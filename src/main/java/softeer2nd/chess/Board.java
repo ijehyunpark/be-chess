@@ -33,7 +33,8 @@ public class Board {
      * @return 만약, 게임 말이 존재할 경우 해당 게임말을 반환한다. 없을 경우 null을 반환하다.
      */
     public Pawn findPawn(int i) {
-        return this.tokens.size() > i ?
-                this.tokens.get(i) : null;
+        if(this.tokens.size() <= i || i < 0)
+            throw new IllegalArgumentException("잘못된 인덱스 접근입니다.");
+        return this.tokens.get(i);
     }
 }

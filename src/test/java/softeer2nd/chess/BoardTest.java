@@ -4,9 +4,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import softeer2nd.chess.pieces.Pawn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BoardTest {
 
@@ -34,5 +36,13 @@ class BoardTest {
     void create(){
         verifyAddPawnInBoard(Pawn.WHITE_COLOR);
         verifyAddPawnInBoard(Pawn.BLACK_COLOR);
+    }
+
+    @Test
+    @DisplayName("잘못된 인덱스 접근 시도 테스트")
+    void find(){
+        assertThrows(IllegalArgumentException.class, () -> board.findPawn(-1));
+        assertThrows(IllegalArgumentException.class, () -> board.findPawn(0));
+        verifyAddPawnInBoard(Pawn.WHITE_COLOR);
     }
 }

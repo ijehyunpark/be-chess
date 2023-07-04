@@ -25,6 +25,7 @@ class PawnTest {
         verifyPawn(Pawn.BLACK_COLOR);
     }
 
+    @Test
     void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
         assertEquals(Pawn.WHITE_COLOR, pawn.getColor());
