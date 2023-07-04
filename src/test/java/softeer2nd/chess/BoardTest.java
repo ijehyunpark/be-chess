@@ -17,6 +17,7 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         board = new Board();
+        board.clear();
     }
 
     /**
@@ -29,7 +30,7 @@ class BoardTest {
         int beforeSize = board.size();
 
         Pawn pawn = new Pawn(color);
-        board.add(pawn, column,row);
+        board.add(pawn, column, row);
         assertEquals(beforeSize + 1, board.size());
         assertEquals(pawn, board.findPawn(beforeSize));
     }

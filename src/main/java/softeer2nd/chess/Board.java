@@ -2,6 +2,7 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Pawn;
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.PieceType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,26 +51,39 @@ public class Board {
             throw new IllegalArgumentException("잘못된 인덱스 접근입니다.");
 
         Piece target = this.pieces.get(i);
-        if(target.isPawn())
+        if(target.getPieceType() == PieceType.Pawn)
             return (Pawn) target;
 
         throw new IllegalArgumentException("폰 객체가 아닙니다.");
     }
 
     /**
-     * 체스 보드판을 초기화한다.
+     * 토큰 정보를 초기화한다.
      */
-    public void initialize() {
+    public void clear() {
         // 할당된 토큰을 모두 삭제한다.
         pieces.clear();
         // 토큰의 위치 정보를 제거한다.
         Arrays.stream(piecePosition).forEach(column -> Arrays.fill(column, -1));
+    }
 
+    /**
+     * 초기 폰 객체를 배치한다.
+     */
+    public void initPawn() {
         // 흰색, 검은색 폰을 초기 개수만큼 할당한다.
         for (int i = 0; i < INIT_PAWN_NUMBER; i++) {
             add(new Pawn(Color.BLACK), 1, i);
             add(new Pawn(Color.WHITE), 6, i);
         }
+    }
+
+    /**
+     * 체스 보드판을 초기화한다.
+     */
+    public void initialize() {
+        clear();
+        initPawn();
     }
 
     /**
