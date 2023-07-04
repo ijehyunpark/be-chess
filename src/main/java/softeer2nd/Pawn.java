@@ -5,6 +5,12 @@ package softeer2nd;
  */
 public class Pawn {
     private String color;
+    public static final String WHITE = "white";
+    public static final String BLACK = "black";
+
+    public Pawn() {
+        this.color = WHITE;
+    }
     public Pawn(String color) {
         this.color = color;
     }
