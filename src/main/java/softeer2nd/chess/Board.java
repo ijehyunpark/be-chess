@@ -18,10 +18,6 @@ public class Board {
     private final List<Token> tokens = new ArrayList<>();
     private final int[][] tokenPosition = new int[COLUMN_NUMBER][ROW_NUMBER];
 
-    public Board() {
-        Arrays.stream(tokenPosition).forEach(column -> Arrays.fill(column, -1));
-    }
-
     /**
      * 체스 보드판에 새로운 게임 말을 추가한다.
      * @param token 추가할 새로운 게임 말
@@ -64,6 +60,11 @@ public class Board {
      * 체스 보드판을 초기화한다.
      */
     public void initialize() {
+        // 할당된 토큰을 모두 삭제한다.
+        tokens.clear();
+        // 토큰의 위치 정보를 제거한다.
+        Arrays.stream(tokenPosition).forEach(column -> Arrays.fill(column, -1));
+
         // 흰색, 검은색 폰을 초기 개수만큼 할당한다.
         for (int i = 0; i < INIT_PAWN_NUMBER; i++) {
             add(new Pawn(Color.BLACK), 1, i);
