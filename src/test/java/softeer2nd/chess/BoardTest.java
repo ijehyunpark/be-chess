@@ -4,9 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.pieces.Pawn;
+import softeer2nd.chess.pieces.Token;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
 
@@ -54,14 +56,23 @@ class BoardTest {
                 {'.','.','.','.','.','.','.','.'},
                 {'.','.','.','.','.','.','.','.'},
                 {'.','.','.','.','.','.','.','.'},
-                {'P','P','P','P','P','P','P','P'},
+                {'p','p','p','p','p','p','p','p'},
                 {'.','.','.','.','.','.','.','.'}};
 
-//        for(int i = 0; i < Board.COLUMN_NUMBER; i++){
-//            for(int j = 0; j < Board.ROW_NUMBER; j++){
-//                assertEquals(initBoard[i][j], board.getTokenByIndex(i, j).getRepresentation());
-//            }
-//        }
+        board.initialize();
+
+        for(int i = 0; i < Board.COLUMN_NUMBER; i++){
+            for(int j = 0; j < Board.ROW_NUMBER; j++){
+                Optional<Token> token = board.getTokenByPosition(i,j);
+                if(initBoard[i][j] == '.') {
+                    assertTrue(token.isEmpty());
+                }
+                else {
+                    assertTrue(token.isPresent());
+                    assertEquals(initBoard[i][j], token.get().getRepresentation());
+                }
+            }
+        }
 
 
     }

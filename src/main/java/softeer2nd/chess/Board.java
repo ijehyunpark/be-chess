@@ -4,13 +4,23 @@ import softeer2nd.chess.pieces.Pawn;
 import softeer2nd.chess.pieces.Token;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 체스 보드판을 나타낸다.
  */
 public class Board {
+    public static final int COLUMN_NUMBER = 8;
+    public static final int ROW_NUMBER = 8;
+    public static final int INIT_PAWN_NUMBER = 8;
     private final List<Token> tokens = new ArrayList<>();
+    private int[][] tokenPosition = new int[COLUMN_NUMBER][ROW_NUMBER];
+
+    public Board() {
+        Arrays.stream(tokenPosition).forEach(column -> Arrays.fill(column, -1));
+    }
 
     /**
      * 체스 보드판에 새로운 게임 말을 추가한다.
@@ -42,5 +52,32 @@ public class Board {
             return (Pawn) target;
 
         throw new IllegalArgumentException("폰 객체가 아닙니다.");
+    }
+
+    /**
+     * 체스 보드판을 초기화한다.
+     */
+    public void initialize() {
+        // 흰색, 검은색 폰을 초기 개수만큼 할당한다.
+        for (int i = 0; i < INIT_PAWN_NUMBER; i++) {
+            tokens.add(new Pawn(Color.BLACK));
+            tokens.add(new Pawn(Color.WHITE));
+        }
+
+        for (int i = 0; i < ROW_NUMBER; i++) {
+            tokenPosition[1][i] = i * 2;
+            tokenPosition[6][i] = i * 2 + 1;
+        }
+    }
+
+    /**
+     * 해당 보드판 위치에 존재하는 게임 말을 찾는다.
+     * @param column 보드판 세로 좌표
+     * @param row 보드판 가로 좌표
+     * @return 만약 해당 보드판 위치에 게임말이 존재할 경우 해당 게임말을 반환한다. 없는 경우 null을 반환한다.
+     */
+    public Optional<Token> getTokenByPosition(int column, int row) {
+        Token result = tokenPosition[column][row] == -1 ? null : tokens.get(tokenPosition[column][row]);
+        return Optional.ofNullable(result);
     }
 }
