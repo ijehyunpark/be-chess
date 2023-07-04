@@ -16,7 +16,7 @@ public class Board {
     public static final int ROW_NUMBER = 8;
     public static final int INIT_PAWN_NUMBER = 8;
     private final List<Token> tokens = new ArrayList<>();
-    private int[][] tokenPosition = new int[COLUMN_NUMBER][ROW_NUMBER];
+    private final int[][] tokenPosition = new int[COLUMN_NUMBER][ROW_NUMBER];
 
     public Board() {
         Arrays.stream(tokenPosition).forEach(column -> Arrays.fill(column, -1));
@@ -24,11 +24,17 @@ public class Board {
 
     /**
      * 체스 보드판에 새로운 게임 말을 추가한다.
-     * @param token 추가할 새로운 게임 말(폰만 허용)
+     * @param token 추가할 새로운 게임 말
+     * @param column 추가할 새로운 게임 말의 세로축 위치
+     * @param row 추가할 새로운 게임 말의 가로축 위치
      */
-    public void add(Token token) {
+    public void add(Token token, int column, int row) {
+        if(tokenPosition[column][row] != -1)
+            throw new IllegalArgumentException("이미 다른 게임 말이 존재하는 위치입니다.");
         this.tokens.add(token);
+        this.tokenPosition[column][row] = this.size() - 1;
     }
+
 
     /**
      * 현재 체스 보드판에 존재하는 게임 말의 개수를 찾는다.
@@ -60,13 +66,8 @@ public class Board {
     public void initialize() {
         // 흰색, 검은색 폰을 초기 개수만큼 할당한다.
         for (int i = 0; i < INIT_PAWN_NUMBER; i++) {
-            tokens.add(new Pawn(Color.BLACK));
-            tokens.add(new Pawn(Color.WHITE));
-        }
-
-        for (int i = 0; i < ROW_NUMBER; i++) {
-            tokenPosition[1][i] = i * 2;
-            tokenPosition[6][i] = i * 2 + 1;
+            add(new Pawn(Color.BLACK), 1, i);
+            add(new Pawn(Color.WHITE), 6, i);
         }
     }
 
