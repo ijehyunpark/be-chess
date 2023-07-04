@@ -3,15 +3,14 @@ package softeer2nd.chess.pieces;
 import softeer2nd.chess.Color;
 
 /**
- * 체스의 폰 객체를 나타낸다.
+ * 체스의 나이트 객체를 나타낸다.
  */
-public class Pawn extends Piece {
-    private final PieceType type = PieceType.PAWN;
-    public Pawn() {
+public class Knight extends Piece {
+    private final PieceType type = PieceType.KNIGHT;
+    public Knight() {
         super();
     }
-
-    public Pawn(Color color) {
+    public Knight(Color color) {
         super(color);
     }
 

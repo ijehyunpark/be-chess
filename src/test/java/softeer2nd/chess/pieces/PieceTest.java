@@ -15,7 +15,7 @@ class PieceTest {
     void verifyPawn(final Color color){
         Pawn pawn = new Pawn(color);
         assertEquals(color.getName(), pawn.getColor());
-        assertEquals(color.getRepresentation(pawn), pawn.getRepresentation());
+        assertEquals(color.getRepresentation(pawn.getPieceType()), pawn.getRepresentation());
     }
 
     @Test
@@ -31,5 +31,29 @@ class PieceTest {
         assertEquals(Color.WHITE.getName(), pawn.getColor());
     }
 
+    @Test
+    void create_piece() {
+        verifyPiece(Piece.createPawn(Color.WHITE), Color.WHITE, PieceType.PAWN);
+        verifyPiece(Piece.createPawn(Color.BLACK), Color.BLACK, PieceType.PAWN);
 
+        verifyPiece(Piece.createKnight(Color.WHITE), Color.WHITE, PieceType.KNIGHT);
+        verifyPiece(Piece.createKnight(Color.BLACK), Color.BLACK, PieceType.KNIGHT);
+
+        verifyPiece(Piece.createBishop(Color.WHITE), Color.WHITE, PieceType.BISHOP);
+        verifyPiece(Piece.createBishop(Color.BLACK), Color.BLACK, PieceType.BISHOP);
+
+        verifyPiece(Piece.createRook(Color.WHITE), Color.WHITE, PieceType.ROOK);
+        verifyPiece(Piece.createRook(Color.BLACK), Color.BLACK, PieceType.ROOK);
+
+        verifyPiece(Piece.createQueen(Color.WHITE), Color.WHITE, PieceType.QUEEN);
+        verifyPiece(Piece.createQueen(Color.BLACK), Color.BLACK, PieceType.QUEEN);
+
+        verifyPiece(Piece.createKing(Color.WHITE), Color.WHITE, PieceType.KING);
+        verifyPiece(Piece.createKing(Color.BLACK), Color.BLACK, PieceType.KING);
+    }
+
+    private void verifyPiece(final Piece piece, final Color color, final PieceType type) {
+        assertEquals(color.getName(), piece.getColor());
+        assertEquals(type, piece.getPieceType());
+    }
 }
