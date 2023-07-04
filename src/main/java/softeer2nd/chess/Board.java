@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Pawn;
+import softeer2nd.chess.pieces.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +10,14 @@ import java.util.List;
  * 체스 보드판을 나타낸다.
  */
 public class Board {
-    private final List<Pawn> tokens = new ArrayList<>();
+    private final List<Token> tokens = new ArrayList<>();
 
     /**
      * 체스 보드판에 새로운 게임 말을 추가한다.
-     * @param pawn 추가할 새로운 게임 말(폰만 허용)
+     * @param token 추가할 새로운 게임 말(폰만 허용)
      */
-    public void add(Pawn pawn) {
-        this.tokens.add(pawn);
+    public void add(Token token) {
+        this.tokens.add(token);
     }
 
     /**
@@ -35,6 +36,11 @@ public class Board {
     public Pawn findPawn(int i) {
         if(this.tokens.size() <= i || i < 0)
             throw new IllegalArgumentException("잘못된 인덱스 접근입니다.");
-        return this.tokens.get(i);
+
+        Token target = this.tokens.get(i);
+        if(target.isPawn())
+            return (Pawn) target;
+
+        throw new IllegalArgumentException("폰 객체가 아닙니다.");
     }
 }
