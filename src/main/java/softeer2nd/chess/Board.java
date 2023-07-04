@@ -1,13 +1,15 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Pawn;
-import softeer2nd.chess.pieces.Piece;
-import softeer2nd.chess.pieces.PieceType;
+import softeer2nd.chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static softeer2nd.chess.Color.BLACK;
+import static softeer2nd.chess.Color.WHITE;
+import static softeer2nd.chess.pieces.PieceType.*;
 
 /**
  * 체스 보드판을 나타낸다.
@@ -15,9 +17,35 @@ import java.util.Optional;
 public class Board {
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
-    public static final int INIT_PAWN_NUMBER = 8;
+    public static final PieceType[][] PIECE_MAP = {
+            { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK },
+            { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
+            { null, null, null, null, null, null, null, null },
+            { null, null, null, null, null, null, null, null },
+            { null, null, null, null, null, null, null, null },
+            { null, null, null, null, null, null, null, null },
+            { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
+            { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK }
+    };
+
+    public static final Color[][] COLOR_MAP = {
+            { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
+            { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
+            { null, null, null, null, null, null, null, null},
+            { null, null, null, null, null, null, null, null},
+            { null, null, null, null, null, null, null, null},
+            { null, null, null, null, null, null, null, null},
+            { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, },
+            { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
+    };
+
+
     private final List<Piece> pieces = new ArrayList<>();
     private final int[][] piecePosition = new int[COLUMN_NUMBER][ROW_NUMBER];
+
+    public Board() {
+        clear();
+    }
 
     /**
      * 체스 보드판에 새로운 게임 말을 추가한다.
@@ -29,7 +57,7 @@ public class Board {
         if(piecePosition[column][row] != -1)
             throw new IllegalArgumentException("이미 다른 게임 말이 존재하는 위치입니다.");
         this.pieces.add(piece);
-        this.piecePosition[column][row] = this.size() - 1;
+        this.piecePosition[column][row] = pieceCount() - 1;
     }
 
 
@@ -37,7 +65,7 @@ public class Board {
      * 현재 체스 보드판에 존재하는 게임 말의 개수를 찾는다.
      * @return 체스 보드판 내의 게임 말 개수
      */
-    public int size() {
+    public int pieceCount() {
         return pieces.size();
     }
 
@@ -66,11 +94,12 @@ public class Board {
     /**
      * 초기 폰 객체를 배치한다.
      */
-    public void initPawn() {
-        // 흰색, 검은색 폰을 초기 개수만큼 할당한다.
-        for (int i = 0; i < INIT_PAWN_NUMBER; i++) {
-            add(new Pawn(Color.BLACK), 1, i);
-            add(new Pawn(Color.WHITE), 6, i);
+    public void initPieces() {
+        for (int i = 0; i < COLUMN_NUMBER; i++) {
+            for (int j = 0; j < ROW_NUMBER; j++) {
+                if(PIECE_MAP[i][j] != null && COLOR_MAP[i][j] != null)
+                    add(Piece.createPiece(PIECE_MAP[i][j], COLOR_MAP[i][j]), i, j);
+            }
         }
     }
 
@@ -79,7 +108,7 @@ public class Board {
      */
     public void initialize() {
         clear();
-        initPawn();
+        initPieces();
     }
 
     /**
@@ -97,7 +126,7 @@ public class Board {
      * 현재 체스 보드판의 상태를 문자열로 변환한다.
      * @return 현재 체스 보드판의 상태를 나타내는 문자열
      */
-    public String print() {
+    public String showBoard() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < COLUMN_NUMBER; i++) {
             for (int j = 0; j < ROW_NUMBER; j++) {

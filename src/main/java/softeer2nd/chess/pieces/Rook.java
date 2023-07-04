@@ -19,4 +19,10 @@ public class Rook extends Piece {
     public PieceType getPieceType() {
         return this.type;
     }
+
+
+    @Override
+    public char getRepresentation() {
+        return getColor() == Color.BLACK ? 'R' : 'r';
+    }
 }

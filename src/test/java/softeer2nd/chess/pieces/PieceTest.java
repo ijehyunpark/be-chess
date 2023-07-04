@@ -14,8 +14,7 @@ class PieceTest {
      */
     void verifyPawn(final Color color){
         Pawn pawn = new Pawn(color);
-        assertEquals(color.getName(), pawn.getColor());
-        assertEquals(color.getRepresentation(pawn.getPieceType()), pawn.getRepresentation());
+        assertEquals(color, pawn.getColor());
     }
 
     @Test
@@ -28,7 +27,7 @@ class PieceTest {
     @Test
     void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
-        assertEquals(Color.WHITE.getName(), pawn.getColor());
+        assertEquals(Color.WHITE, pawn.getColor());
     }
 
     @Test
@@ -53,7 +52,7 @@ class PieceTest {
     }
 
     private void verifyPiece(final Piece piece, final Color color, final PieceType type) {
-        assertEquals(color.getName(), piece.getColor());
+        assertEquals(color, piece.getColor());
         assertEquals(type, piece.getPieceType());
     }
 }

@@ -19,4 +19,9 @@ public class Pawn extends Piece {
     public PieceType getPieceType() {
         return this.type;
     }
+
+    @Override
+    public char getRepresentation() {
+        return getColor() == Color.BLACK ? 'P' : 'p';
+    }
 }

@@ -18,4 +18,10 @@ public class Knight extends Piece {
     public PieceType getPieceType() {
         return this.type;
     }
+
+
+    @Override
+    public char getRepresentation() {
+        return getColor() == Color.BLACK ? 'N' : 'n';
+    }
 }

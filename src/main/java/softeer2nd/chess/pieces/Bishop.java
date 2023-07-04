@@ -19,4 +19,10 @@ public class Bishop extends Piece {
     public PieceType getPieceType() {
         return this.type;
     }
+
+
+    @Override
+    public char getRepresentation() {
+        return getColor() == Color.BLACK ? 'B' : 'b';
+    }
 }

@@ -18,7 +18,7 @@ public class Main {
                 case "start":
                     board = new Board();
                     board.initialize();
-                    System.out.println(board.print());
+                    System.out.println(board.showBoard());
                     break;
                 case "end":
                     scanLoop = false;

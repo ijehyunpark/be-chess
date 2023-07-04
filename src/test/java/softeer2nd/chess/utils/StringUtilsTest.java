@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class StringUtilsTest {
 
@@ -12,13 +14,13 @@ class StringUtilsTest {
     void testAppendNewLine() {
         String origin = "sample";
 
-        String result = StringUtils.appendNewLine(origin);
-        assertEquals(origin + StringUtils.NEWLINE, result);
+        String result = appendNewLine(origin);
+        assertEquals(origin + NEWLINE, result);
 
         StringBuilder builder = new StringBuilder();
         builder.append(origin);
-        StringUtils.appendNewLine(builder);
-        assertEquals(origin + StringUtils.NEWLINE, builder.toString());
+        appendNewLine(builder);
+        assertEquals(origin + NEWLINE, builder.toString());
 
     }
 

@@ -72,13 +72,36 @@ public abstract class Piece {
         return new King(color);
     }
 
-
-    public String getColor(){
-        return this.color.getName();
+    /**
+     * 새로운 체스 말을 생성한다.
+     * @param type 생성할 체스 말 종류
+     * @param color 생성할 체스 말 색깔
+     * @return 신규 채스 말 객체
+     */
+    public static Piece createPiece(PieceType type, Color color) {
+        switch (type){
+            case PAWN:
+                return createPawn(color);
+            case KNIGHT:
+                return createKnight(color);
+            case BISHOP:
+                return createBishop(color);
+            case ROOK:
+                return createRook(color);
+            case QUEEN:
+                return createQueen(color);
+            case KING:
+                return createKing(color);
+            default:
+                throw new IllegalArgumentException("타입이 허용되지 않습니다.");
+        }
     }
 
-    public char getRepresentation() {
-        return this.color.getRepresentation(getPieceType());
+
+    public Color getColor(){
+        return this.color;
     }
     public abstract PieceType getPieceType();
+
+    public abstract char getRepresentation();
 }
