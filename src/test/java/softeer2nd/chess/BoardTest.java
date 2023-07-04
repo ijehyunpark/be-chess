@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.pieces.Pawn;
-import softeer2nd.chess.pieces.Token;
+import softeer2nd.chess.pieces.Piece;
 
 import java.util.Optional;
 
@@ -67,13 +67,13 @@ class BoardTest {
 
         for(int i = 0; i < Board.COLUMN_NUMBER; i++){
             for(int j = 0; j < Board.ROW_NUMBER; j++){
-                Optional<Token> token = board.getTokenByPosition(i,j);
+                Optional<Piece> piece = board.getPieceByPosition(i,j);
                 if(initBoard[i][j] == '.') {
-                    assertTrue(token.isEmpty());
+                    assertTrue(piece.isEmpty());
                 }
                 else {
-                    assertTrue(token.isPresent());
-                    assertEquals(initBoard[i][j], token.get().getRepresentation());
+                    assertTrue(piece.isPresent());
+                    assertEquals(initBoard[i][j], piece.get().getRepresentation());
                 }
             }
         }

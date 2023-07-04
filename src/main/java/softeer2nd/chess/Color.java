@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Token;
+import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.PieceType;
 
 public enum Color {
     BLACK("black", 'P'),
@@ -13,8 +14,8 @@ public enum Color {
         this.pawnRepresentation = pawnRepresentation;
     }
 
-    public char getRepresentation(Token token){
-        if(token.isPawn()){
+    public char getRepresentation(Piece piece){
+        if(piece.getPieceType() == PieceType.Pawn){
             return this.pawnRepresentation;
         }
         throw new IllegalArgumentException("정의되지 않은 게임 말입니다.");
