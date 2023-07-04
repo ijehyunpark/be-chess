@@ -1,4 +1,6 @@
-package softeer2nd;
+package softeer2nd.chess;
+
+import softeer2nd.chess.pieces.Pawn;
 
 import java.util.ArrayList;
 import java.util.List;

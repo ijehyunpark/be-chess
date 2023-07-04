@@ -1,4 +1,4 @@
-package softeer2nd;
+package softeer2nd.chess.pieces;
 
 /**
  * 체스의 폰 객체를 나타낸다.
