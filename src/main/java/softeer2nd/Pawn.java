@@ -5,11 +5,11 @@ package softeer2nd;
  */
 public class Pawn {
     private String color;
-    public static final String WHITE = "white";
-    public static final String BLACK = "black";
+    public static final String WHITE_COLOR = "white";
+    public static final String BLACK_COLOR = "black";
 
     public Pawn() {
-        this.color = WHITE;
+        this.color = WHITE_COLOR;
     }
     public Pawn(String color) {
         this.color = color;
