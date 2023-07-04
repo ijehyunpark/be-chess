@@ -46,15 +46,11 @@ public class Board {
      * @param i 게임 말이 할당되어 있는 인덱스
      * @return 만약, 게임 말이 존재할 경우 해당 게임말을 반환한다. 없을 경우 null을 반환하다.
      */
-    public Pawn findPawn(int i) {
+    public Piece findPiece(int i) {
         if(this.pieces.size() <= i || i < 0)
             throw new IllegalArgumentException("잘못된 인덱스 접근입니다.");
 
-        Piece target = this.pieces.get(i);
-        if(target.getPieceType() == PieceType.Pawn)
-            return (Pawn) target;
-
-        throw new IllegalArgumentException("폰 객체가 아닙니다.");
+        return this.pieces.get(i);
     }
 
     /**

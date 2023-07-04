@@ -32,7 +32,7 @@ class BoardTest {
         Pawn pawn = new Pawn(color);
         board.add(pawn, column, row);
         assertEquals(beforeSize + 1, board.size());
-        assertEquals(pawn, board.findPawn(beforeSize));
+        assertEquals(pawn, board.findPiece(beforeSize));
     }
 
     @Test
@@ -46,8 +46,8 @@ class BoardTest {
     @Test
     @DisplayName("잘못된 인덱스 접근 시도 테스트")
     void find(){
-        assertThrows(IllegalArgumentException.class, () -> board.findPawn(-1));
-        assertThrows(IllegalArgumentException.class, () -> board.findPawn(0));
+        assertThrows(IllegalArgumentException.class, () -> board.findPiece(-1));
+        assertThrows(IllegalArgumentException.class, () -> board.findPiece(0));
         verifyAddPawnInBoard(Color.WHITE, 0, 0);
     }
 

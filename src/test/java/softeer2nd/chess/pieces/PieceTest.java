@@ -6,7 +6,7 @@ import softeer2nd.chess.Color;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PawnTest {
+class PieceTest {
 
     /**
      * 특정 색깔 폰이 생성되는지 검증한다.
