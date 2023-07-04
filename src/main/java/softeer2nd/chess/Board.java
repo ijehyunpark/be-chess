@@ -81,4 +81,20 @@ public class Board {
         Token result = tokenPosition[column][row] == -1 ? null : tokens.get(tokenPosition[column][row]);
         return Optional.ofNullable(result);
     }
+
+    /**
+     * 현재 체스 보드판의 상태를 문자열로 변환한다.
+     * @return 현재 체스 보드판의 상태를 나타내는 문자열
+     */
+    public String print() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < COLUMN_NUMBER; i++) {
+            for (int j = 0; j < ROW_NUMBER; j++) {
+                Optional<Token> token = getTokenByPosition(i, j);
+                builder.append(token.map(Token::getRepresentation).orElse('.'));
+            }
+            builder.append('\n');
+        }
+        return builder.toString();
+    }
 }

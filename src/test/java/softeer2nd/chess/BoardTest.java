@@ -53,7 +53,7 @@ class BoardTest {
     @Test
     @DisplayName("체스 보드판 초기화 상태를 검증한다.")
     void init() {
-        Character[][] initBoard =
+        char[][] initBoard =
                 {{'.','.','.','.','.','.','.','.'},
                 {'P','P','P','P','P','P','P','P'},
                 {'.','.','.','.','.','.','.','.'},
@@ -77,7 +77,22 @@ class BoardTest {
                 }
             }
         }
+    }
 
+    @Test
+    @DisplayName("체스 보드판 문자열 변환이 성공적인지 검증한다.")
+    void print() {
+        String result = "........\n" +
+                "PPPPPPPP\n" +
+                "........\n" +
+                "........\n" +
+                "........\n" +
+                "........\n" +
+                "pppppppp\n" +
+                "........\n";
 
+        board.initialize();
+
+        assertEquals(result, board.print());
     }
 }
