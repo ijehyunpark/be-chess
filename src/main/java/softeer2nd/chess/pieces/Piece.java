@@ -5,10 +5,10 @@ import softeer2nd.chess.Color;
 public abstract class Piece {
     private final Color color;
 
-    public Piece() {
+    protected Piece() {
         this.color = Color.WHITE;
     }
-    public Piece(Color color){
+    protected Piece(Color color){
         this.color = color;
     }
 
