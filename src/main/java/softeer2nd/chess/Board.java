@@ -52,13 +52,13 @@ public class Board {
      * 초기 폰 객체를 배치한다.
      */
     public void initPieces() {
-        for (int i = 0; i < COLUMN_NUMBER; i++) {
-            ArrayList<Piece> row = new ArrayList<>();
-            for (int j = 0; j < ROW_NUMBER; j++) {
-                row.add(PIECE_MAP[i][j] == NO_PIECE ?
-                                Piece.createBlank() : Piece.createPiece(PIECE_MAP[i][j], COLOR_MAP[i][j]));
+        for (int col = 0; col < COLUMN_NUMBER; col++) {
+            ArrayList<Piece> rowPieces = new ArrayList<>();
+            for (int row = 0; row < ROW_NUMBER; row++) {
+                rowPieces.add(PIECE_MAP[col][row] == NO_PIECE ?
+                                Piece.createBlank() : Piece.createPiece(PIECE_MAP[col][row], COLOR_MAP[col][row]));
             }
-            pieces.add(row);
+            pieces.add(rowPieces);
         }
     }
 
@@ -76,9 +76,9 @@ public class Board {
      */
     public String showBoard() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < COLUMN_NUMBER; i++) {
-            for (int j = 0; j < ROW_NUMBER; j++) {
-                Piece piece = pieces.get(i).get(j);
+        for (int col = 0; col < COLUMN_NUMBER; col++) {
+            for (int row = 0; row < ROW_NUMBER; row++) {
+                Piece piece = pieces.get(col).get(row);
                 builder.append(piece.getRepresentation());
             }
             appendNewLine(builder);
