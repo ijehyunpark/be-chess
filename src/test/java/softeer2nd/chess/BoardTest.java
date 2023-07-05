@@ -3,7 +3,7 @@ package softeer2nd.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
@@ -19,6 +19,16 @@ class BoardTest {
             ".....nq." +
             ".....p.." +
             "......p." +
+            "....rk..";
+
+    String sample2 =
+            ".KR....." +
+            "P.PB...." +
+            ".P..Q..." +
+            "........" +
+            ".....nq." +
+            ".....p.p" +
+            ".....pp." +
             "....rk..";
 
     @BeforeEach
@@ -106,5 +116,35 @@ class BoardTest {
 
         assertEquals(piece, board.findPiece(position));
         System.out.println(board.showBoard());
+    }
+
+    @Test
+    @DisplayName("점수 계산 메소드를 테스트한다.")
+    void calculatePoint() {
+        board.initializeEmpty();
+
+        addPiece("b6", Pawn.createBlackPawn());
+        addPiece("e6", Queen.createBlackQueen());
+        addPiece("b8", King.createBlackKing());
+        addPiece("c6", Rook.createBlackRook());
+
+        addPiece("f2", Pawn.createWhitePawn());
+        addPiece("g2", Pawn.createWhitePawn());
+        addPiece("e1", Rook.createWhiteRook());
+        addPiece("f1", King.createWhiteKing());
+
+        assertEquals(15.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
+        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
+
+        System.out.println(board.showBoard());
+
+        board.initialize(sample2);
+        assertEquals(20.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
+        assertEquals(19.5, board.calculatePoint(Piece.Color.WHITE), 0.01);
+
+    }
+
+    private void addPiece(String position, Piece piece) {
+        board.move(position, piece);
     }
 }

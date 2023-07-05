@@ -12,7 +12,6 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
  * 체스 보드판을 나타낸다.
  */
 public class Board {
-
     /**
      * 체스판의 row 객체를 나타낸다.
      */
@@ -213,5 +212,42 @@ public class Board {
     public void move(String position, Piece piece) {
         pieces.get(PositionUtils.extractYPos(position))
                 .rank.set(PositionUtils.extractXPos(position), piece);
+    }
+
+    /**
+     * 체스 게임에서 특정 색깔의 현재 점수를 계산한다.
+     * 각 기물의 점수는 queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+     * pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
+     * king은 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
+     * @param color 점수를 측정하는 색깔
+     * @return 현재까지의 점수
+     */
+    public double calculatePoint(Piece.Color color) {
+        // 기본 점수 계산
+        double score = pieces.stream()
+                .flatMap(rank -> rank.rank.stream())
+                .filter(piece -> piece.getColor() == color)
+                .mapToDouble(value -> value.getPieceType().getDefaultScore())
+                .sum();
+
+        // 특수 점수(pawn 예외; 같은 세로줄의 같은 색의 폰의 경우 점수 0.5점 처리
+        // 1. 해당 색깔의 폰의 개수를 찾는다.
+        // 2. 그 후 만약 같은 column에 폰의 개수가 2 이상인 모든 폰의 개수를 찾는다.
+        // 3. 찾은 폰의 개수만큼 점수에서 차감한다.
+        int targetPawnNumber = 0;
+        for (int row = 0; row < ROW_NUMBER; row++) {
+            int count = 0;
+            for (int col = 0; col < COLUMN_NUMBER; col++) {
+                Piece target = pieces.get(col).rank.get(row);
+                if(target.getColor() != color)
+                    continue;
+                if(target.getPieceType() != PAWN)
+                    continue;
+                count++;
+            }
+            targetPawnNumber += count > 1 ? count : 0;
+        }
+        score -= (double) targetPawnNumber * 0.5;
+        return score;
     }
 }

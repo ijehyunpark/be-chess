@@ -16,13 +16,16 @@ public class Piece {
      * 체스 말의 종류를 나타낸다.
      */
     public enum Type {
-        KING('k'), QUEEN('q'), ROOK('r'), BISHOP('b'),
-        KNIGHT('n'), PAWN('p'), NO_PIECE('.');
+        KING('k', 0), QUEEN('q', 9), ROOK('r',5),
+        BISHOP('b', 3), KNIGHT('n', 2.5), PAWN('p', 1),
+        NO_PIECE('.', 0);
 
         private final char representation;
+        private final double defaultScore;
 
-        Type(char representation) {
+        Type(char representation, double defaultScore) {
             this.representation = representation;
+            this.defaultScore = defaultScore;
         }
 
         public char getWhiteRepresentation() {
@@ -31,6 +34,10 @@ public class Piece {
 
         public char getBlackRepresentation() {
             return Character.toUpperCase(representation);
+        }
+
+        public double getDefaultScore() {
+            return defaultScore;
         }
     }
 
