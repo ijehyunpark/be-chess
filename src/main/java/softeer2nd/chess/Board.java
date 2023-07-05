@@ -8,34 +8,29 @@ import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
-/**
- * 체스 보드판을 나타낸다.
- */
 public class Board {
     /**
-     * 체스판의 row 객체를 나타낸다.
+     * 보드판의 row줄 나타낸다.
      */
     public static class Rank {
         public final ArrayList<Piece> rank = new ArrayList<>();
     }
 
     /**
-     * 체스판 내의 위치 정보를 내부 인덱스 정보로 변환하는 유틸리티 객체이다.
+     * 보드판 내의 위치 정보를 내부 인덱스 정보로 변환하는 유틸리티 객체이다.
      */
     private static class PositionUtils {
         /**
-         * 체스판 위치 정보로부터 배열의 ROW(X) 좌표를 추출한다.
-         * @param position 체스판 위치 정보
-         * @return 체스판 내부 pieces객체와 연관되는 인덱스 x 좌표
+         * 체스판 위치 정보로부터 배열의 Row(X) 좌표를 추출한다. <br/>
+         * @return 예를 들어, "a7"의 경우 Row 좌표인 'a'로 부터 인덱스 0을 반환한다.
          */
         public static int extractXPos(final String position){
             return position.charAt(0) - 'a';
         }
 
         /**
-         * 체스판 위치 정보로부터 배열의 COL(Y) 좌표를 추출한다.
-         * @param position 체스판 위치 정보
-         * @return 체스판 내부 pieces 객체와 연관되는 인덱스 y 좌표
+         * 체스판 위치 정보로부터 배열의 Column(Y) 좌표를 추출한다. <br/>
+         * @return 예를 들어, "a7"의 경우 Column 좌표인 '7'로 부터 인덱스 0을 반환한다. (세로축의 경우 체스판과 배열은 반대로 구현되어 있다.)
          */
         public static int extractYPos(final String position) {
             return COLUMN_NUMBER - Character.getNumericValue(
