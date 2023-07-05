@@ -83,4 +83,16 @@ class BoardTest {
 
         assertEquals(expect, board.showBoard());
     }
+
+    @Test
+    @DisplayName("Piece 검색 테스트")
+    void findPiece() {
+        board.initialize();
+
+        assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.BLACK), board.findPiece("a8"));
+        assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.BLACK), board.findPiece("h8"));
+        assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.WHITE), board.findPiece("a1"));
+        assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.WHITE), board.findPiece("a1"));
+
+    }
 }

@@ -36,8 +36,9 @@ public class Piece {
 
     private final Color color;
     private final Type type;
+    private static final Piece BLANK_PIECE_INSTANCE = new Piece();
 
-    protected Piece() {
+    private Piece() {
         this.color = Color.NO_COLOR;
         this.type = Type.NO_PIECE;
     }
@@ -51,64 +52,7 @@ public class Piece {
      * @return 추가적인 기능을 제공하지 않는 원시적인 체스 말 객체
      */
     public static Piece createBlank() {
-        return new Piece();
-    }
-
-    /**
-     * 새로운 폰을 생성한다.
-     * @param color 해당 게임 말 객체의 색깔
-     * @return 신규 폰 객체
-     */
-    private static Pawn createPawn(final Color color) {
-        return new Pawn(color);
-    }
-
-    /**
-     * 새로운 나이트를 생성한다.
-     * @param color 해당 게임 말 객체의 색깔
-     * @return 신규 기사 객체
-     */
-    private static Knight createKnight(final Color color) {
-        return new Knight(color);
-    }
-
-    /**
-     * 새로운 비숍를 생성한다.
-     * @param color 해당 게임 말 객체의 색깔
-     * @return 신규 비숍 객체
-     */
-    private static Bishop createBishop(final Color color) {
-        return new Bishop(color);
-    }
-
-
-    /**
-     * 새로운 룩를 생성한다.
-     * @param color 해당 게임 말 객체의 색깔
-     * @return 신규 룩 객체
-     */
-    private static Rook createRook(final Color color) {
-        return new Rook(color);
-    }
-
-
-    /**
-     * 새로운 퀸를 생성한다.
-     * @param color 해당 게임 말 객체의 색깔
-     * @return 신규 퀸 객체
-     */
-    private static Queen createQueen(final Color color) {
-        return new Queen(color);
-    }
-
-
-    /**
-     * 새로운 킹를 생성한다.
-     * @param color 해당 게임 말 객체의 색깔
-     * @return 신규 킹 객체
-     */
-    private static King createKing(final Color color) {
-        return new King(color);
+        return BLANK_PIECE_INSTANCE;
     }
 
     /**
@@ -120,17 +64,23 @@ public class Piece {
     public static Piece createPiece(final Type type, final Color color) {
         switch (type){
             case PAWN:
-                return createPawn(color);
+                return color == Color.BLACK ?
+                        Pawn.createBlackPawn() : Pawn.createWhitePawn();
             case KNIGHT:
-                return createKnight(color);
+                return color == Color.BLACK ?
+                        Knight.createBlackKnight() : Knight.createWhiteKnight();
             case BISHOP:
-                return createBishop(color);
+                return color == Color.BLACK ?
+                        Bishop.createBlackBishop() : Bishop.createWhiteBishop();
             case ROOK:
-                return createRook(color);
+                return color == Color.BLACK ?
+                        Rook.createBlackRook() : Rook.createWhiteRook();
             case QUEEN:
-                return createQueen(color);
+                return color == Color.BLACK ?
+                        Queen.createBlackQueen() : Queen.createWhiteQueen();
             case KING:
-                return createKing(color);
+                return color == Color.BLACK ?
+                        King.createBlackKing() : King.createWhiteKing();
             default:
                 throw new IllegalArgumentException("타입이 허용되지 않습니다.");
         }

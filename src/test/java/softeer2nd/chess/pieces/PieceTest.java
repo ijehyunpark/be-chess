@@ -7,22 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PieceTest {
 
-    /**
-     * 특정 색깔 폰이 생성되는지 검증한다.
-     * @param color 검증할 폰 색깔을 나타낸다.
-     */
-    void verifyPawn(final Piece.Color color){
-        Pawn pawn = new Pawn(color);
-        assertEquals(color, pawn.getColor());
-    }
-
-    @Test
-    @DisplayName("흰색 및 검은색 폰이 생성되어야 한다")
-    void create() {
-        verifyPawn(Piece.Color.WHITE);
-        verifyPawn(Piece.Color.BLACK);
-    }
-
     @Test
     void createPiece() {
         verifyPiece(Piece.createPiece(Piece.Type.PAWN, Piece.Color.WHITE), Piece.createPiece(Piece.Type.PAWN, Piece.Color.BLACK), Piece.Type.PAWN);

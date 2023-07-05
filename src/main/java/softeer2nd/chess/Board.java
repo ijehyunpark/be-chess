@@ -156,4 +156,18 @@ public class Board {
         }
         return builder.toString();
     }
+
+
+    /**
+     * 특정 index의 Piece를 찾는다.
+     * @param position 체스 보드판 내의 인덱스
+     * @return 체스 보드판에서 해당 index애 위치한 Piece 객체
+     */
+    public Piece findPiece(String position) {
+        int xPos = position.charAt(0) - 'a';
+        int yPos = COLUMN_NUMBER - Character.getNumericValue(
+                position.charAt(1));
+
+        return pieces.get(yPos).rank.get(xPos);
+    }
 }
