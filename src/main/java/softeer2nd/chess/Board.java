@@ -125,6 +125,20 @@ public class Board {
     }
 
     /**
+     * 체스 보드판에서 모든 체스말을 제거한다.
+     */
+    public void initializeEmpty() {
+        pieces.clear();
+        for (int col = 0; col < COLUMN_NUMBER; col++) {
+            Rank rank = new Rank();
+            for (int row = 0; row < ROW_NUMBER; row++) {
+                rank.rank.add(Piece.createBlank());
+            }
+            pieces.add(rank);
+        }
+    }
+
+    /**
      * 체스 보드판을 초기화한다.
      */
     public void initialize() {
@@ -169,5 +183,18 @@ public class Board {
                 position.charAt(1));
 
         return pieces.get(yPos).rank.get(xPos);
+    }
+
+    /**
+     * 체스 보드판에 특정 체스말을 추가한다.
+     * @param position 체스 보드판 내의 위치 (exampel "a5")
+     * @param piece 추가하고자 하는 체스말
+     */
+    public void move(String position, Piece piece) {
+        int xPos = position.charAt(0) - 'a';
+        int yPos = COLUMN_NUMBER - Character.getNumericValue(
+                position.charAt(1));
+
+        pieces.get(yPos).rank.set(xPos, piece);
     }
 }

@@ -93,6 +93,18 @@ class BoardTest {
         assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.BLACK), board.findPiece("h8"));
         assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.WHITE), board.findPiece("a1"));
         assertEquals(Piece.createPiece(Piece.Type.ROOK, Piece.Color.WHITE), board.findPiece("a1"));
+    }
 
+    @Test
+    @DisplayName("체스 보드판의 특정 위치에 새로운 Piece 추가 테스트")
+    void move() {
+        board.initializeEmpty();
+
+        String position = "b5";
+        Piece piece = Piece.createPiece(Piece.Type.ROOK, Piece.Color.BLACK);
+        board.move(position, piece);
+
+        assertEquals(piece, board.findPiece(position));
+        System.out.println(board.showBoard());
     }
 }
