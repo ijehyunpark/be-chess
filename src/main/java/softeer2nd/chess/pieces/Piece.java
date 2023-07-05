@@ -19,7 +19,7 @@ public class Piece {
         KING('k'), QUEEN('q'), ROOK('r'), BISHOP('b'),
         KNIGHT('n'), PAWN('p'), NO_PIECE('.');
 
-        private char representation;
+        private final char representation;
 
         Type(char representation) {
             this.representation = representation;
@@ -59,7 +59,7 @@ public class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 폰 객체
      */
-    public static Pawn createPawn(final Color color) {
+    private static Pawn createPawn(final Color color) {
         return new Pawn(color);
     }
 
@@ -68,7 +68,7 @@ public class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 기사 객체
      */
-    public static Knight createKnight(final Color color) {
+    private static Knight createKnight(final Color color) {
         return new Knight(color);
     }
 
@@ -77,7 +77,7 @@ public class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 비숍 객체
      */
-    public static Bishop createBishop(final Color color) {
+    private static Bishop createBishop(final Color color) {
         return new Bishop(color);
     }
 
@@ -87,7 +87,7 @@ public class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 룩 객체
      */
-    public static Rook createRook(final Color color) {
+    private static Rook createRook(final Color color) {
         return new Rook(color);
     }
 
@@ -97,7 +97,7 @@ public class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 퀸 객체
      */
-    public static Queen createQueen(final Color color) {
+    private static Queen createQueen(final Color color) {
         return new Queen(color);
     }
 
@@ -107,7 +107,7 @@ public class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 킹 객체
      */
-    public static King createKing(final Color color) {
+    private static King createKing(final Color color) {
         return new King(color);
     }
 

@@ -31,11 +31,4 @@ class BoardTest {
                         appendNewLine("rnbqkbnr"),
                 board.showBoard());
     }
-
-    @Test
-    @DisplayName("잘못된 인덱스 접근 시도 테스트")
-    void find(){
-        assertThrows(IllegalArgumentException.class, () -> board.findPiece(-1));
-        assertThrows(IllegalArgumentException.class, () -> board.findPiece(0));
-    }
 }

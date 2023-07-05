@@ -25,12 +25,12 @@ class PieceTest {
 
     @Test
     void createPiece() {
-        verifyPiece(Piece.createPawn(Piece.Color.WHITE), Piece.createPawn(Piece.Color.BLACK), Piece.Type.PAWN);
-        verifyPiece(Piece.createKnight(Piece.Color.WHITE), Piece.createKnight(Piece.Color.BLACK), Piece.Type.KNIGHT);
-        verifyPiece(Piece.createBishop(Piece.Color.WHITE), Piece.createBishop(Piece.Color.BLACK), Piece.Type.BISHOP);
-        verifyPiece(Piece.createRook(Piece.Color.WHITE), Piece.createRook(Piece.Color.BLACK), Piece.Type.ROOK);
-        verifyPiece(Piece.createQueen(Piece.Color.WHITE), Piece.createQueen(Piece.Color.BLACK), Piece.Type.QUEEN);
-        verifyPiece(Piece.createKing(Piece.Color.WHITE), Piece.createKing(Piece.Color.BLACK), Piece.Type.KING);
+        verifyPiece(Piece.createPiece(Piece.Type.PAWN, Piece.Color.WHITE), Piece.createPiece(Piece.Type.PAWN, Piece.Color.BLACK), Piece.Type.PAWN);
+        verifyPiece(Piece.createPiece(Piece.Type.KNIGHT, Piece.Color.WHITE), Piece.createPiece(Piece.Type.KNIGHT, Piece.Color.BLACK), Piece.Type.KNIGHT);
+        verifyPiece(Piece.createPiece(Piece.Type.BISHOP, Piece.Color.WHITE), Piece.createPiece(Piece.Type.BISHOP, Piece.Color.BLACK), Piece.Type.BISHOP);
+        verifyPiece(Piece.createPiece(Piece.Type.ROOK, Piece.Color.WHITE), Piece.createPiece(Piece.Type.ROOK, Piece.Color.BLACK), Piece.Type.ROOK);
+        verifyPiece(Piece.createPiece(Piece.Type.QUEEN, Piece.Color.WHITE), Piece.createPiece(Piece.Type.QUEEN, Piece.Color.BLACK), Piece.Type.QUEEN);
+        verifyPiece(Piece.createPiece(Piece.Type.KING, Piece.Color.WHITE), Piece.createPiece(Piece.Type.KING, Piece.Color.BLACK), Piece.Type.KING);
 
         Piece blank = Piece.createBlank();
         assertFalse(blank.isWhite());
@@ -49,8 +49,8 @@ class PieceTest {
     @Test
     @DisplayName("Piece 색깔 확인 테스트")
     void color() {
-        Piece blackPawn = Piece.createPawn(Piece.Color.BLACK);
-        Piece whitePawn = Piece.createPawn(Piece.Color.WHITE);
+        Piece blackPawn = Piece.createPiece(Piece.Type.PAWN, Piece.Color.BLACK);
+        Piece whitePawn = Piece.createPiece(Piece.Type.PAWN, Piece.Color.WHITE);
 
         assertTrue(blackPawn.isBlack());
         assertFalse(blackPawn.isWhite());
