@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 /**
@@ -19,6 +18,30 @@ public class Board {
      */
     public static class Rank {
         public final ArrayList<Piece> rank = new ArrayList<>();
+    }
+
+    /**
+     * 체스판 내의 위치 정보를 내부 인덱스 정보로 변환하는 유틸리티 객체이다.
+     */
+    private static class PositionUtils {
+        /**
+         * 체스판 위치 정보로부터 배열의 ROW(X) 좌표를 추출한다.
+         * @param position 체스판 위치 정보
+         * @return 체스판 내부 pieces객체와 연관되는 인덱스 x 좌표
+         */
+        public static int extractXPos(final String position){
+            return position.charAt(0) - 'a';
+        }
+
+        /**
+         * 체스판 위치 정보로부터 배열의 COL(Y) 좌표를 추출한다.
+         * @param position 체스판 위치 정보
+         * @return 체스판 내부 pieces 객체와 연관되는 인덱스 y 좌표
+         */
+        public static int extractYPos(final String position) {
+            return COLUMN_NUMBER - Character.getNumericValue(
+                    position.charAt(1));
+        }
     }
 
     public static final int COLUMN_NUMBER = 8;
@@ -174,27 +197,21 @@ public class Board {
 
     /**
      * 특정 index의 Piece를 찾는다.
-     * @param position 체스 보드판 내의 인덱스
-     * @return 체스 보드판에서 해당 index애 위치한 Piece 객체
+     * @param position 체스 보드판 내의 위치 (example "a5")
+     * @return 체스 보드판에서 해당 위치애 위치한 Piece 객체
      */
     public Piece findPiece(String position) {
-        int xPos = position.charAt(0) - 'a';
-        int yPos = COLUMN_NUMBER - Character.getNumericValue(
-                position.charAt(1));
-
-        return pieces.get(yPos).rank.get(xPos);
+        return pieces.get(PositionUtils.extractYPos(position))
+                .rank.get(PositionUtils.extractXPos(position));
     }
 
     /**
      * 체스 보드판에 특정 체스말을 추가한다.
-     * @param position 체스 보드판 내의 위치 (exampel "a5")
+     * @param position 체스 보드판 내의 위치 (example "a5")
      * @param piece 추가하고자 하는 체스말
      */
     public void move(String position, Piece piece) {
-        int xPos = position.charAt(0) - 'a';
-        int yPos = COLUMN_NUMBER - Character.getNumericValue(
-                position.charAt(1));
-
-        pieces.get(yPos).rank.set(xPos, piece);
+        pieces.get(PositionUtils.extractYPos(position))
+                .rank.set(PositionUtils.extractXPos(position), piece);
     }
 }
