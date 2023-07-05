@@ -31,7 +31,7 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("Piece 색깔 확인 테스트")
+    @DisplayName("기물의 색깔 확인 테스트")
     void color() {
         Piece blackPawn = Piece.createPiece(Piece.Type.PAWN, Piece.Color.BLACK);
         Piece whitePawn = Piece.createPiece(Piece.Type.PAWN, Piece.Color.WHITE);
@@ -43,7 +43,7 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("Piece 타입 별 표현 방식 동작 테스트")
+    @DisplayName("기물의 타입 별 표현 방식 동작 테스트")
     void getRepresentationPerPiece() {
         assertEquals('p', Piece.Type.PAWN.getWhiteRepresentation());
         assertEquals('P', Piece.Type.PAWN.getBlackRepresentation());

@@ -1,8 +1,5 @@
 package softeer2nd.chess.pieces;
 
-/**
- * 체스의 룩 객체를 나타낸다.
- */
 public class Rook extends Piece {
     private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
@@ -11,16 +8,14 @@ public class Rook extends Piece {
     }
 
     /**
-     * 흑색 룩 싱글톤 인스턴스를 불러온다.
-     * @return 흑색 룩 객체
+     * 흑색 룩 싱글톤 인스턴스를 가져온다.
      */
     public static Rook createBlackRook() {
         return BLACK_ROOK;
     }
 
     /**
-     * 흰색 룩 싱글톤 인스턴스를 불러온다.
-     * @return 흰색 룩 객체
+     * 백색 비숍 싱글톤 인스턴스를 가져온다.
      */
     public static Rook createWhiteRook(){
         return WHITE_ROOK;

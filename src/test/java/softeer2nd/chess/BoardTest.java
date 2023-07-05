@@ -53,7 +53,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("보드판에서 체스 말 개수 계산 테스트")
+    @DisplayName("보드판에서 기물 개수 계산 테스트")
     void pieceCount() {
         board.initialize();
 
@@ -78,7 +78,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("체스판을 임의로 초기화 테스트")
+    @DisplayName("보드판을 임의로 초기화 테스트")
     void initPieces() {
         String expect =
                 ".KR.....\n" +
@@ -96,7 +96,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("Piece 검색 테스트")
+    @DisplayName("기물 검색 테스트")
     void findPiece() {
         board.initialize();
 
@@ -107,7 +107,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("체스 보드판의 특정 위치에 새로운 Piece 추가 테스트")
+    @DisplayName("보드판의 특정 위치에 새로운 기물 추가 테스트")
     void move() {
         board.initializeEmpty();
 

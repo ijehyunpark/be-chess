@@ -1,25 +1,23 @@
 package softeer2nd.chess.pieces;
 
 /**
- * 채스의 게임 말의 공통적인 구현체 및 생성 팩토리 메소드를 가지고 있다.
+ * 체스 게임에 사용되는 각 기물들을 정의하고 있다.
  */
 public class Piece {
 
-    /**
-     * 각 체스말의 색깔을 나타낸다.
-     */
     public enum Color {
         BLACK, WHITE, NO_COLOR;
     }
 
-    /**
-     * 체스 말의 종류를 나타낸다.
-     */
     public enum Type {
         KING('k', 0), QUEEN('q', 9), ROOK('r',5),
         BISHOP('b', 3), KNIGHT('n', 2.5), PAWN('p', 1),
         NO_PIECE('.', 0);
 
+        /**
+         * 기물의 표현 방식 <br/>
+         * 흑색일 경우 대문자로 치환된다.
+         */
         private final char representation;
         private final double defaultScore;
 
@@ -55,18 +53,16 @@ public class Piece {
     }
 
     /**
-     * 원시적인 체스 말을 생성한다.
-     * @return 추가적인 기능을 제공하지 않는 원시적인 체스 말 객체
+     * 원시적인 기물의 싱글톤 인스턴스를 가져온다. <br/>
+     * 해당 기물은 어떠한 기물종류에도 포함되자 않고, 색깔을 보유하지 않는다. <br/>
+     * 보드판의 빈 칸을 표현하기 위해 사용된다.
      */
     public static Piece createBlank() {
         return BLANK_PIECE_INSTANCE;
     }
 
     /**
-     * 새로운 체스 말을 생성한다.
-     * @param type 생성할 체스 말 종류
-     * @param color 생성할 체스 말 색깔
-     * @return 신규 채스 말 객체
+     * 새로운 기물을 생성한다.
      */
     public static Piece createPiece(final Type type, final Color color) {
         switch (type){
@@ -94,9 +90,9 @@ public class Piece {
     }
 
     /**
-     * 표현식을 받아 새로운 체스말을 생성한다.
-     * @param representation 체스말 표현식
-     * @return 해당 표현식과 일치하는 체스말 객체
+     * 테스트를 사용하기 위한 메소드이다. <br/>
+     * 표현식을 받아 새로운 체스말을 생성한다. <br/>
+     * 표현식은 {@link Piece.Type#representation} 에서 확인할 수 있다.
      */
     public static Piece createPiece(char representation) {
         boolean isBlack = Character.isUpperCase(representation);

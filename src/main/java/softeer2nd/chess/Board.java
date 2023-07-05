@@ -75,8 +75,7 @@ public class Board {
             Rook.createWhiteRook(), King.createWhiteKing(), Queen.createWhiteQueen()));
 
     /**
-     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
-     * @return 체스 보드판 내의 체스 말 개수
+     * 현재 보드판에 존재하는 모든 기물의 개수를 찾는다.
      */
     public int pieceCount() {
         return (int) pieces.stream()
@@ -86,9 +85,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
-     * @param type 체스 말의 종류
-     * @return 해당 type을 가지는 체스 보드판 내의 체스 말 개수
+     * 현재 보드판에 존재하는 특정 종류의 기물의 개수를 찾는다.
      */
     public int pieceCount(Piece.Type type) {
         return (int) pieces.stream()
@@ -98,9 +95,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
-     * @param color 체스 말의 색깔
-     * @return 해당 color를 가지는 체스 보드판 내의 체스 말 개수
+     * 현재 체스 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
      */
     public int pieceCount(Piece.Color color) {
         return (int) pieces.stream()
@@ -110,10 +105,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
-     * @param type 체스 말의 종류
-     * @param color 체스 말의 색깔
-     * @return 해당 type과 color에 해당하는 체스 보드판 내의 체스 말 개수
+     * 현재 체스 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
      */
     public int pieceCount(Piece.Type type, Piece.Color color) {
         return (int) pieces.stream()
@@ -123,7 +115,8 @@ public class Board {
     }
 
     /**
-     * 초기 폰 객체를 배치한다.
+     * 기물을 배치한다. <br/>
+     * 기물 종류를 나타내는 {@link Board#PIECE_MAP}과 색깔을 나타내는 {@link Board#COLOR_MAP}을 사용하여 초기 기물 배치를 수행한다. <br/>
      */
     public void initPieces() {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
@@ -137,8 +130,10 @@ public class Board {
     }
 
     /**
-     * 초기 폰 객체를 배치한다.
-     * @param pieceAndColorMap 배치팔 폰 객체 정보
+     * 테스트를 사용하기 위한 메소드이다. <br/>
+     * 기물을 입력 받아서 배치한다.
+     * @param pieceAndColorMap 기물 배치를 나타낸다. 개행문자를 포함하지 않으며 적절한 길이 ({@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER})만큼 입력해야 한다.
+     *
      */
     public void initPieces(String pieceAndColorMap) {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
@@ -153,7 +148,7 @@ public class Board {
     }
 
     /**
-     * 체스 보드판에서 모든 체스말을 제거한다.
+     * 기물이 없는 보드판을 배치한다.
      */
     public void initializeEmpty() {
         pieces.clear();
@@ -167,7 +162,7 @@ public class Board {
     }
 
     /**
-     * 체스 보드판을 초기화한다.
+     * 보드판을 초기화한다. 기본 체스판으로 초기화된다.
      */
     public void initialize() {
         pieces.clear();
@@ -175,8 +170,8 @@ public class Board {
     }
 
     /**
-     * 체스 보드판을 초기화한다.
-     * @param pieceAndColorMap 배치팔 폰 객체 정보
+     * 테스트를 위해 사용되는 메소드이다. <br/>
+     * 체스 보드판을 초기화한다. 특정 체스판으로 초기화된다.
      */
     public void initialize(String pieceAndColorMap) {
         pieces.clear();
@@ -184,8 +179,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판의 상태를 문자열로 변환한다.
-     * @return 현재 체스 보드판의 상태를 나타내는 문자열
+     * 현재 보드판의 상태를 문자열로 변환하여 반환한다.
      */
     public String showBoard() {
         StringBuilder builder = new StringBuilder();
@@ -201,9 +195,8 @@ public class Board {
 
 
     /**
-     * 특정 index의 Piece를 찾는다.
+     * 특정 위치의 기물을 찾는다.
      * @param position 체스 보드판 내의 위치 (example "a5")
-     * @return 체스 보드판에서 해당 위치애 위치한 Piece 객체
      */
     public Piece findPiece(String position) {
         return pieces.get(PositionUtils.extractYPos(position))
@@ -211,9 +204,8 @@ public class Board {
     }
 
     /**
-     * 체스 보드판에 특정 체스말을 추가한다.
+     * 보드판에 특정 기물을 추가한다.
      * @param position 체스 보드판 내의 위치 (example "a5")
-     * @param piece 추가하고자 하는 체스말
      */
     public void move(String position, Piece piece) {
         pieces.get(PositionUtils.extractYPos(position))
@@ -221,12 +213,11 @@ public class Board {
     }
 
     /**
-     * 체스 게임에서 특정 색깔의 현재 점수를 계산한다.
-     * 각 기물의 점수는 queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
-     * pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
-     * king은 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
-     * @param color 점수를 측정하는 색깔
-     * @return 현재까지의 점수
+     * 게임에서 특정 색깔의 현재 점수를 계산한다. <br/>
+     * 각 기물의 점수는 다음과 같이 계산된다. <br/>
+     * {@link Queen}: 9, {@link Rook}: 5, {@link Bishop}: 3, {@link Knight}: 2.5, {@link Pawn}: 1, {@link King}: 0 <br/>
+     * 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다. <br/>
+     * {@link King}의 경우 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
      */
     public double calculatePoint(Piece.Color color) {
         // 기본 점수 계산
@@ -236,10 +227,9 @@ public class Board {
                 .mapToDouble(value -> value.getPieceType().getDefaultScore())
                 .sum();
 
-        // 특수 점수(pawn 예외; 같은 세로줄의 같은 색의 폰의 경우 점수 0.5점 처리
-        // 1. 해당 색깔의 폰의 개수를 찾는다.
-        // 2. 그 후 만약 같은 column에 폰의 개수가 2 이상인 모든 폰의 개수를 찾는다.
-        // 3. 찾은 폰의 개수만큼 점수에서 차감한다.
+
+        // 특수 점수(Pawn에 대한 예외처리: 같은 세로줄의 같은 색의 폰의 경우 점수 0.5점 처리)
+        // 같은 column의 개수가 2 이상인 해당 색깔의 폰을 찾은 후 그 개수만큼 점수에서 0.5점 차감한다.
         int targetPawnNumber = 0;
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
@@ -258,7 +248,7 @@ public class Board {
     }
 
     /**
-     * 점수 순서대로 체스 말을 정렬한다.
+     * 점수 순서대로 기물을 정렬한다.
      */
     public void sortPieces(Piece.Color color) {
         // 각 체스말 별로 점수 계산
