@@ -1,18 +1,49 @@
 package softeer2nd.chess.pieces;
 
-import softeer2nd.chess.Color;
-
 /**
  * 채스의 게임 말의 공통적인 구현체 및 생성 팩토리 메소드를 가지고 있다.
  */
 public abstract class Piece {
+
+    /**
+     * 각 체스말의 색깔을 나타낸다.
+     */
+    public enum Color {
+        BLACK, WHITE, NO_COLOR;
+    }
+
+    /**
+     * 체스 말의 종류를 나타낸다.
+     */
+    public enum Type {
+        KING('k'), QUEEN('q'), ROOK('r'), BISHOP('b'),
+        KNIGHT('n'), PAWN('p'), NO_PIECE('.');
+
+        private char representation;
+
+        Type(char representation) {
+            this.representation = representation;
+        }
+
+        public char getWhiteRepresentation() {
+            return representation;
+        }
+
+        public char getBlackRepresentation() {
+            return Character.toUpperCase(representation);
+        }
+    }
+
     private final Color color;
+    private final Type type;
 
     protected Piece() {
-        this.color = Color.WHITE;
+        this.color = Color.NO_COLOR;
+        this.type = Type.NO_PIECE;
     }
-    protected Piece(Color color){
+    protected Piece(Color color, Type type){
         this.color = color;
+        this.type = type;
     }
 
     /**
@@ -78,7 +109,7 @@ public abstract class Piece {
      * @param color 생성할 체스 말 색깔
      * @return 신규 채스 말 객체
      */
-    public static Piece createPiece(final PieceType type, final Color color) {
+    public static Piece createPiece(final Type type, final Color color) {
         switch (type){
             case PAWN:
                 return createPawn(color);
@@ -100,9 +131,14 @@ public abstract class Piece {
     public Color getColor(){
         return this.color;
     }
-    public abstract PieceType getPieceType();
+    public Type getPieceType() {
+        return this.type;
+    };
 
-    public abstract char getRepresentation();
+    public char getRepresentation() {
+        return color == Color.BLACK ?
+                type.getBlackRepresentation() : type.getWhiteRepresentation();
+    }
 
     public boolean isBlack() {
         return getColor() == Color.BLACK;

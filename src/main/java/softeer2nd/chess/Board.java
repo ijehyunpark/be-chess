@@ -7,9 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static softeer2nd.chess.Color.BLACK;
-import static softeer2nd.chess.Color.WHITE;
-import static softeer2nd.chess.pieces.PieceType.*;
+import static softeer2nd.chess.pieces.Piece.Color.*;
+import static softeer2nd.chess.pieces.Piece.Type.*;
 
 /**
  * 체스 보드판을 나타낸다.
@@ -17,24 +16,24 @@ import static softeer2nd.chess.pieces.PieceType.*;
 public class Board {
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
-    public static final PieceType[][] PIECE_MAP = {
+    public static final Piece.Type[][] PIECE_MAP = {
             { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK },
             { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
-            { null, null, null, null, null, null, null, null },
-            { null, null, null, null, null, null, null, null },
-            { null, null, null, null, null, null, null, null },
-            { null, null, null, null, null, null, null, null },
+            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
+            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
+            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
+            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
             { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
             { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK }
     };
 
-    public static final Color[][] COLOR_MAP = {
+    public static final Piece.Color[][] COLOR_MAP = {
             { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
             { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
-            { null, null, null, null, null, null, null, null},
-            { null, null, null, null, null, null, null, null},
-            { null, null, null, null, null, null, null, null},
-            { null, null, null, null, null, null, null, null},
+            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
+            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
+            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
+            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, },
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
     };
@@ -97,7 +96,7 @@ public class Board {
     public void initPieces() {
         for (int i = 0; i < COLUMN_NUMBER; i++) {
             for (int j = 0; j < ROW_NUMBER; j++) {
-                if(PIECE_MAP[i][j] != null && COLOR_MAP[i][j] != null)
+                if(PIECE_MAP[i][j] != NO_PIECE && COLOR_MAP[i][j] != NO_COLOR)
                     add(Piece.createPiece(PIECE_MAP[i][j], COLOR_MAP[i][j]), i, j);
             }
         }
