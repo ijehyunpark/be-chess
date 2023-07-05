@@ -1,9 +1,8 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
@@ -68,6 +67,12 @@ public class Board {
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
     };
     private final List<Rank> pieces = new ArrayList<>();
+    private final List<Piece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
+            Pawn.createBlackPawn(), Knight.createBlackKnight(), Bishop.createBlackBishop(),
+            Rook.createBlackRook(), King.createBlackKing(), Queen.createBlackQueen()));
+    private final List<Piece> sortedWhitePieces = new ArrayList<>(Arrays.asList(
+            Pawn.createWhitePawn(), Knight.createWhiteKnight(), Bishop.createWhiteBishop(),
+            Rook.createWhiteRook(), King.createWhiteKing(), Queen.createWhiteQueen()));
 
     /**
      * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
@@ -250,5 +255,41 @@ public class Board {
         }
         score -= (double) targetPawnNumber * 0.5;
         return score;
+    }
+
+    /**
+     * 점수 순서대로 체스 말을 정렬한다.
+     */
+    public void sortPieces(Piece.Color color) {
+        // 각 체스말 별로 점수 계산
+        Map<Piece.Type, Double> scores = new HashMap<>(Map.of(
+                PAWN, 0.0,
+                KNIGHT, 0.0,
+                BISHOP, 0.0,
+                ROOK, 0.0,
+                KING, 0.0,
+                QUEEN, 0.0));
+
+        pieces.stream()
+                .flatMap(rank -> rank.rank.stream())
+                .filter(piece -> piece.getColor() == color)
+                .forEach(piece -> {
+                    scores.computeIfPresent(piece.getPieceType(), (k, v) -> v + piece.getPieceType().getDefaultScore());
+                });
+
+        // 체스말 별로 점수 정렬
+        List<Piece> targetSortedPieces = color == BLACK ?
+                sortedBlackPieces : sortedWhitePieces;
+        targetSortedPieces.sort(Comparator.comparingDouble(
+                piece -> scores.get(piece.getPieceType())));
+        Collections.reverse(targetSortedPieces);
+    }
+
+    public List<Piece> getSortedBlackPieces() {
+        return sortedBlackPieces;
+    }
+
+    public List<Piece> getSortedWhitePieces() {
+        return sortedWhitePieces;
     }
 }

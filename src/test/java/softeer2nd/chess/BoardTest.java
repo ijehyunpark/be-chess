@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.pieces.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
@@ -146,5 +147,27 @@ class BoardTest {
 
     private void addPiece(String position, Piece piece) {
         board.move(position, piece);
+    }
+
+    @Test
+    @DisplayName("점수 별로 정렬이 되는지 테스트한다.")
+    void sort() {
+        // given
+        board.initialize(sample2);
+
+        // when
+        board.sortPieces(Piece.Color.BLACK);
+        board.sortPieces(Piece.Color.WHITE);
+
+        // then
+        assertEquals(6, board.getSortedBlackPieces().size());
+        assertEquals(Queen.createBlackQueen(), board.getSortedBlackPieces().get(0));
+        assertEquals(Rook.createBlackRook(), board.getSortedBlackPieces().get(1));
+
+        assertEquals(6, board.getSortedWhitePieces().size());
+        assertEquals(Queen.createWhiteQueen(), board.getSortedWhitePieces().get(0));
+        assertEquals(Rook.createWhiteRook(), board.getSortedWhitePieces().get(1));
+
+
     }
 }
