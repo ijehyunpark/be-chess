@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
+import static softeer2nd.chess.utils.StringUtils.NEWLINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 /**
@@ -57,6 +58,43 @@ public class Board {
     }
 
     /**
+     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
+     * @param type 체스 말의 종류
+     * @return 해당 type을 가지는 체스 보드판 내의 체스 말 개수
+     */
+    public int pieceCount(Piece.Type type) {
+        return (int) pieces.stream()
+                .flatMap(rank -> rank.rank.stream())
+                .filter(piece -> piece.getPieceType() == type)
+                .count();
+    }
+
+    /**
+     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
+     * @param color 체스 말의 색깔
+     * @return 해당 color를 가지는 체스 보드판 내의 체스 말 개수
+     */
+    public int pieceCount(Piece.Color color) {
+        return (int) pieces.stream()
+                .flatMap(rank -> rank.rank.stream())
+                .filter(piece -> piece.getColor() == color)
+                .count();
+    }
+
+    /**
+     * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
+     * @param type 체스 말의 종류
+     * @param color 체스 말의 색깔
+     * @return 해당 type과 color에 해당하는 체스 보드판 내의 체스 말 개수
+     */
+    public int pieceCount(Piece.Type type, Piece.Color color) {
+        return (int) pieces.stream()
+                .flatMap(rank -> rank.rank.stream())
+                .filter(piece -> piece.getPieceType() == type && piece.getColor() == color)
+                .count();
+    }
+
+    /**
      * 초기 폰 객체를 배치한다.
      */
     public void initPieces() {
@@ -71,11 +109,36 @@ public class Board {
     }
 
     /**
+     * 초기 폰 객체를 배치한다.
+     * @param pieceAndColorMap 배치팔 폰 객체 정보
+     */
+    public void initPieces(String pieceAndColorMap) {
+        for (int col = 0; col < COLUMN_NUMBER; col++) {
+            Rank rank = new Rank();
+            for (int row = 0; row < ROW_NUMBER; row++) {
+                rank.rank.add(Piece.createPiece(
+                        pieceAndColorMap.charAt(col * COLUMN_NUMBER + row)
+                ));
+            }
+            pieces.add(rank);
+        }
+    }
+
+    /**
      * 체스 보드판을 초기화한다.
      */
     public void initialize() {
         pieces.clear();
         initPieces();
+    }
+
+    /**
+     * 체스 보드판을 초기화한다.
+     * @param pieceAndColorMap 배치팔 폰 객체 정보
+     */
+    public void initialize(String pieceAndColorMap) {
+        pieces.clear();
+        initPieces(pieceAndColorMap);
     }
 
     /**

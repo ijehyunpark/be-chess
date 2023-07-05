@@ -136,6 +136,22 @@ public class Piece {
         }
     }
 
+    /**
+     * 표현식을 받아 새로운 체스말을 생성한다.
+     * @param representation 체스말 표현식
+     * @return 해당 표현식과 일치하는 체스말 객체
+     */
+    public static Piece createPiece(char representation) {
+        boolean isBlack = Character.isUpperCase(representation);
+        representation = Character.toLowerCase(representation);
+        for (Type type : Type.values()) {
+            if (type.representation == representation) {
+                return type == Type.NO_PIECE ? createBlank() : createPiece(type, isBlack ? Color.BLACK : Color.WHITE);
+            }
+        }
+        throw new IllegalArgumentException("잘못된 표현식입니다. : " + representation);
+    }
+
     public Color getColor(){
         return this.color;
     }
