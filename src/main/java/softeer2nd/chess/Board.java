@@ -12,6 +12,14 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
  * 체스 보드판을 나타낸다.
  */
 public class Board {
+
+    /**
+     * 체스판의 row 객체를 나타낸다.
+     */
+    public static class Rank {
+        public final ArrayList<Piece> rank = new ArrayList<>();
+    }
+
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
     public static final Piece.Type[][] PIECE_MAP = {
@@ -35,7 +43,7 @@ public class Board {
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, },
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
     };
-    private final ArrayList<ArrayList<Piece>> pieces = new ArrayList<>();
+    private final ArrayList<Rank> pieces = new ArrayList<>();
 
     /**
      * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
@@ -43,7 +51,7 @@ public class Board {
      */
     public int pieceCount() {
         return (int) pieces.stream()
-                .flatMap(ArrayList::stream)
+                .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() != NO_PIECE)
                 .count();
     }
@@ -53,12 +61,12 @@ public class Board {
      */
     public void initPieces() {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
-            ArrayList<Piece> rowPieces = new ArrayList<>();
+            Rank rank = new Rank();
             for (int row = 0; row < ROW_NUMBER; row++) {
-                rowPieces.add(PIECE_MAP[col][row] == NO_PIECE ?
+                rank.rank.add(PIECE_MAP[col][row] == NO_PIECE ?
                                 Piece.createBlank() : Piece.createPiece(PIECE_MAP[col][row], COLOR_MAP[col][row]));
             }
-            pieces.add(rowPieces);
+            pieces.add(rank);
         }
     }
 
@@ -78,7 +86,7 @@ public class Board {
         StringBuilder builder = new StringBuilder();
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             for (int row = 0; row < ROW_NUMBER; row++) {
-                Piece piece = pieces.get(col).get(row);
+                Piece piece = pieces.get(col).rank.get(row);
                 builder.append(piece.getRepresentation());
             }
             appendNewLine(builder);
