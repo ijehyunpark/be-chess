@@ -3,7 +3,7 @@ package softeer2nd.chess.pieces;
 /**
  * 채스의 게임 말의 공통적인 구현체 및 생성 팩토리 메소드를 가지고 있다.
  */
-public abstract class Piece {
+public class Piece {
 
     /**
      * 각 체스말의 색깔을 나타낸다.
@@ -44,6 +44,14 @@ public abstract class Piece {
     protected Piece(Color color, Type type){
         this.color = color;
         this.type = type;
+    }
+
+    /**
+     * 원시적인 체스 말을 생성한다.
+     * @return 추가적인 기능을 제공하지 않는 원시적인 체스 말 객체
+     */
+    public static Piece createBlank() {
+        return new Piece();
     }
 
     /**

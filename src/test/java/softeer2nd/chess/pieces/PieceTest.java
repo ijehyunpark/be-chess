@@ -24,29 +24,26 @@ class PieceTest {
     }
 
     @Test
-    void create_piece() {
-        verifyPiece(Piece.createPawn(Piece.Color.WHITE), Piece.Color.WHITE, Piece.Type.PAWN);
-        verifyPiece(Piece.createPawn(Piece.Color.BLACK), Piece.Color.BLACK, Piece.Type.PAWN);
+    void createPiece() {
+        verifyPiece(Piece.createPawn(Piece.Color.WHITE), Piece.createPawn(Piece.Color.BLACK), Piece.Type.PAWN);
+        verifyPiece(Piece.createKnight(Piece.Color.WHITE), Piece.createKnight(Piece.Color.BLACK), Piece.Type.KNIGHT);
+        verifyPiece(Piece.createBishop(Piece.Color.WHITE), Piece.createBishop(Piece.Color.BLACK), Piece.Type.BISHOP);
+        verifyPiece(Piece.createRook(Piece.Color.WHITE), Piece.createRook(Piece.Color.BLACK), Piece.Type.ROOK);
+        verifyPiece(Piece.createQueen(Piece.Color.WHITE), Piece.createQueen(Piece.Color.BLACK), Piece.Type.QUEEN);
+        verifyPiece(Piece.createKing(Piece.Color.WHITE), Piece.createKing(Piece.Color.BLACK), Piece.Type.KING);
 
-        verifyPiece(Piece.createKnight(Piece.Color.WHITE), Piece.Color.WHITE, Piece.Type.KNIGHT);
-        verifyPiece(Piece.createKnight(Piece.Color.BLACK), Piece.Color.BLACK, Piece.Type.KNIGHT);
-
-        verifyPiece(Piece.createBishop(Piece.Color.WHITE), Piece.Color.WHITE, Piece.Type.BISHOP);
-        verifyPiece(Piece.createBishop(Piece.Color.BLACK), Piece.Color.BLACK, Piece.Type.BISHOP);
-
-        verifyPiece(Piece.createRook(Piece.Color.WHITE), Piece.Color.WHITE, Piece.Type.ROOK);
-        verifyPiece(Piece.createRook(Piece.Color.BLACK), Piece.Color.BLACK, Piece.Type.ROOK);
-
-        verifyPiece(Piece.createQueen(Piece.Color.WHITE), Piece.Color.WHITE, Piece.Type.QUEEN);
-        verifyPiece(Piece.createQueen(Piece.Color.BLACK), Piece.Color.BLACK, Piece.Type.QUEEN);
-
-        verifyPiece(Piece.createKing(Piece.Color.WHITE), Piece.Color.WHITE, Piece.Type.KING);
-        verifyPiece(Piece.createKing(Piece.Color.BLACK), Piece.Color.BLACK, Piece.Type.KING);
+        Piece blank = Piece.createBlank();
+        assertFalse(blank.isWhite());
+        assertFalse(blank.isBlack());
+        assertEquals(Piece.Type.NO_PIECE, blank.getPieceType());
     }
 
-    private void verifyPiece(final Piece piece, final Piece.Color color, final Piece.Type type) {
-        assertEquals(color, piece.getColor());
-        assertEquals(type, piece.getPieceType());
+    private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final Piece.Type type) {
+        assertTrue(whitePiece.isWhite());
+        assertEquals(type, whitePiece.getPieceType());
+
+        assertTrue(blackPiece.isBlack());
+        assertEquals(type, blackPiece.getPieceType());
     }
 
     @Test
