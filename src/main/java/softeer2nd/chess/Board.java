@@ -3,6 +3,7 @@ package softeer2nd.chess;
 import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
@@ -66,7 +67,7 @@ public class Board {
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, },
             { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
     };
-    private final ArrayList<Rank> pieces = new ArrayList<>();
+    private final List<Rank> pieces = new ArrayList<>();
 
     /**
      * 현재 체스 보드판에 존재하는 체스 말의 개수를 찾는다.
