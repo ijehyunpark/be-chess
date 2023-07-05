@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Color;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PieceTest {
 
@@ -54,5 +54,17 @@ class PieceTest {
     private void verifyPiece(final Piece piece, final Color color, final PieceType type) {
         assertEquals(color, piece.getColor());
         assertEquals(type, piece.getPieceType());
+    }
+
+    @Test
+    @DisplayName("Piece 색깔 확인 테스트")
+    void color() {
+        Piece blackPawn = Piece.createPawn(Color.BLACK);
+        Piece whitePawn = Piece.createPawn(Color.WHITE);
+
+        assertTrue(blackPawn.isBlack());
+        assertFalse(blackPawn.isWhite());
+        assertFalse(whitePawn.isBlack());
+        assertTrue(whitePawn.isWhite());
     }
 }

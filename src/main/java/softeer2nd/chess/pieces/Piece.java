@@ -20,7 +20,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 폰 객체
      */
-    public static Piece createPawn(Color color) {
+    public static Pawn createPawn(Color color) {
         return new Pawn(color);
     }
 
@@ -29,7 +29,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 기사 객체
      */
-    public static Piece createKnight(Color color) {
+    public static Knight createKnight(Color color) {
         return new Knight(color);
     }
 
@@ -38,7 +38,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 비숍 객체
      */
-    public static Piece createBishop(Color color) {
+    public static Bishop createBishop(Color color) {
         return new Bishop(color);
     }
 
@@ -48,7 +48,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 룩 객체
      */
-    public static Piece createRook(Color color) {
+    public static Rook createRook(Color color) {
         return new Rook(color);
     }
 
@@ -58,7 +58,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 퀸 객체
      */
-    public static Piece createQueen(Color color) {
+    public static Queen createQueen(Color color) {
         return new Queen(color);
     }
 
@@ -68,7 +68,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 킹 객체
      */
-    public static Piece createKing(Color color) {
+    public static King createKing(Color color) {
         return new King(color);
     }
 
@@ -97,11 +97,18 @@ public abstract class Piece {
         }
     }
 
-
     public Color getColor(){
         return this.color;
     }
     public abstract PieceType getPieceType();
 
     public abstract char getRepresentation();
+
+    public boolean isBlack() {
+        return getColor() == Color.BLACK;
+    }
+
+    public boolean isWhite() {
+        return getColor() == Color.WHITE;
+    }
 }
