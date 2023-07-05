@@ -20,7 +20,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 폰 객체
      */
-    public static Pawn createPawn(Color color) {
+    public static Pawn createPawn(final Color color) {
         return new Pawn(color);
     }
 
@@ -29,7 +29,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 기사 객체
      */
-    public static Knight createKnight(Color color) {
+    public static Knight createKnight(final Color color) {
         return new Knight(color);
     }
 
@@ -38,7 +38,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 비숍 객체
      */
-    public static Bishop createBishop(Color color) {
+    public static Bishop createBishop(final Color color) {
         return new Bishop(color);
     }
 
@@ -48,7 +48,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 룩 객체
      */
-    public static Rook createRook(Color color) {
+    public static Rook createRook(final Color color) {
         return new Rook(color);
     }
 
@@ -58,7 +58,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 퀸 객체
      */
-    public static Queen createQueen(Color color) {
+    public static Queen createQueen(final Color color) {
         return new Queen(color);
     }
 
@@ -68,7 +68,7 @@ public abstract class Piece {
      * @param color 해당 게임 말 객체의 색깔
      * @return 신규 킹 객체
      */
-    public static King createKing(Color color) {
+    public static King createKing(final Color color) {
         return new King(color);
     }
 
@@ -78,7 +78,7 @@ public abstract class Piece {
      * @param color 생성할 체스 말 색깔
      * @return 신규 채스 말 객체
      */
-    public static Piece createPiece(PieceType type, Color color) {
+    public static Piece createPiece(final PieceType type, final Color color) {
         switch (type){
             case PAWN:
                 return createPawn(color);

@@ -53,7 +53,7 @@ public class Board {
      * @param column 추가할 새로운 게임 말의 세로축 위치
      * @param row 추가할 새로운 게임 말의 가로축 위치
      */
-    public void add(Piece piece, int column, int row) {
+    public void add(final Piece piece, final int column, final int row) {
         if(piecePosition[column][row] != -1)
             throw new IllegalArgumentException("이미 다른 게임 말이 존재하는 위치입니다.");
         this.pieces.add(piece);
@@ -74,7 +74,7 @@ public class Board {
      * @param i 게임 말이 할당되어 있는 인덱스
      * @return 만약, 게임 말이 존재할 경우 해당 게임말을 반환한다. 없을 경우 null을 반환하다.
      */
-    public Piece findPiece(int i) {
+    public Piece findPiece(final int i) {
         if(this.pieces.size() <= i || i < 0)
             throw new IllegalArgumentException("잘못된 인덱스 접근입니다.");
 
@@ -117,7 +117,7 @@ public class Board {
      * @param row 보드판 가로 좌표
      * @return 만약 해당 보드판 위치에 게임말이 존재할 경우 해당 게임말을 반환한다. 없는 경우 null을 반환한다.
      */
-    public Optional<Piece> getPieceByPosition(int column, int row) {
+    public Optional<Piece> getPieceByPosition(final int column, final int row) {
         Piece result = piecePosition[column][row] == -1 ? null : pieces.get(piecePosition[column][row]);
         return Optional.ofNullable(result);
     }
