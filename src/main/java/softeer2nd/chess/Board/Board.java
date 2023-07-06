@@ -12,7 +12,7 @@ public class Board {
      * 체스판의 row 객체를 나타낸다.
      */
     public static class Rank {
-        public final ArrayList<Piece> rank = new ArrayList<>();
+        public final ArrayList<abstrctPiece> rank = new ArrayList<>();
     }
 
     public static class Position {
@@ -41,10 +41,10 @@ public class Board {
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
     private final List<Rank> pieces = new ArrayList<>();
-    private final List<Piece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
+    private final List<abstrctPiece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
             Pawn.createBlackPawn(), Knight.createBlackKnight(), Bishop.createBlackBishop(),
             Rook.createBlackRook(), King.createBlackKing(), Queen.createBlackQueen()));
-    private final List<Piece> sortedWhitePieces = new ArrayList<>(Arrays.asList(
+    private final List<abstrctPiece> sortedWhitePieces = new ArrayList<>(Arrays.asList(
             Pawn.createWhitePawn(), Knight.createWhiteKnight(), Bishop.createWhiteBishop(),
             Rook.createWhiteRook(), King.createWhiteKing(), Queen.createWhiteQueen()));
 
@@ -61,7 +61,7 @@ public class Board {
     /**
      * 현재 보드판에 존재하는 특정 종류의 기물의 개수를 찾는다.
      */
-    public int pieceCount(Piece.Type type) {
+    public int pieceCount(abstrctPiece.Type type) {
         return (int) pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() == type)
@@ -71,7 +71,7 @@ public class Board {
     /**
      * 현재 체스 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
      */
-    public int pieceCount(Piece.Color color) {
+    public int pieceCount(abstrctPiece.Color color) {
         return (int) pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getColor() == color)
@@ -81,7 +81,7 @@ public class Board {
     /**
      * 현재 체스 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
      */
-    public int pieceCount(Piece.Type type, Piece.Color color) {
+    public int pieceCount(abstrctPiece.Type type, abstrctPiece.Color color) {
         return (int) pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() == type && piece.getColor() == color)
@@ -101,7 +101,7 @@ public class Board {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             Rank rank = new Rank();
             for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(Piece.createPiece(
+                rank.rank.add(abstrctPiece.createPiece(
                         pieceAndColorMap.charAt(col * COLUMN_NUMBER + row)
                 ));
             }
@@ -115,23 +115,23 @@ public class Board {
      * Note: 각 pieceMap과 colorMap은 {@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER} 의 크기를 가지고 있어야 한다.
      */
     @Deprecated
-    public void initPieces(Piece.Type[][] pieceMap, Piece.Color[][] colorMap) {
+    public void initPieces(abstrctPiece.Type[][] pieceMap, abstrctPiece.Color[][] colorMap) {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             Rank rank = new Rank();
             for (int row = 0; row < ROW_NUMBER; row++) {
                 rank.rank.add(pieceMap[col][row] == NO_PIECE ?
-                        Piece.createBlank() : Piece.createPiece(pieceMap[col][row], colorMap[col][row]));
+                        abstrctPiece.createBlank() : abstrctPiece.createPiece(pieceMap[col][row], colorMap[col][row]));
             }
             pieces.add(rank);
         }
     }
 
-    public Piece findPiece(Position position) {
+    public abstrctPiece findPiece(Position position) {
         return pieces.get(position.yPos)
                 .rank.get(position.xPos);
     }
 
-    public Piece findPiece(int column, int row) {
+    public abstrctPiece findPiece(int column, int row) {
         return pieces.get(column)
                 .rank.get(row);
     }
@@ -140,7 +140,7 @@ public class Board {
      * 특정 보드판의 위치에 기물을 추가한다. <br />
      * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
-    public void assignPiece(Position position, Piece piece) {
+    public void assignPiece(Position position, abstrctPiece piece) {
         pieces.get(position.yPos)
                 .rank.set(position.xPos, piece);
     }
@@ -152,7 +152,7 @@ public class Board {
      * 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다. <br/>
      * {@link King}의 경우 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
      */
-    public double calculatePoint(Piece.Color color) {
+    public double calculatePoint(abstrctPiece.Color color) {
         // 기본 점수 계산
         double score = pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
@@ -167,7 +167,7 @@ public class Board {
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
             for (int col = 0; col < COLUMN_NUMBER; col++) {
-                Piece target = pieces.get(col).rank.get(row);
+                abstrctPiece target = pieces.get(col).rank.get(row);
                 if(target.getColor() != color)
                     continue;
                 if(target.getPieceType() != PAWN)
@@ -183,9 +183,9 @@ public class Board {
     /**
      * 점수 순서대로 기물을 정렬한다.
      */
-    public void sortPieces(Piece.Color color) {
+    public void sortPieces(abstrctPiece.Color color) {
         // 각 체스말 별로 점수 계산
-        Map<Piece.Type, Double> scores = new HashMap<>(Map.of(
+        Map<abstrctPiece.Type, Double> scores = new HashMap<>(Map.of(
                 PAWN, 0.0,
                 KNIGHT, 0.0,
                 BISHOP, 0.0,
@@ -201,18 +201,18 @@ public class Board {
                 });
 
         // 체스말 별로 점수 정렬
-        List<Piece> targetSortedPieces = color == BLACK ?
+        List<abstrctPiece> targetSortedPieces = color == BLACK ?
                 sortedBlackPieces : sortedWhitePieces;
         targetSortedPieces.sort(Comparator.comparingDouble(
                 piece -> scores.get(piece.getPieceType())));
         Collections.reverse(targetSortedPieces);
     }
 
-    public List<Piece> getSortedBlackPieces() {
+    public List<abstrctPiece> getSortedBlackPieces() {
         return sortedBlackPieces;
     }
 
-    public List<Piece> getSortedWhitePieces() {
+    public List<abstrctPiece> getSortedWhitePieces() {
         return sortedWhitePieces;
     }
 }
