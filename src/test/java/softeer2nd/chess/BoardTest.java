@@ -61,21 +61,21 @@ class BoardTest {
         ChessGame.initialize(board);
 
         assertEquals(32, board.pieceCount());
-        assertEquals(16, board.pieceCount(abstrctPiece.Color.BLACK));
-        assertEquals(16, board.pieceCount(abstrctPiece.Color.WHITE));
+        assertEquals(16, board.pieceCount(BlankPiece.Color.BLACK));
+        assertEquals(16, board.pieceCount(BlankPiece.Color.WHITE));
 
-        assertEquals(16, board.pieceCount(abstrctPiece.Type.PAWN));
-        assertEquals(4, board.pieceCount(abstrctPiece.Type.KNIGHT));
-        assertEquals(2, board.pieceCount(abstrctPiece.Type.KING));
+        assertEquals(16, board.pieceCount(BlankPiece.Type.PAWN));
+        assertEquals(4, board.pieceCount(BlankPiece.Type.KNIGHT));
+        assertEquals(2, board.pieceCount(BlankPiece.Type.KING));
 
 
-        assertEquals(8, board.pieceCount(abstrctPiece.Type.PAWN, abstrctPiece.Color.BLACK));
-        assertEquals(2, board.pieceCount(abstrctPiece.Type.KNIGHT, abstrctPiece.Color.WHITE));
-        assertEquals(1, board.pieceCount(abstrctPiece.Type.KING, abstrctPiece.Color.BLACK));
+        assertEquals(8, board.pieceCount(BlankPiece.Type.PAWN, BlankPiece.Color.BLACK));
+        assertEquals(2, board.pieceCount(BlankPiece.Type.KNIGHT, BlankPiece.Color.WHITE));
+        assertEquals(1, board.pieceCount(BlankPiece.Type.KING, BlankPiece.Color.BLACK));
 
         ChessGame.initialize(board, sample1);
         assertEquals(13, board.pieceCount());
-        assertEquals(3, board.pieceCount(abstrctPiece.Type.PAWN, abstrctPiece.Color.BLACK));
+        assertEquals(3, board.pieceCount(BlankPiece.Type.PAWN, BlankPiece.Color.BLACK));
     }
 
     @Test
@@ -101,10 +101,10 @@ class BoardTest {
     void findPiece() {
         ChessGame.initialize(board);
 
-        assertEquals(abstrctPiece.createPiece(abstrctPiece.Type.ROOK, abstrctPiece.Color.BLACK), board.findPiece(new Board.Position("a8")));
-        assertEquals(abstrctPiece.createPiece(abstrctPiece.Type.ROOK, abstrctPiece.Color.BLACK), board.findPiece(new Board.Position("h8")));
-        assertEquals(abstrctPiece.createPiece(abstrctPiece.Type.ROOK, abstrctPiece.Color.WHITE), board.findPiece(new Board.Position("a1")));
-        assertEquals(abstrctPiece.createPiece(abstrctPiece.Type.ROOK, abstrctPiece.Color.WHITE), board.findPiece(new Board.Position("a1")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Board.Position("a8")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Board.Position("h8")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.WHITE), board.findPiece(new Board.Position("a1")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.WHITE), board.findPiece(new Board.Position("a1")));
     }
 
     @Test
@@ -115,7 +115,7 @@ class BoardTest {
         Board.Position sourcePosition = new Board.Position("b2");
         Board.Position targetPosition = new Board.Position("b3");
         ChessGame.move(board, sourcePosition, targetPosition);
-        assertEquals(abstrctPiece.createBlank(), board.findPiece(sourcePosition));
+        assertEquals(BlankPiece.createBlank(), board.findPiece(sourcePosition));
         assertEquals(Pawn.createWhitePawn(), board.findPiece(targetPosition));
     }
 
@@ -134,18 +134,18 @@ class BoardTest {
         addPiece(new Board.Position("e1"), Rook.createWhiteRook());
         addPiece(new Board.Position("f1"), King.createWhiteKing());
 
-        assertEquals(15.0, board.calculatePoint(abstrctPiece.Color.BLACK), 0.01);
-        assertEquals(7.0, board.calculatePoint(abstrctPiece.Color.WHITE), 0.01);
+        assertEquals(15.0, board.calculatePoint(BlankPiece.Color.BLACK), 0.01);
+        assertEquals(7.0, board.calculatePoint(BlankPiece.Color.WHITE), 0.01);
 
         System.out.println(showBoard(board));
 
         ChessGame.initialize(board, sample2);
-        assertEquals(20.0, board.calculatePoint(abstrctPiece.Color.BLACK), 0.01);
-        assertEquals(19.5, board.calculatePoint(abstrctPiece.Color.WHITE), 0.01);
+        assertEquals(20.0, board.calculatePoint(BlankPiece.Color.BLACK), 0.01);
+        assertEquals(19.5, board.calculatePoint(BlankPiece.Color.WHITE), 0.01);
 
     }
 
-    private void addPiece(Board.Position position, abstrctPiece piece) {
+    private void addPiece(Board.Position position, BlankPiece piece) {
         board.assignPiece(position, piece);
     }
 
@@ -156,8 +156,8 @@ class BoardTest {
         ChessGame.initialize(board, sample2);
 
         // when
-        board.sortPieces(abstrctPiece.Color.BLACK);
-        board.sortPieces(abstrctPiece.Color.WHITE);
+        board.sortPieces(BlankPiece.Color.BLACK);
+        board.sortPieces(BlankPiece.Color.WHITE);
 
         // then
         assertEquals(6, board.getSortedBlackPieces().size());

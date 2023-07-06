@@ -1,9 +1,6 @@
 package softeer2nd.chess.Board;
 
-import softeer2nd.chess.pieces.abstrctPiece;
-
-import static softeer2nd.chess.pieces.Piece.Color.*;
-import static softeer2nd.chess.pieces.Piece.Type.*;
+import softeer2nd.chess.pieces.BlankPiece;
 
 public class ChessGame {
     public static final String BASIC_BOARD =
@@ -60,8 +57,8 @@ public class ChessGame {
                 targetPosition.getXPos() < 0 || targetPosition.getXPos() >= Board.ROW_NUMBER)
             throw new IllegalArgumentException("보드판 범위를 벗어나는 입력입니다.");
 
-        abstrctPiece source = board.findPiece(sourcePosition);
-        abstrctPiece target = board.findPiece(targetPosition);
+        BlankPiece source = board.findPiece(sourcePosition);
+        BlankPiece target = board.findPiece(targetPosition);
 
         if(source.getColor() == target.getColor())
             throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
