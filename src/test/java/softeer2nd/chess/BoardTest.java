@@ -170,8 +170,8 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("킹 기물 이동 테스트")
-    void moveKing() {
+    @DisplayName("단순 이동 기물 이동 테스트")
+    void moveNonRecursive() {
         // given
         String sample =
                 ".K......" +
@@ -225,8 +225,8 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("퀸 기물 이동 테스트")
-    void moveQueen() {
+    @DisplayName("재귀적 이동 기물 이동 테스트")
+    void moveRecursive() {
         // given
         String sample =
                 "........" +
