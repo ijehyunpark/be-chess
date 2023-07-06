@@ -1,5 +1,9 @@
 package softeer2nd.chess.pieces;
 
+import softeer2nd.chess.Board.Board;
+
+import java.util.Arrays;
+
 /**
  * 체스 게임에 사용되는 각 기물들을 정의하고 있다.
  */
@@ -103,6 +107,16 @@ public class Piece {
             }
         }
         throw new IllegalArgumentException("잘못된 표현식입니다. : " + representation);
+    }
+
+    protected void verifyTargetMove(Board board, Board.Position source, Board.Position target, int[][] moveAble){
+        boolean isMoveAble = Arrays.stream(moveAble)
+                .anyMatch(ints ->
+                        source.getYPos() + ints[0] == target.getYPos() &&
+                        source.getXPos() + ints[1] == target.getXPos());
+
+        if(!isMoveAble)
+            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 범위입니다.");
     }
 
     public Color getColor(){

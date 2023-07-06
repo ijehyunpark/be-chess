@@ -8,6 +8,7 @@ import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.pieces.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static softeer2nd.chess.Board.BoardView.showBoard;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
@@ -108,7 +109,7 @@ class BoardTest {
 
     @Test
     @DisplayName("보드판의 특정 위치에 새로운 기물 추가 테스트")
-    void move() {
+    void createPiece() {
         ChessGame.initialize(board);
 
         Board.Position sourcePosition = new Board.Position("b2");
@@ -166,7 +167,60 @@ class BoardTest {
         assertEquals(6, board.getSortedWhitePieces().size());
         assertEquals(Queen.createWhiteQueen(), board.getSortedWhitePieces().get(0));
         assertEquals(Rook.createWhiteRook(), board.getSortedWhitePieces().get(1));
+    }
 
+    @Test
+    @DisplayName("킹 기물 이동 테스트")
+    void move() {
+        // given
+        String sample =
+                ".K......" +
+                "........" +
+                "K....KN." +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                ".......K";
 
+        String expect =
+                "........\n" +
+                "..K.....\n" +
+                ".....KN.\n" +
+                "........\n" +
+                "K.......\n" +
+                "........\n" +
+                "........\n" +
+                ".......K\n";
+
+        ChessGame.initialize(board, sample);
+
+        // when
+        ChessGame.move(board, new Board.Position("b8"), new Board.Position("b7"));
+        ChessGame.move(board, new Board.Position("b7"), new Board.Position("c7"));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("c7"), new Board.Position("a8"))
+        );
+
+        ChessGame.move(board, new Board.Position("a6"), new Board.Position("a5"));
+        ChessGame.move(board, new Board.Position("a5"), new Board.Position("a4"));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("h1"), new Board.Position("h0"))
+        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("h1"), new Board.Position("i1"))
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("f6"), new Board.Position("g6"))
+        );
+
+        // then
+        assertEquals(expect, showBoard(board));
     }
 }

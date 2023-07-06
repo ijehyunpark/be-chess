@@ -28,6 +28,14 @@ public class Board {
                     position.charAt(1));
             xPos = position.charAt(0) - 'a';
         }
+
+        public int getXPos() {
+            return xPos;
+        }
+
+        public int getYPos() {
+            return yPos;
+        }
     }
 
     public static final int COLUMN_NUMBER = 8;
