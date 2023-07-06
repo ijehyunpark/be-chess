@@ -5,7 +5,7 @@ import softeer2nd.chess.Board.Board;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NonRecursiveMovePiece extends abstrctPiece {
+public abstract class NonRecursiveMovePiece extends BlankPiece {
 
     protected NonRecursiveMovePiece(Color color, Type type) {
         super(color, type);
