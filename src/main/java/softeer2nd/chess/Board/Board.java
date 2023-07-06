@@ -1,4 +1,4 @@
-package softeer2nd.chess;
+package softeer2nd.chess.Board;
 
 import softeer2nd.chess.pieces.*;
 
@@ -6,11 +6,7 @@ import java.util.*;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
-import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
-/**
- * 체스 보드판을 나타낸다.
- */
 public class Board {
     /**
      * 체스판의 row 객체를 나타낸다.
@@ -19,51 +15,23 @@ public class Board {
         public final ArrayList<Piece> rank = new ArrayList<>();
     }
 
-    /**
-     * 체스판 내의 위치 정보를 내부 인덱스 정보로 변환하는 유틸리티 객체이다.
-     */
     public static class Position {
         private int xPos;
         private int yPos;
 
+        /**
+         * @param position "a3" 과 같은 보드판 위치 정보를 사용해야 합니다. <br/>
+         *                 이는 8 * 8 보드판 인덱스에서 (col = 5, row = 0)를 나타냅니다.
+         */
         public Position(String position) {
             yPos = COLUMN_NUMBER - Character.getNumericValue(
                     position.charAt(1));
             xPos = position.charAt(0) - 'a';
         }
-
-//        public int getYPos() {
-//            return yPos;
-//        }
-//
-//        public int getXPos() {
-//            return xPos;
-//        }
     }
 
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
-    public static final Piece.Type[][] PIECE_MAP = {
-            { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK },
-            { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
-            { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK }
-    };
-
-    public static final Piece.Color[][] COLOR_MAP = {
-            { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
-            { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, },
-            { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
-    };
     private final List<Rank> pieces = new ArrayList<>();
     private final List<Piece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
             Pawn.createBlackPawn(), Knight.createBlackKnight(), Bishop.createBlackBishop(),
@@ -112,26 +80,14 @@ public class Board {
                 .count();
     }
 
-    /**
-     * 기물을 배치한다. <br/>
-     * 기물 종류를 나타내는 {@link Board#PIECE_MAP}과 색깔을 나타내는 {@link Board#COLOR_MAP}을 사용하여 초기 기물 배치를 수행한다. <br/>
-     */
-    public void initPieces() {
-        for (int col = 0; col < COLUMN_NUMBER; col++) {
-            Rank rank = new Rank();
-            for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(PIECE_MAP[col][row] == NO_PIECE ?
-                                Piece.createBlank() : Piece.createPiece(PIECE_MAP[col][row], COLOR_MAP[col][row]));
-            }
-            pieces.add(rank);
-        }
+    public void clear() {
+        pieces.clear();
     }
 
     /**
      * 테스트를 사용하기 위한 메소드이다. <br/>
-     * 기물을 입력 받아서 배치한다.
+     * 배치도에 따라 기물을 배치한다..
      * @param pieceAndColorMap 기물 배치를 나타낸다. 개행문자를 포함하지 않으며 적절한 길이 ({@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER})만큼 입력해야 한다.
-     *
      */
     public void initPieces(String pieceAndColorMap) {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
@@ -146,82 +102,39 @@ public class Board {
     }
 
     /**
-     * 기물이 없는 보드판을 배치한다.
+     * 배치도에 따라 기물을 배치한다. <br/>
+     * 기물 종류를 나타내는  pieceMap과 색깔을 나타내는 colorMap을 사용하여 초기 기물 배치를 수행한다. <br/>
+     * Note: 각 pieceMap과 colorMap은 {@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER} 의 크기를 가지고 있어야 한다.
      */
-    public void initializeEmpty() {
-        pieces.clear();
+    @Deprecated
+    public void initPieces(Piece.Type[][] pieceMap, Piece.Color[][] colorMap) {
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             Rank rank = new Rank();
             for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(Piece.createBlank());
+                rank.rank.add(pieceMap[col][row] == NO_PIECE ?
+                        Piece.createBlank() : Piece.createPiece(pieceMap[col][row], colorMap[col][row]));
             }
             pieces.add(rank);
         }
     }
 
-    /**
-     * 보드판을 초기화한다. 기본 체스판으로 초기화된다.
-     */
-    public void initialize() {
-        pieces.clear();
-        initPieces();
+    public Piece findPiece(Position position) {
+        return pieces.get(position.yPos)
+                .rank.get(position.xPos);
     }
 
-    /**
-     * 테스트를 위해 사용되는 메소드이다. <br/>
-     * 체스 보드판을 초기화한다. 특정 체스판으로 초기화된다.
-     */
-    public void initialize(String pieceAndColorMap) {
-        pieces.clear();
-        initPieces(pieceAndColorMap);
-    }
-
-    /**
-     * 현재 보드판의 상태를 문자열로 변환하여 반환한다.
-     */
-    public String showBoard() {
-        StringBuilder builder = new StringBuilder();
-        for (int col = 0; col < COLUMN_NUMBER; col++) {
-            for (int row = 0; row < ROW_NUMBER; row++) {
-                Piece piece = pieces.get(col).rank.get(row);
-                builder.append(piece.getRepresentation());
-            }
-            appendNewLine(builder);
-        }
-        return builder.toString();
-    }
-
-
-    /**
-     * 특정 위치의 기물을 찾는다.
-     * @param position 체스 보드판 내의 위치 (example "a5")
-     */
-    public Piece findPiece(String position) {
-        Position boardPosition = new Position(position);
-        return pieces.get(boardPosition.yPos)
-                .rank.get(boardPosition.xPos);
+    public Piece findPiece(int column, int row) {
+        return pieces.get(column)
+                .rank.get(row);
     }
 
     /**
      * 특정 보드판의 위치에 기물을 추가한다. <br />
      * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
-    public void assignPiece(String position, Piece piece) {
-        Position boardPosition = new Position(position);
-        pieces.get(boardPosition.yPos)
-                .rank.set(boardPosition.xPos, piece);
-    }
-
-    /**
-     * 보드판의 기물을 교환한다. <br/>
-     * 구체적으로 보드판에서 sourcePosition와 targetPosition의 위치를 교환한다.
-     */
-    public void move(String sourcePosition, String targetPosition) {
-        Piece source = findPiece(sourcePosition);
-        Piece target = findPiece(targetPosition);
-
-        assignPiece(sourcePosition, target);
-        assignPiece(targetPosition, source);
+    public void assignPiece(Position position, Piece piece) {
+        pieces.get(position.yPos)
+                .rank.set(position.xPos, piece);
     }
 
     /**
