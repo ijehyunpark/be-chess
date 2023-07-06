@@ -22,25 +22,23 @@ public class Board {
     /**
      * 체스판 내의 위치 정보를 내부 인덱스 정보로 변환하는 유틸리티 객체이다.
      */
-    private static class PositionUtils {
-        /**
-         * 체스판 위치 정보로부터 배열의 ROW(X) 좌표를 추출한다.
-         * @param position 체스판 위치 정보
-         * @return 체스판 내부 pieces객체와 연관되는 인덱스 x 좌표
-         */
-        public static int extractXPos(final String position){
-            return position.charAt(0) - 'a';
+    public static class Position {
+        private int xPos;
+        private int yPos;
+
+        public Position(String position) {
+            yPos = COLUMN_NUMBER - Character.getNumericValue(
+                    position.charAt(1));
+            xPos = position.charAt(0) - 'a';
         }
 
-        /**
-         * 체스판 위치 정보로부터 배열의 COL(Y) 좌표를 추출한다.
-         * @param position 체스판 위치 정보
-         * @return 체스판 내부 pieces 객체와 연관되는 인덱스 y 좌표
-         */
-        public static int extractYPos(final String position) {
-            return COLUMN_NUMBER - Character.getNumericValue(
-                    position.charAt(1));
-        }
+//        public int getYPos() {
+//            return yPos;
+//        }
+//
+//        public int getXPos() {
+//            return xPos;
+//        }
     }
 
     public static final int COLUMN_NUMBER = 8;
@@ -199,17 +197,31 @@ public class Board {
      * @param position 체스 보드판 내의 위치 (example "a5")
      */
     public Piece findPiece(String position) {
-        return pieces.get(PositionUtils.extractYPos(position))
-                .rank.get(PositionUtils.extractXPos(position));
+        Position boardPosition = new Position(position);
+        return pieces.get(boardPosition.yPos)
+                .rank.get(boardPosition.xPos);
     }
 
     /**
-     * 보드판에 특정 기물을 추가한다.
-     * @param position 체스 보드판 내의 위치 (example "a5")
+     * 특정 보드판의 위치에 기물을 추가한다. <br />
+     * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
-    public void move(String position, Piece piece) {
-        pieces.get(PositionUtils.extractYPos(position))
-                .rank.set(PositionUtils.extractXPos(position), piece);
+    public void assignPiece(String position, Piece piece) {
+        Position boardPosition = new Position(position);
+        pieces.get(boardPosition.yPos)
+                .rank.set(boardPosition.xPos, piece);
+    }
+
+    /**
+     * 보드판의 기물을 교환한다. <br/>
+     * 구체적으로 보드판에서 sourcePosition와 targetPosition의 위치를 교환한다.
+     */
+    public void move(String sourcePosition, String targetPosition) {
+        Piece source = findPiece(sourcePosition);
+        Piece target = findPiece(targetPosition);
+
+        assignPiece(sourcePosition, target);
+        assignPiece(targetPosition, source);
     }
 
     /**
