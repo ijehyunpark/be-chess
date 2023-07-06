@@ -6,30 +6,6 @@ import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
 
 public class ChessGame {
-    @Deprecated
-    public static final abstrctPiece.Type[][] PIECE_MAP = {
-            { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK },
-            { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
-            { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
-            { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK }
-    };
-
-    @Deprecated
-    public static final abstrctPiece.Color[][] COLOR_MAP = {
-            { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
-            { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
-            { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, },
-            { WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, }
-    };
-
     public static final String BASIC_BOARD =
                 "RNBQKBNR" +
                 "PPPPPPPP" +
