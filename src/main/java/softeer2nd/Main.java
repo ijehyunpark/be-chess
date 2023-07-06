@@ -4,7 +4,12 @@ import softeer2nd.chess.Board;
 
 import java.util.Scanner;
 
+import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+
 public class Main {
+
+    private static final Board board = new Board();
+    private static boolean isStart = false;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -12,18 +17,36 @@ public class Main {
         while(scanLoop) {
             // 명령어 입력
             String command = scanner.nextLine();
-            Board board;
 
-            switch (command) {
-                case "start":
-                    board = new Board();
-                    board.initialize();
-                    System.out.println(board.showBoard());
-                    break;
-                case "end":
-                    scanLoop = false;
-                    break;
+            if (command.equals("start")) {
+                start();
+            } else if (command.equals("end")) {
+                scanLoop = false;
+            } else if(command.startsWith("move")) {
+                String[] commandArgs = command.split(" ");
+                move(commandArgs);
+            } else{
+                System.out.println("잘못된 명령어 입니다.");
             }
         }
+    }
+
+    private static void start() {
+        board.initialize();
+        isStart = true;
+
+        System.out.println(board.showBoard());
+    }
+
+    private static void move(String[] commandArgs) {
+        if(commandArgs.length != 3) {
+            System.out.println("잘못된 인자 개수입니다. 다음과 같이 입력해 주세요." + NEWLINE + "move [이동 전] [이동 후]");
+        }
+        else if(!isStart){
+            System.out.println("게임을 시작해 주세요.");
+        }
+        board.move(commandArgs[1], commandArgs[2]);
+
+        System.out.println(board.showBoard());
     }
 }
