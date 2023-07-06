@@ -2,11 +2,14 @@ package softeer2nd.chess.pieces;
 
 import java.util.List;
 
+import static softeer2nd.chess.pieces.Piece.BasicDirection.*;
+
 public class Knight extends NonRecursiveMovePiece {
     private static final Knight BLACK_KNIGHT = new Knight(Color.BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(Color.WHITE);
     private static final List<BasicDirection> moveAble = List.of(
-
+            NNE, NNW, SSE, SSW,
+            EEN, EES, WWN, WWS
     );
     private Knight(Color color) {
         super(color, Type.KNIGHT);
