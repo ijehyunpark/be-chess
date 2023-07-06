@@ -1,4 +1,6 @@
-package softeer2nd.chess.pieces;
+package softeer2nd.chess.pieces.concrete;
+
+import softeer2nd.chess.pieces.NonRecursiveMovePiece;
 
 import java.util.List;
 

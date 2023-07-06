@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.pieces.*;
+import softeer2nd.chess.pieces.concrete.King;
+import softeer2nd.chess.pieces.concrete.Pawn;
+import softeer2nd.chess.pieces.concrete.Queen;
+import softeer2nd.chess.pieces.concrete.Rook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
