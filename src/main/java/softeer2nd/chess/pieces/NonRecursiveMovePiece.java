@@ -1,6 +1,9 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.pieces.concrete.King;
+import softeer2nd.chess.pieces.concrete.Knight;
+import softeer2nd.chess.pieces.concrete.Pawn;
 
 import java.util.ArrayList;
 import java.util.List;

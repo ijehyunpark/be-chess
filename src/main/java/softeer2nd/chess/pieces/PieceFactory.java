@@ -1,5 +1,7 @@
 package softeer2nd.chess.pieces;
 
+import softeer2nd.chess.pieces.concrete.*;
+
 public class PieceFactory {
     /**
      * 테스트를 사용하기 위한 메소드이다. <br/>

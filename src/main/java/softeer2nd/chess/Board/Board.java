@@ -1,6 +1,7 @@
 package softeer2nd.chess.Board;
 
 import softeer2nd.chess.pieces.*;
+import softeer2nd.chess.pieces.concrete.*;
 
 import java.util.*;
 
