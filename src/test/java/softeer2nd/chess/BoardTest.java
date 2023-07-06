@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.pieces.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
@@ -109,14 +108,13 @@ class BoardTest {
     @Test
     @DisplayName("보드판의 특정 위치에 새로운 기물 추가 테스트")
     void move() {
-        board.initializeEmpty();
+        board.initialize();
 
-        String position = "b5";
-        Piece piece = Piece.createPiece(Piece.Type.ROOK, Piece.Color.BLACK);
-        board.move(position, piece);
-
-        assertEquals(piece, board.findPiece(position));
-        System.out.println(board.showBoard());
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        board.move(sourcePosition, targetPosition);
+        assertEquals(Piece.createBlank(), board.findPiece(sourcePosition));
+        assertEquals(Pawn.createWhitePawn(), board.findPiece(targetPosition));
     }
 
     @Test
@@ -146,7 +144,7 @@ class BoardTest {
     }
 
     private void addPiece(String position, Piece piece) {
-        board.move(position, piece);
+        board.assignPiece(position, piece);
     }
 
     @Test
