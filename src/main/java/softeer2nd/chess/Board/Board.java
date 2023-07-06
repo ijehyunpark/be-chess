@@ -109,23 +109,6 @@ public class Board {
         }
     }
 
-    /**
-     * 배치도에 따라 기물을 배치한다. <br/>
-     * 기물 종류를 나타내는  pieceMap과 색깔을 나타내는 colorMap을 사용하여 초기 기물 배치를 수행한다. <br/>
-     * Note: 각 pieceMap과 colorMap은 {@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER} 의 크기를 가지고 있어야 한다.
-     */
-    @Deprecated
-    public void initPieces(abstrctPiece.Type[][] pieceMap, abstrctPiece.Color[][] colorMap) {
-        for (int col = 0; col < COLUMN_NUMBER; col++) {
-            Rank rank = new Rank();
-            for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(pieceMap[col][row] == NO_PIECE ?
-                        abstrctPiece.createBlank() : abstrctPiece.createPiece(pieceMap[col][row], colorMap[col][row]));
-            }
-            pieces.add(rank);
-        }
-    }
-
     public abstrctPiece findPiece(Position position) {
         return pieces.get(position.yPos)
                 .rank.get(position.xPos);
