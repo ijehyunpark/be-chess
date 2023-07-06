@@ -1,9 +1,12 @@
 package softeer2nd;
 
-import softeer2nd.chess.Board;
+import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.Board.BoardView;
+import softeer2nd.chess.Board.ChessGame;
 
 import java.util.Scanner;
 
+import static softeer2nd.chess.Board.BoardView.showBoard;
 import static softeer2nd.chess.utils.StringUtils.NEWLINE;
 
 public class Main {
@@ -32,10 +35,10 @@ public class Main {
     }
 
     private static void start() {
-        board.initialize();
+        ChessGame.initialize(board);
         isStart = true;
 
-        System.out.println(board.showBoard());
+        System.out.println(showBoard(board));
     }
 
     private static void move(String[] commandArgs) {
@@ -45,8 +48,8 @@ public class Main {
         else if(!isStart){
             System.out.println("게임을 시작해 주세요.");
         }
-        board.move(commandArgs[1], commandArgs[2]);
+        ChessGame.move(board, new Board.Position(commandArgs[1]), new Board.Position(commandArgs[2]));
 
-        System.out.println(board.showBoard());
+        System.out.println(showBoard(board));
     }
 }
