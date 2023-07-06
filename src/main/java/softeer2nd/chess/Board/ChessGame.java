@@ -1,14 +1,13 @@
 package softeer2nd.chess.Board;
 
-import softeer2nd.chess.pieces.King;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.abstrctPiece;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
 
 public class ChessGame {
     @Deprecated
-    public static final Piece.Type[][] PIECE_MAP = {
+    public static final abstrctPiece.Type[][] PIECE_MAP = {
             { ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK },
             { PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN },
             { NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE, NO_PIECE },
@@ -20,7 +19,7 @@ public class ChessGame {
     };
 
     @Deprecated
-    public static final Piece.Color[][] COLOR_MAP = {
+    public static final abstrctPiece.Color[][] COLOR_MAP = {
             { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
             { BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, },
             { NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR, NO_COLOR},
@@ -85,29 +84,13 @@ public class ChessGame {
                 targetPosition.getXPos() < 0 || targetPosition.getXPos() >= Board.ROW_NUMBER)
             throw new IllegalArgumentException("보드판 범위를 벗어나는 입력입니다.");
 
-        Piece source = board.findPiece(sourcePosition);
-        Piece target = board.findPiece(targetPosition);
+        abstrctPiece source = board.findPiece(sourcePosition);
+        abstrctPiece target = board.findPiece(targetPosition);
 
         if(source.getColor() == target.getColor())
             throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
 
-        switch (source.getPieceType()){
-            case KING:
-                King.createBlackKing().move(board, sourcePosition, targetPosition);
-                break;
-            case QUEEN:
-                break;
-            case ROOK:
-                break;
-            case BISHOP:
-                break;
-            case KNIGHT:
-                break;
-            case PAWN:
-                break;
-            case NO_PIECE:
-                break;
-        }
+        source.verifyMove(sourcePosition, targetPosition);
         board.assignPiece(sourcePosition, target);
         board.assignPiece(targetPosition, source);
     }

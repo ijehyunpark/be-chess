@@ -1,8 +1,19 @@
 package softeer2nd.chess.pieces;
 
-public class Rook extends Piece {
+import java.util.List;
+
+import static softeer2nd.chess.pieces.Piece.BasicDirection.*;
+
+public class Rook extends RecursiveMovePiece {
     private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
+    private final List<BasicDirection> moveAble = List.of(
+            NORTH,
+            EAST,
+            SOUTH,
+            WEST
+    );
+
     private Rook(Color color) {
         super(color, Type.ROOK);
     }
@@ -19,5 +30,10 @@ public class Rook extends Piece {
      */
     public static Rook createWhiteRook(){
         return WHITE_ROOK;
+    }
+
+    @Override
+    public List<BasicDirection> getBasicDirection() {
+        return moveAble;
     }
 }

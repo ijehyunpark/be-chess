@@ -1,8 +1,18 @@
 package softeer2nd.chess.pieces;
 
-public class Bishop extends Piece {
+import java.util.List;
+
+import static softeer2nd.chess.pieces.Piece.BasicDirection.*;
+
+public class Bishop extends RecursiveMovePiece {
     private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
+    private final List<BasicDirection> moveAble = List.of(
+            NORTHEAST,
+            SOUTHEAST,
+            SOUTHWEST,
+            NORTHWEST
+    );
     private Bishop(Color color) {
         super(color, Type.BISHOP);
     }
@@ -19,5 +29,10 @@ public class Bishop extends Piece {
      */
     public static Bishop createWhiteBishop(){
         return WHITE_BISHOP;
+    }
+
+    @Override
+    public List<BasicDirection> getBasicDirection() {
+        return moveAble;
     }
 }

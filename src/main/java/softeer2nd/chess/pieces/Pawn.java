@@ -1,8 +1,13 @@
 package softeer2nd.chess.pieces;
 
-public class Pawn extends Piece {
+import java.util.List;
+
+public class Pawn extends NonRecursiveMovePiece {
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
+    private static final List<BasicDirection> moveAble = List.of(
+
+    );
     private Pawn(Color color) {
         super(color, Type.PAWN);
     }
@@ -19,5 +24,10 @@ public class Pawn extends Piece {
      */
     public static Pawn createWhitePawn(){
         return WHITE_PAWN;
+    }
+
+    @Override
+    public List<BasicDirection> getBasicDirection() {
+        return moveAble;
     }
 }
