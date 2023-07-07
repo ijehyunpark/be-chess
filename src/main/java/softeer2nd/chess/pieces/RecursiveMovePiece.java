@@ -36,6 +36,9 @@ public abstract class RecursiveMovePiece extends BlankPiece {
 
     @Override
     public void verifyMove(Board board, Board.Position source, Board.Position target) {
+        if(board.findPiece(source).getColor() == board.findPiece(target).getColor())
+            throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
+
         List<Direction> moveAble = new ArrayList<>();
         for (BasicDirection direction : getBasicDirection()) {
             expandPieceMoveAble(board, moveAble, direction, source.getYPos(), source.getXPos());
