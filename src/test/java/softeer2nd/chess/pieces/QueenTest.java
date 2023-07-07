@@ -8,7 +8,7 @@ import softeer2nd.chess.Board.ChessGame;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class KingTest {
+public class QueenTest {
     Board board;
 
     @BeforeEach
@@ -17,14 +17,14 @@ public class KingTest {
     }
 
     @Test
-    @DisplayName("킹 기물 이동 테스트")
+    @DisplayName("퀸 기물 이동 테스트")
     void move() {
         // given
         String sample =
                 "........" +
                 "........" +
                 "........" +
-                "....K..." +
+                "....Q..." +
                 "........" +
                 "........" +
                 "........" +
@@ -34,13 +34,12 @@ public class KingTest {
         // when
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("e5"), new Board.Position("e7"))
+                () -> ChessGame.move(board, new Board.Position("e5"), new Board.Position("a3"))
         );
-        ChessGame.move(board, new Board.Position("e5"), new Board.Position("e6"));
+        ChessGame.move(board, new Board.Position("e5"), new Board.Position("e8"));
 
         // then
 
 
     }
 }
-
