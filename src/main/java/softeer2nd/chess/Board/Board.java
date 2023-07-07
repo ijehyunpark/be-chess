@@ -13,7 +13,7 @@ public class Board {
      * 체스판의 row 객체를 나타낸다.
      */
     public static class Rank {
-        public final ArrayList<BlankPiece> rank = new ArrayList<>();
+        public final ArrayList<Piece> rank = new ArrayList<>();
     }
 
     public static class Position {
@@ -42,10 +42,10 @@ public class Board {
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
     private final List<Rank> pieces = new ArrayList<>();
-    private final List<BlankPiece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
+    private final List<Piece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
             Pawn.createBlackPawn(), Knight.createBlackKnight(), Bishop.createBlackBishop(),
             Rook.createBlackRook(), King.createBlackKing(), Queen.createBlackQueen()));
-    private final List<BlankPiece> sortedWhitePieces = new ArrayList<>(Arrays.asList(
+    private final List<Piece> sortedWhitePieces = new ArrayList<>(Arrays.asList(
             Pawn.createWhitePawn(), Knight.createWhiteKnight(), Bishop.createWhiteBishop(),
             Rook.createWhiteRook(), King.createWhiteKing(), Queen.createWhiteQueen()));
 
@@ -62,7 +62,7 @@ public class Board {
     /**
      * 현재 보드판에 존재하는 특정 종류의 기물의 개수를 찾는다.
      */
-    public int pieceCount(BlankPiece.Type type) {
+    public int pieceCount(Piece.Type type) {
         return (int) pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() == type)
@@ -72,7 +72,7 @@ public class Board {
     /**
      * 현재 체스 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
      */
-    public int pieceCount(BlankPiece.Color color) {
+    public int pieceCount(Piece.Color color) {
         return (int) pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getColor() == color)
@@ -82,7 +82,7 @@ public class Board {
     /**
      * 현재 체스 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
      */
-    public int pieceCount(BlankPiece.Type type, BlankPiece.Color color) {
+    public int pieceCount(Piece.Type type, Piece.Color color) {
         return (int) pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() == type && piece.getColor() == color)
@@ -110,21 +110,27 @@ public class Board {
         }
     }
 
-    public BlankPiece findPiece(Position position) {
+    public Piece findPiece(Position position) {
         return pieces.get(position.yPos)
                 .rank.get(position.xPos);
     }
 
-    public BlankPiece findPiece(int column, int row) {
+    public Piece findPiece(int column, int row) {
         return pieces.get(column)
                 .rank.get(row);
     }
+
+
+    public boolean isBlankPiece(int column, int row) {
+        return findPiece(column, row) == BlankPiece.createBlank();
+    }
+
 
     /**
      * 특정 보드판의 위치에 기물을 추가한다. <br />
      * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
-    public void assignPiece(Position position, BlankPiece piece) {
+    public void assignPiece(Position position, Piece piece) {
         pieces.get(position.yPos)
                 .rank.set(position.xPos, piece);
     }
@@ -136,7 +142,7 @@ public class Board {
      * 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다. <br/>
      * {@link King}의 경우 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
      */
-    public double calculatePoint(BlankPiece.Color color) {
+    public double calculatePoint(Piece.Color color) {
         // 기본 점수 계산
         double score = pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
@@ -151,7 +157,7 @@ public class Board {
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
             for (int col = 0; col < COLUMN_NUMBER; col++) {
-                BlankPiece target = pieces.get(col).rank.get(row);
+                Piece target = pieces.get(col).rank.get(row);
                 if(target.getColor() != color)
                     continue;
                 if(target.getPieceType() != PAWN)
@@ -167,9 +173,9 @@ public class Board {
     /**
      * 점수 순서대로 기물을 정렬한다.
      */
-    public void sortPieces(BlankPiece.Color color) {
+    public void sortPieces(Piece.Color color) {
         // 각 체스말 별로 점수 계산
-        Map<BlankPiece.Type, Double> scores = new HashMap<>(Map.of(
+        Map<Piece.Type, Double> scores = new HashMap<>(Map.of(
                 PAWN, 0.0,
                 KNIGHT, 0.0,
                 BISHOP, 0.0,
@@ -185,18 +191,18 @@ public class Board {
                 });
 
         // 체스말 별로 점수 정렬
-        List<BlankPiece> targetSortedPieces = color == BLACK ?
+        List<Piece> targetSortedPieces = color == BLACK ?
                 sortedBlackPieces : sortedWhitePieces;
         targetSortedPieces.sort(Comparator.comparingDouble(
                 piece -> scores.get(piece.getPieceType())));
         Collections.reverse(targetSortedPieces);
     }
 
-    public List<BlankPiece> getSortedBlackPieces() {
+    public List<Piece> getSortedBlackPieces() {
         return sortedBlackPieces;
     }
 
-    public List<BlankPiece> getSortedWhitePieces() {
+    public List<Piece> getSortedWhitePieces() {
         return sortedWhitePieces;
     }
 }

@@ -1,6 +1,7 @@
 package softeer2nd.chess.Board;
 
 import softeer2nd.chess.pieces.BlankPiece;
+import softeer2nd.chess.pieces.Piece;
 
 import static softeer2nd.chess.Board.Board.COLUMN_NUMBER;
 import static softeer2nd.chess.Board.Board.ROW_NUMBER;
@@ -14,7 +15,7 @@ public class BoardView {
         StringBuilder builder = new StringBuilder();
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             for (int row = 0; row < ROW_NUMBER; row++) {
-                BlankPiece piece = board.findPiece(col, row);
+                Piece piece = board.findPiece(col, row);
                 builder.append(piece.getRepresentation());
             }
             appendNewLine(builder);

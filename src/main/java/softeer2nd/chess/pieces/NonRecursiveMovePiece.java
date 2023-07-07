@@ -37,7 +37,7 @@ public abstract class NonRecursiveMovePiece extends BlankPiece {
     }
 
     @Override
-    public void verifyMove(Board.Position source, Board.Position target) {
+    public void verifyMove(Board board, Board.Position source, Board.Position target) {
         List<Direction> moveAble = new ArrayList<>();
         makeKingMoveAble(moveAble, getBasicDirection(), source.getYPos(), source.getXPos());
         verifyTargetMove(target, moveAble);

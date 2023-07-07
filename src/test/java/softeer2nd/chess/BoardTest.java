@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.pieces.*;
 import softeer2nd.chess.pieces.concrete.King;
@@ -14,6 +15,7 @@ import softeer2nd.chess.pieces.concrete.Rook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static softeer2nd.chess.Board.BoardView.showBoard;
+import static softeer2nd.chess.utils.StringUtils.NEWLINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
@@ -276,5 +278,76 @@ class BoardTest {
 
         // then
         assertEquals(expect, showBoard(board));
+    }
+
+    @Test
+    @DisplayName("기물을 넘어갈 수 없으며 색깔이 다른 기물 위치로 이동하면 해당 기물이 제거되어야 한다.")
+    void remove() {
+        // given
+        String sample =
+                "........" +
+                "........" +
+                ".q...Q.." +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........";
+
+        String expect =
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                ".Q......" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE;
+        ChessGame.initialize(board, sample);
+
+        // when
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("f6"), new Board.Position("a6"))
+        );
+        ChessGame.move(board, new Board.Position("f6") ,new Board.Position("b6"));
+
+        // then
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("같은 색 기물은 제거되면 안된다.")
+    void notRemove() {
+        // given
+        String sample =
+                "........" +
+                "........" +
+                ".Q...Q.." +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........";
+
+        String expect =
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                ".Q...Q.." + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE;
+        ChessGame.initialize(board, sample);
+
+        // when
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("f6"), new Board.Position("a6"))
+        );
+
+        // then
+        assertEquals(expect, BoardView.showBoard(board));
     }
 }
