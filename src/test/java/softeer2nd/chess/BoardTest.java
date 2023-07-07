@@ -489,7 +489,7 @@ class BoardTest {
                 "........" + NEWLINE +
                 "........" + NEWLINE +
                 "........" + NEWLINE +
-                "........" +  NEWLINE;
+                "........" + NEWLINE;
         ChessGame.initializeEmpty(board);
 
         // when
@@ -497,6 +497,52 @@ class BoardTest {
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Board.Position("e6"), new Board.Position("g7"))
         );
+
+        // then
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("폰 움직임 테스트")
+    void movePawn() {
+        // given
+        String sample =
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "...Pp..." +
+                "........" +
+                "........" +
+                "........" ;
+
+        String expect =
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "....p..." + NEWLINE +
+                "........" + NEWLINE +
+                "...P...." + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE;
+        ChessGame.initialize(board, sample);
+
+        // when
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("d5"))
+        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("c4"))
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("e4"))
+        );
+        ChessGame.move(board, new Board.Position("d4"), new Board.Position("d3"));
+        ChessGame.move(board, new Board.Position("e4"), new Board.Position("e5"));
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
@@ -537,4 +583,6 @@ class BoardTest {
         // then
         assertEquals(expect, BoardView.showBoard(board));
     }
+
+
 }
