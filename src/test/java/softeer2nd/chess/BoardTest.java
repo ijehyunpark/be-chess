@@ -7,10 +7,7 @@ import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.pieces.*;
-import softeer2nd.chess.pieces.concrete.King;
-import softeer2nd.chess.pieces.concrete.Pawn;
-import softeer2nd.chess.pieces.concrete.Queen;
-import softeer2nd.chess.pieces.concrete.Rook;
+import softeer2nd.chess.pieces.concrete.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -345,6 +342,160 @@ class BoardTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Board.Position("f6"), new Board.Position("a6"))
+        );
+
+        // then
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("룩 기물의 움직임 테스트")
+    void moveRook() {
+        // given
+        String rookSample =
+                "........" +
+                "........" +
+                "....R...." +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........";
+
+        String expect =
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                ".....R.." + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........"+ NEWLINE;
+        ChessGame.initialize(board, rookSample);
+
+        // when
+        ChessGame.move(board, new Board.Position("e6"), new Board.Position("e8"));
+        Piece result1 = board.findPiece(new Board.Position("e8"));
+        ChessGame.move(board, new Board.Position("e8"), new Board.Position("e5"));
+        Piece result2 = board.findPiece(new Board.Position("e5"));
+
+
+        ChessGame.move(board, new Board.Position("e5"), new Board.Position("a5"));
+        Piece result3 = board.findPiece(new Board.Position("a5"));
+        ChessGame.move(board, new Board.Position("a5"), new Board.Position("f5"));
+        Piece result4 = board.findPiece(new Board.Position("f5"));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("f5"), new Board.Position("a1"))
+        );
+
+        // then
+        assertEquals(result1, Rook.createBlackRook());
+        assertEquals(result2, Rook.createBlackRook());
+        assertEquals(result3, Rook.createBlackRook());
+        assertEquals(result4, Rook.createBlackRook());
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+
+    @Test
+    @DisplayName("나이트 기물의 움직임 테스트")
+    void moveKnight() {
+        // given
+        String knightSample =
+                "........" +
+                "........" +
+                "....N...." +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........";
+
+        String expect =
+                "...N...." + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE;
+        ChessGame.initialize(board, knightSample);
+
+        // when
+        ChessGame.move(board, new Board.Position("e6"), new Board.Position("d8"));
+        Piece result1 = board.findPiece(new Board.Position("d8"));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("d8"), new Board.Position("d7"))
+        );
+
+        // then
+        assertEquals(result1, Knight.createBlackKnight());
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("비숍 기물의 움직임 테스트")
+    void moveBishop() {
+        // given
+        String bishopSample =
+                "........" +
+                "........" +
+                "....B..." +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........";
+
+        String expect =
+                "......B." + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE;
+        ChessGame.initialize(board, bishopSample);
+
+        // when
+        ChessGame.move(board, new Board.Position("e6"), new Board.Position("g8"));
+        Piece result1 = board.findPiece(new Board.Position("g8"));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("g8"), new Board.Position("g7"))
+        );
+
+        // then
+        assertEquals(result1, Bishop.createBlackBishop());
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("없는 기물의 움직임 테스트는 실패해야 합니다")
+    void moveEmpty() {
+        // given
+        String expect =
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" +  NEWLINE;
+        ChessGame.initializeEmpty(board);
+
+        // when
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("e6"), new Board.Position("g7"))
         );
 
         // then

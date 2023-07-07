@@ -30,7 +30,7 @@ public abstract class NonRecursiveMovePiece extends BlankPiece {
             int nextX = currentX + direction.getXDegree();
 
             if(nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
-                    nextX < 0 || nextX >= Board.ROW_NUMBER)
+                nextX < 0 || nextX >= Board.ROW_NUMBER)
                 continue;
             moveAble.add(new Direction(nextY, nextX));
         }
@@ -38,6 +38,9 @@ public abstract class NonRecursiveMovePiece extends BlankPiece {
 
     @Override
     public void verifyMove(Board board, Board.Position source, Board.Position target) {
+        if(board.findPiece(source).getColor() == board.findPiece(target).getColor())
+            throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
+
         List<Direction> moveAble = new ArrayList<>();
         makeKingMoveAble(moveAble, getBasicDirection(), source.getYPos(), source.getXPos());
         verifyTargetMove(target, moveAble);

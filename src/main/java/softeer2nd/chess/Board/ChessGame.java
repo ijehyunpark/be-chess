@@ -52,6 +52,7 @@ public class ChessGame {
     /**
      * 보드판에서 한 기물을 이동시킨다. <br/>
      * 구체적으로 가능한 이동일 경우 보드판에서 sourcePosition와 targetPosition의 위치를 교환한다.
+     * @throws IllegalArgumentException 범위를 벗어나는 이동, 같은 색깔 기물로 이동, 빈 칸 이동의 경우 발생한다.
      */
     public static void move(Board board, Board.Position sourcePosition, Board.Position targetPosition) {
         if(targetPosition.getYPos() < 0 || targetPosition.getYPos() >= Board.COLUMN_NUMBER ||
@@ -60,9 +61,6 @@ public class ChessGame {
 
         Piece source = board.findPiece(sourcePosition);
         Piece target = board.findPiece(targetPosition);
-
-        if(source.getColor() == target.getColor())
-            throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
 
         source.verifyMove(board, sourcePosition, targetPosition);
 
