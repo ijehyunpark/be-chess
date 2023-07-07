@@ -501,4 +501,40 @@ class BoardTest {
         // then
         assertEquals(expect, BoardView.showBoard(board));
     }
+
+    @Test
+    @DisplayName("앙파상 테스트")
+    void moveEnPassant() {
+        // given
+        String sample =
+                "........" +
+                "........" +
+                "........" +
+                "....p..." +
+                "...P...." +
+                "........" +
+                "........" +
+                "........" ;
+
+        String expect =
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "....P..." + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE +
+                "........" + NEWLINE;
+        ChessGame.initialize(board, sample);
+
+        // when
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("c5"))
+        );
+        ChessGame.move(board, new Board.Position("d4"), new Board.Position("e5"));
+
+        // then
+        assertEquals(expect, BoardView.showBoard(board));
+    }
 }
