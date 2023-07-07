@@ -64,8 +64,11 @@ public class ChessGame {
 
         source.verifyMove(board, sourcePosition, targetPosition);
 
-        if((source.getColor() != target.getColor()) && source.getColor() != Piece.Color.NO_COLOR && target.getColor() != Piece.Color.NO_COLOR)
+        // 다른 색 기물일 경우 제거한다.
+        if((source.getColor() != target.getColor()) && source.getColor() != Piece.Color.NO_COLOR && target.getColor() != Piece.Color.NO_COLOR){
             target = BlankPiece.createBlank();
+        }
+
         board.assignPiece(sourcePosition, target);
         board.assignPiece(targetPosition, source);
     }

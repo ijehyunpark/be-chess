@@ -22,7 +22,7 @@ public abstract class RecursiveMovePiece extends BlankPiece {
      * @param currentY 탐색 중에 사용되는 y 좌표
      * @param currentX 탐색 중에 사용되는 x 좌표
      */
-    protected void expandPieceMoveAble(Board board, final List<Direction> moveAble, final BasicDirection direction, int currentY, int currentX) {
+    protected void expandPieceMoveAble(Board board, List<Direction> moveAble, BasicDirection direction, int currentY, int currentX) {
         currentY += direction.getYDegree();
         currentX += direction.getXDegree();
         if(currentY < 0 || currentY >= Board.COLUMN_NUMBER || currentX < 0 || currentX >= Board.ROW_NUMBER)
