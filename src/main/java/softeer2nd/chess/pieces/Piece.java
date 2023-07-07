@@ -89,7 +89,7 @@ public interface Piece {
         }
     }
 
-    void verifyMove(Board.Position source, Board.Position target);
+    void verifyMove(Board board, Board.Position source, Board.Position target);
 
     Color getColor();
     Type getPieceType();

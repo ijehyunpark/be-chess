@@ -40,7 +40,7 @@ public class BlankPiece implements Piece {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 범위입니다.");
     }
 
-    public void verifyMove(Board.Position source, Board.Position target) {
+    public void verifyMove(Board board, Board.Position source, Board.Position target) {
         throw new IllegalArgumentException("정의되지 않는 기물(빈 기물)은 이동할 수 없습니다.");
     }
 
