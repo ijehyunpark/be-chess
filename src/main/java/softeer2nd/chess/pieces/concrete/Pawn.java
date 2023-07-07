@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static softeer2nd.chess.pieces.Piece.BasicDirection.*;
-import static softeer2nd.chess.pieces.Piece.BasicDirection.WEST;
 
 public class Pawn extends NonRecursiveMovePiece {
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
     private static final List<BasicDirection> moveAble = List.of(
-            NORTH, EAST, WEST
     );
     private static final List<BasicDirection> enPassantMoveAble = List.of(
             NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST
@@ -58,9 +56,22 @@ public class Pawn extends NonRecursiveMovePiece {
         }
     }
     @Override
-    protected void makeKingMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
+    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
         List<BasicDirection> pawnMoveAble = new ArrayList<>(directionList);
         enPassant(board, pawnMoveAble, currentY, currentX);
-        super.makeKingMoveAble(board, moveAble, pawnMoveAble, currentY, currentX);
+        super.makeMoveAble(board, moveAble, pawnMoveAble, currentY, currentX);
+    }
+
+    @Override
+    public void verifyMove(Board board, Board.Position source, Board.Position target) {
+        if(board.findPiece(source).getColor() == board.findPiece(target).getColor())
+            throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
+
+        List<Direction> moveAble = new ArrayList<>();
+        List<BasicDirection> directionList = List.of(
+                board.findPiece(source).isBlack() ? SOUTH : NORTH
+        );
+        makeMoveAble(board, moveAble, directionList, source.getYPos(), source.getXPos());
+        verifyTargetMove(target, moveAble);
     }
 }

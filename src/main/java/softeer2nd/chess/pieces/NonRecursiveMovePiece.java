@@ -24,7 +24,7 @@ public abstract class NonRecursiveMovePiece extends BlankPiece {
      * @param currentY 탐색 중에 사용되는 y 좌표
      * @param currentX 탐색 중에 사용되는 x 좌표
      */
-    protected void makeKingMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
+    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
         for (BasicDirection direction : directionList) {
             int nextY = currentY + direction.getYDegree();
             int nextX = currentX + direction.getXDegree();
@@ -42,7 +42,7 @@ public abstract class NonRecursiveMovePiece extends BlankPiece {
             throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
 
         List<Direction> moveAble = new ArrayList<>();
-        makeKingMoveAble(board, moveAble, getBasicDirection(), source.getYPos(), source.getXPos());
+        makeMoveAble(board, moveAble, getBasicDirection(), source.getYPos(), source.getXPos());
         verifyTargetMove(target, moveAble);
     }
 }
