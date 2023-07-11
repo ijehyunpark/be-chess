@@ -1,7 +1,6 @@
 package softeer2nd;
 
 import softeer2nd.chess.Board.Board;
-import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
 
 import java.util.Scanner;
@@ -27,7 +26,11 @@ public class Main {
                 scanLoop = false;
             } else if(command.startsWith("move")) {
                 String[] commandArgs = command.split(" ");
-                move(commandArgs);
+                try {
+                    move(commandArgs);
+                } catch (IllegalArgumentException exception) {
+                    System.out.println(exception.getLocalizedMessage());
+                }
             } else{
                 System.out.println("잘못된 명령어 입니다.");
             }
