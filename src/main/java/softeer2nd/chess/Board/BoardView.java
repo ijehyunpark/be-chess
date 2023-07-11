@@ -1,6 +1,5 @@
 package softeer2nd.chess.Board;
 
-import softeer2nd.chess.pieces.BlankPiece;
 import softeer2nd.chess.pieces.Piece;
 
 import static softeer2nd.chess.Board.Board.COLUMN_NUMBER;

@@ -10,7 +10,7 @@ import static softeer2nd.chess.pieces.Piece.Type.*;
 
 public class Board {
     /**
-     * 체스판의 row 객체를 나타낸다.
+     * 보드판의 row 객체를 나타낸다.
      */
     public static class Rank {
         public final ArrayList<Piece> rank = new ArrayList<>();
@@ -70,7 +70,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
+     * 현재 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
      */
     public int pieceCount(Piece.Color color) {
         return (int) pieces.stream()
@@ -80,7 +80,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
+     * 현재 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
      */
     public int pieceCount(Piece.Type type, Piece.Color color) {
         return (int) pieces.stream()
