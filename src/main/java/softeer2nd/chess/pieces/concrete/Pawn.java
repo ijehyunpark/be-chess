@@ -51,9 +51,9 @@ public class Pawn extends NonRecursiveMovePiece {
                 continue;
             }
 
-            Piece target = board.findPiece(nextY, nextX);
+            Piece target = board.findPiece(new Board.Position(nextY, nextX));
             if (target.getPieceType() != Type.NO_PIECE
-                    && target.getColor() != board.findPiece(currentY, currentX).getColor()) {
+                    && target.getColor() != board.findPiece(new Board.Position(currentY, currentX)).getColor()) {
                 pawnMoveAble.add(direction);
             }
         }

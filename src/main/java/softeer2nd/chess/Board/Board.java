@@ -11,7 +11,19 @@ import static softeer2nd.chess.pieces.Piece.Type.*;
 public class Board {
 
     public static class Rank {
-        public final ArrayList<Piece> rank = new ArrayList<>();
+        public final List<Piece> rank = new ArrayList<>();
+
+        public void appendPiece(Piece piece) {
+            this.rank.add(piece);
+        }
+
+        public Piece getPiece(int x) {
+            return rank.get(x);
+        }
+
+        public void setPiece(int x, Piece piece) {
+            rank.set(x, piece);
+        }
     }
 
     public static class Position {
@@ -28,6 +40,11 @@ public class Board {
             xPos = position.charAt(0) - 'a';
         }
 
+        public Position(int col, int row) {
+            this.yPos = col;
+            this.xPos = row;
+        }
+
         public int getXPos() {
             return xPos;
         }
@@ -39,7 +56,7 @@ public class Board {
 
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
-    private final List<Rank> pieces = new ArrayList<>();
+    private final List<Rank> ranks = new ArrayList<>();
     private final List<Piece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
             Pawn.createBlackPawn(), Knight.createBlackKnight(), Bishop.createBlackBishop(),
             Rook.createBlackRook(), King.createBlackKing(), Queen.createBlackQueen()));
@@ -47,41 +64,29 @@ public class Board {
             Pawn.createWhitePawn(), Knight.createWhiteKnight(), Bishop.createWhiteBishop(),
             Rook.createWhiteRook(), King.createWhiteKing(), Queen.createWhiteQueen()));
 
-    /**
-     * 현재 보드판에 존재하는 모든 기물의 개수를 찾는다.
-     */
     public int pieceCount() {
-        return (int) pieces.stream()
+        return (int) ranks.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() != NO_PIECE)
                 .count();
     }
 
-    /**
-     * 현재 보드판에 존재하는 특정 종류의 기물의 개수를 찾는다.
-     */
     public int pieceCount(Piece.Type type) {
-        return (int) pieces.stream()
+        return (int) ranks.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() == type)
                 .count();
     }
 
-    /**
-     * 현재 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
-     */
     public int pieceCount(Piece.Color color) {
-        return (int) pieces.stream()
+        return (int) ranks.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getColor() == color)
                 .count();
     }
 
-    /**
-     * 현재 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
-     */
     public int pieceCount(Piece.Type type, Piece.Color color) {
-        return (int) pieces.stream()
+        return (int) ranks.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getPieceType() == type && piece.getColor() == color)
                 .count();
@@ -94,31 +99,24 @@ public class Board {
      * @param pieceAndColorMap 기물 배치를 나타낸다. 개행문자를 포함하지 않으며 적절한 길이 ({@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER})만큼 입력해야 한다.
      */
     public void initPieces(String pieceAndColorMap) {
-        pieces.clear();
+        ranks.clear();
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             Rank rank = new Rank();
             for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(PieceFactory.createPiece(
-                        pieceAndColorMap.charAt(col * COLUMN_NUMBER + row)
-                ));
+                rank.appendPiece(PieceFactory.createPiece(
+                        pieceAndColorMap.charAt(col * COLUMN_NUMBER + row)));
             }
-            pieces.add(rank);
+            ranks.add(rank);
         }
     }
 
     public Piece findPiece(Position position) {
-        return pieces.get(position.yPos)
-                .rank.get(position.xPos);
+        return ranks.get(position.yPos)
+                .getPiece(position.xPos);
     }
 
-    public Piece findPiece(int column, int row) {
-        return pieces.get(column)
-                .rank.get(row);
-    }
-
-
-    public boolean isBlankPiece(int column, int row) {
-        return findPiece(column, row) == BlankPiece.createBlank();
+    public boolean isBlankPiece(Position position) {
+        return findPiece(position).getPieceType() == NO_PIECE;
     }
 
 
@@ -127,8 +125,8 @@ public class Board {
      * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
     public void assignPiece(Position position, Piece piece) {
-        pieces.get(position.yPos)
-                .rank.set(position.xPos, piece);
+        ranks.get(position.yPos)
+                .setPiece(position.xPos, piece);
     }
 
     /**
@@ -140,7 +138,7 @@ public class Board {
      */
     public double calculatePoint(Piece.Color color) {
         // 기본 점수 계산
-        double score = pieces.stream()
+        double score = ranks.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getColor() == color)
                 .mapToDouble(value -> value.getPieceType().getDefaultScore())
@@ -153,7 +151,7 @@ public class Board {
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
             for (int col = 0; col < COLUMN_NUMBER; col++) {
-                Piece target = pieces.get(col).rank.get(row);
+                Piece target = ranks.get(col).rank.get(row);
                 if (target.getColor() != color) {
                     continue;
                 }
@@ -169,7 +167,7 @@ public class Board {
     }
 
     /**
-     * 점수 순서대로 기물을 정렬한다.
+     * 기물 별로 가진 모든 점수를 합한 점수를 기준으로 정렬한다.
      */
     public void sortPieces(Piece.Color color) {
         // 각 체스말 별로 점수 계산
@@ -181,7 +179,7 @@ public class Board {
                 KING, 0.0,
                 QUEEN, 0.0));
 
-        pieces.stream()
+        ranks.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getColor() == color)
                 .forEach(piece -> scores.computeIfPresent(
