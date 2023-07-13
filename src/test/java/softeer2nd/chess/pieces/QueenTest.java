@@ -13,6 +13,7 @@ import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class QueenTest {
+
     Board board;
 
     @BeforeEach
@@ -47,4 +48,5 @@ public class QueenTest {
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
     }
+
 }

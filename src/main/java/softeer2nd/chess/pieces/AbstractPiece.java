@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 public abstract class AbstractPiece implements Piece {
+
     private final Color color;
     private final Type type;
 
@@ -33,4 +34,5 @@ public abstract class AbstractPiece implements Piece {
     public boolean isBlank() {
         return color == Color.NO_COLOR;
     }
+
 }

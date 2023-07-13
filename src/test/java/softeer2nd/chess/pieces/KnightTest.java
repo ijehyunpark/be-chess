@@ -15,6 +15,7 @@ import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class KnightTest {
+
     Board board;
 
     @BeforeEach
@@ -66,4 +67,5 @@ public class KnightTest {
         assertEquals(result1, Knight.createBlackKnight());
         assertEquals(expect, BoardView.showBoard(board));
     }
+
 }

@@ -8,7 +8,9 @@ import java.util.List;
 import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 
 public interface MovablePiece extends Piece {
+
     enum Direction {
+
         NORTH(-1, 0),
         NORTHEAST(1, -1),
         EAST(0, 1),
@@ -43,6 +45,7 @@ public interface MovablePiece extends Piece {
         public int getXDegree() {
             return xDegree;
         }
+
     }
 
     void verifyMove(Board board, Position source, Position destination);
@@ -59,4 +62,5 @@ public interface MovablePiece extends Piece {
     default Position movePosition(Position position, Direction direction) {
         return new Position(position.getYPos() + direction.getYDegree(), position.getXPos() + direction.getXDegree());
     }
+
 }

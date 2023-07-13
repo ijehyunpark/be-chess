@@ -15,4 +15,5 @@ public abstract class StringUtils {
     public static StringBuilder appendNewLine(final StringBuilder builder) {
         return builder.append(NEW_LINE);
     }
+
 }

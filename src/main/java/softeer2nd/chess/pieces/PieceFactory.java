@@ -5,6 +5,7 @@ import softeer2nd.chess.pieces.concrete.*;
 import static softeer2nd.chess.exception.ExceptionMessage.WRONG_ARGUMENT;
 
 public abstract class PieceFactory {
+
     /**
      * 테스트를 사용하기 위한 메소드이다. <br/>
      * 표현식을 받아 새로운 체스말을 생성한다. <br/>
@@ -45,4 +46,5 @@ public abstract class PieceFactory {
                 throw new IllegalArgumentException(WRONG_ARGUMENT);
         }
     }
+
 }

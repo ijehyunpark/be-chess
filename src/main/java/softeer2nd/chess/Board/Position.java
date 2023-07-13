@@ -3,6 +3,7 @@ package softeer2nd.chess.Board;
 import static softeer2nd.chess.Board.Board.COLUMN_NUMBER;
 
 public class Position {
+
     private final int yPos;
     private final int xPos;
 
@@ -33,4 +34,5 @@ public class Position {
         return position1.getYPos() == position2.getYPos() &&
                 position1.getXPos() == position2.getXPos();
     }
+
 }

@@ -153,4 +153,5 @@ public class RookTest {
                 Arguments.of(new Position(col, row), new Position(4, 2))
         );
     }
+
 }

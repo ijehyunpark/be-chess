@@ -1,11 +1,13 @@
 package softeer2nd.chess.pieces;
 
 public interface Piece {
+
     enum Color {
         BLACK, WHITE, NO_COLOR
     }
 
     enum Type {
+
         KING('k', 0),
         QUEEN('q', 9),
         ROOK('r', 5),
@@ -37,6 +39,7 @@ public interface Piece {
         public double getDefaultScore() {
             return defaultScore;
         }
+
     }
 
     Type getPieceType();
@@ -58,4 +61,5 @@ public interface Piece {
     static boolean isSameColorAndHasPiece(Piece piece1, Piece piece2) {
         return isSameColor(piece1, piece2) && !piece1.isBlank() && !piece2.isBlank();
     }
+
 }

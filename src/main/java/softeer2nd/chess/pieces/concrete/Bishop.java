@@ -8,6 +8,7 @@ import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 
 public class Bishop extends RecursiveMovAblePiece {
+
     private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
     private final List<Direction> movableDirection = List.of(
@@ -36,4 +37,5 @@ public class Bishop extends RecursiveMovAblePiece {
     public List<Direction> getDirection() {
         return movableDirection;
     }
+
 }

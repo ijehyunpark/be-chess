@@ -4,6 +4,7 @@ package softeer2nd.chess.pieces;
  * 보드판의 빈 칸을 표현하기 위해 사용된다.
  */
 public class BlankPiece extends AbstractPiece {
+
     private static final BlankPiece BLANK_PIECE_INSTANCE = new BlankPiece();
 
     private BlankPiece() {
