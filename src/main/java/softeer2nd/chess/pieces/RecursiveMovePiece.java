@@ -33,7 +33,7 @@ public abstract class RecursiveMovePiece extends BlankPiece {
 
         moveAble.add(new Direction(currentY, currentX));
 
-        if (board.isBlankPiece(currentY, currentX)) {
+        if (board.isBlankPiece(new Board.Position(currentY, currentX))) {
             expandPieceMoveAble(board, moveAble, direction, currentY, currentX);
         }
     }
