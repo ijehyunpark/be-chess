@@ -16,10 +16,13 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 public class PawnTest {
 
     Board board;
+    GameManager chessGame;
 
     @BeforeEach
     void setUp() {
         board = new Board();
+        chessGame = new GameManager(board);
+        chessGame.start();
     }
 
     @Test
@@ -53,19 +56,19 @@ public class PawnTest {
         // when
         assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("d4"), new Position("d5"))
+                () -> chessGame.move(new Position("d4"), new Position("d5"))
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("d4"), new Position("c4"))
+                () -> chessGame.move(new Position("d4"), new Position("c4"))
         );
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("d4"), new Position("e4"))
+                () -> chessGame.move(new Position("d4"), new Position("e4"))
         );
-        GameManager.move(board, new Position("d4"), new Position("d3"));
-        GameManager.move(board, new Position("e4"), new Position("e5"));
+        chessGame.move(new Position("d4"), new Position("d3"));
+        chessGame.move(new Position("e4"), new Position("e5"));
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
@@ -102,7 +105,7 @@ public class PawnTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("d4"), new Position("d5"))
+                () -> chessGame.move(new Position("d4"), new Position("d5"))
         );
 
         // then
@@ -141,9 +144,9 @@ public class PawnTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("d4"), new Position("c5"))
+                () -> chessGame.move(new Position("d4"), new Position("c5"))
         );
-        GameManager.move(board, new Position("d4"), new Position("e5"));
+        chessGame.move(new Position("d4"), new Position("e5"));
 
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());

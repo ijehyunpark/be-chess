@@ -17,10 +17,13 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 public class BishopTest {
 
     Board board;
+    GameManager chessGame;
 
     @BeforeEach
     void setUp() {
         board = new Board();
+        chessGame = new GameManager(board);
+        chessGame.start();
     }
 
     @Test
@@ -51,12 +54,12 @@ public class BishopTest {
         board.initialize(bishopSample);
 
         // when
-        GameManager.move(board, new Position("e6"), new Position("g8"));
+        chessGame.move(new Position("e6"), new Position("g8"));
         Piece result1 = board.findPiece(new Position("g8"));
 
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("g8"), new Position("g7"))
+                () -> chessGame.move(new Position("g8"), new Position("g7"))
         );
 
         // then
