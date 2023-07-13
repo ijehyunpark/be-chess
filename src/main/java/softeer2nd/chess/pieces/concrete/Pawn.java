@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces.concrete;
 
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.exception.ExceptionMessage;
 import softeer2nd.chess.pieces.NonRecursiveMovAblePiece;
 import softeer2nd.chess.pieces.Piece;
@@ -52,9 +53,9 @@ public class Pawn extends NonRecursiveMovAblePiece {
                 continue;
             }
 
-            Piece target = board.findPiece(new Board.Position(nextY, nextX));
+            Piece target = board.findPiece(new Position(nextY, nextX));
             if (target.getPieceType() != Type.NO_PIECE
-                    && target.getColor() != board.findPiece(new Board.Position(currentY, currentX)).getColor()) {
+                    && target.getColor() != board.findPiece(new Position(currentY, currentX)).getColor()) {
                 pawnMoveAble.add(direction);
             }
         }
@@ -68,7 +69,7 @@ public class Pawn extends NonRecursiveMovAblePiece {
     }
 
     @Override
-    public void verifyMove(Board board, Board.Position source, Board.Position destination) {
+    public void verifyMove(Board board, Position source, Position destination) {
         if (board.findPiece(source).getColor() == board.findPiece(destination).getColor()) {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }

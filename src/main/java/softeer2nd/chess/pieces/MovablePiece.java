@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.Board.Position;
 
 import java.util.List;
 
@@ -62,9 +63,9 @@ public interface MovablePiece extends Piece {
         }
     }
 
-    void verifyMove(Board board, Board.Position source, Board.Position destination);
+    void verifyMove(Board board, Position source, Position destination);
 
-    default void verifyTargetMove(List<Direction> moveAble, Board.Position destination) {
+    default void verifyTargetMove(List<Direction> moveAble, Position destination) {
         boolean isMoveAble = moveAble.stream()
                 .anyMatch(direction -> destination.getYPos() == direction.getY() &&
                         destination.getXPos() == direction.getX());

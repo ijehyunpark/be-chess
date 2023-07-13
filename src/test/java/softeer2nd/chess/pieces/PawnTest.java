@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.Board.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,19 +53,19 @@ public class PawnTest {
         // when
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("d5"))
+                () -> ChessGame.move(board, new Position("d4"), new Position("d5"))
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("c4"))
+                () -> ChessGame.move(board, new Position("d4"), new Position("c4"))
         );
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("e4"))
+                () -> ChessGame.move(board, new Position("d4"), new Position("e4"))
         );
-        ChessGame.move(board, new Board.Position("d4"), new Board.Position("d3"));
-        ChessGame.move(board, new Board.Position("e4"), new Board.Position("e5"));
+        ChessGame.move(board, new Position("d4"), new Position("d3"));
+        ChessGame.move(board, new Position("e4"), new Position("e5"));
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
@@ -101,9 +102,9 @@ public class PawnTest {
         // when
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("d4"), new Board.Position("c5"))
+                () -> ChessGame.move(board, new Position("d4"), new Position("c5"))
         );
-        ChessGame.move(board, new Board.Position("d4"), new Board.Position("e5"));
+        ChessGame.move(board, new Position("d4"), new Position("e5"));
 
         // then
         assertEquals(expect, BoardView.showBoard(board));

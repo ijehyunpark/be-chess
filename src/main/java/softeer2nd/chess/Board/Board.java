@@ -45,34 +45,6 @@ public class Board {
         }
     }
 
-    public static class Position {
-        private final int xPos;
-        private final int yPos;
-
-        /**
-         * @param position "a3" 과 같은 보드판 위치 정보를 사용해야 합니다. <br/>
-         *                 이는 8 * 8 보드판 인덱스에서 (col = 5, row = 0)를 나타냅니다.
-         */
-        public Position(String position) {
-            yPos = COLUMN_NUMBER - Character.getNumericValue(
-                    position.charAt(1));
-            xPos = position.charAt(0) - 'a';
-        }
-
-        public Position(int col, int row) {
-            this.yPos = col;
-            this.xPos = row;
-        }
-
-        public int getXPos() {
-            return xPos;
-        }
-
-        public int getYPos() {
-            return yPos;
-        }
-    }
-
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
     private List<Rank> ranks;
@@ -156,8 +128,8 @@ public class Board {
     }
 
     public Piece findPiece(Position position) {
-        return ranks.get(position.yPos)
-                .getPiece(position.xPos);
+        return ranks.get(position.getYPos())
+                .getPiece(position.getXPos());
     }
 
     public boolean isBlankPiece(Position position) {
@@ -169,8 +141,8 @@ public class Board {
      * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
     public void assignPiece(Position position, Piece piece) {
-        ranks.get(position.yPos)
-                .setPiece(position.xPos, piece);
+        ranks.get(position.getYPos())
+                .setPiece(position.getXPos(), piece);
     }
 
     /**

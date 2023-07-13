@@ -2,6 +2,7 @@ package softeer2nd;
 
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.Board.Position;
 
 import java.util.Scanner;
 
@@ -51,7 +52,7 @@ public class Main {
         } else if (!isStart) {
             System.out.println("게임을 시작해 주세요.");
         }
-        ChessGame.move(board, new Board.Position(commandArgs[1]), new Board.Position(commandArgs[2]));
+        ChessGame.move(board, new Position(commandArgs[1]), new Position(commandArgs[2]));
 
         System.out.println(showBoard(board));
     }

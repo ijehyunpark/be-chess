@@ -14,7 +14,7 @@ public abstract class ChessGame {
      *
      * @throws IllegalArgumentException 범위를 벗어나는 이동, 같은 색깔 기물로 이동, 빈 칸 이동의 경우 발생한다.
      */
-    public static void move(Board board, Board.Position sourcePosition, Board.Position destinationPosition) {
+    public static void move(Board board, Position sourcePosition, Position destinationPosition) {
         if (destinationPosition.getYPos() < 0 || destinationPosition.getYPos() >= Board.COLUMN_NUMBER ||
                 destinationPosition.getXPos() < 0 || destinationPosition.getXPos() >= Board.ROW_NUMBER) {
             throw new IllegalArgumentException(OUT_OF_BOUND_INPUT);

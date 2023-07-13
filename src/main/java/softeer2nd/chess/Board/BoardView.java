@@ -14,7 +14,7 @@ public abstract class BoardView {
         StringBuilder builder = new StringBuilder();
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             for (int row = 0; row < ROW_NUMBER; row++) {
-                Piece piece = board.findPiece(new Board.Position(col, row));
+                Piece piece = board.findPiece(new Position(col, row));
                 builder.append(piece.getRepresentation());
             }
             appendNewLine(builder);
