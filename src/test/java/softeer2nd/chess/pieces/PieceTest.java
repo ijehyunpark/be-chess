@@ -7,9 +7,11 @@ import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.Board.Position;
+import softeer2nd.chess.exception.ExceptionMessage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static softeer2nd.chess.Board.BoardView.showBoard;
+import static softeer2nd.chess.exception.ExceptionMessage.*;
 import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
@@ -205,13 +207,14 @@ class PieceTest {
         board.initialize(sample);
 
         // when
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("f6"), new Position("a6"))
         );
         ChessGame.move(board, new Position("f6"), new Position("b6"));
 
         // then
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
         assertEquals(expect, BoardView.showBoard(board));
     }
 
@@ -245,18 +248,19 @@ class PieceTest {
         board.initialize(sample);
 
         // when
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("f6"), new Position("a6"))
         );
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
     }
 
 
     @Test
-    @DisplayName("없는 기물의 움직임 테스트는 실패해야 합니다")
+    @DisplayName("빈 기물의 움직임 테스트는 실패해야 합니다")
     void moveEmpty() {
         // given
         String expect = appendNewLine(
@@ -273,12 +277,13 @@ class PieceTest {
         board.initializeEmpty();
 
         // when
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("e6"), new Position("g7"))
         );
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
+        assertEquals(MOVE_NOT_MOVABLE_PIECE, illegalArgumentException.getMessage());
     }
 }

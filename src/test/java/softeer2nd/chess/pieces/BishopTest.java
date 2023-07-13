@@ -11,6 +11,7 @@ import softeer2nd.chess.pieces.concrete.Bishop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class BishopTest {
@@ -52,12 +53,13 @@ public class BishopTest {
         ChessGame.move(board, new Position("e6"), new Position("g8"));
         Piece result1 = board.findPiece(new Position("g8"));
 
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("g8"), new Position("g7"))
         );
 
         // then
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
         assertEquals(result1, Bishop.createBlackBishop());
         assertEquals(expect, BoardView.showBoard(board));
     }

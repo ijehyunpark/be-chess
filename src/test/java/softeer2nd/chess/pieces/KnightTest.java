@@ -11,7 +11,7 @@ import softeer2nd.chess.pieces.concrete.Knight;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class KnightTest {
@@ -56,12 +56,13 @@ public class KnightTest {
         ChessGame.move(board, new Position("e6"), new Position("d8"));
         Piece result1 = board.findPiece(new Position("d8"));
 
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("d8"), new Position("d7"))
         );
 
         // then
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
         assertEquals(result1, Knight.createBlackKnight());
         assertEquals(expect, BoardView.showBoard(board));
     }
