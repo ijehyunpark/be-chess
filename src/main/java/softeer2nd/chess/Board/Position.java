@@ -29,4 +29,8 @@ public class Position {
         return xPos;
     }
 
+    public static boolean isSamePosition(Position position1, Position position2) {
+        return position1.getYPos() == position2.getYPos() &&
+                position1.getXPos() == position2.getXPos();
+    }
 }

@@ -4,12 +4,12 @@ import softeer2nd.chess.pieces.RecursiveMovAblePiece;
 
 import java.util.List;
 
-import static softeer2nd.chess.pieces.MovablePiece.BasicDirection.*;
+import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 public class Rook extends RecursiveMovAblePiece {
     private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
-    private final List<BasicDirection> movableDirection = List.of(
+    private final List<Direction> movableDirection = List.of(
             NORTH, EAST, SOUTH, WEST
     );
 
@@ -32,7 +32,7 @@ public class Rook extends RecursiveMovAblePiece {
     }
 
     @Override
-    public List<BasicDirection> getBasicDirection() {
+    public List<Direction> getDirection() {
         return movableDirection;
     }
 }

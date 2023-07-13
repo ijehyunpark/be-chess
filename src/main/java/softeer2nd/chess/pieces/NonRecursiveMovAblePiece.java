@@ -17,7 +17,7 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
         super(color, type);
     }
 
-    abstract public List<BasicDirection> getBasicDirection();
+    abstract public List<Direction> getDirection();
 
     /**
      * 단순하게 기물이 한 번 이동 가능한 위치로 확장한다.
@@ -25,18 +25,16 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
      *
      * @param moveAble      확장된 기물의 움직임을 저장할 리스트 객체
      * @param directionList 기물의 움직임을 확장할 방향 (Note: 보드판의 범위를 넘어서 확장되지 않는다.
-     * @param currentY      탐색 중에 사용되는 y 좌표
-     * @param currentX      탐색 중에 사용되는 x 좌표
+     * @param position      탐색 중에 사용되는 보드판 좌표
      */
-    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, Position position) {
-        for (BasicDirection direction : directionList) {
-            int nextY = position.getYPos() + direction.getYDegree();
-            int nextX = position.getXPos() + direction.getXDegree();
+    protected void makeMoveAble(Board board, List<Position> moveAble, List<Direction> directionList, Position position) {
+        for (Direction direction : directionList) {
+            Position nextPosition = movePosition(position, direction);
 
             if (board.isOutOfBoardIndex(position)) {
                 continue;
             }
-            moveAble.add(new Direction(nextY, nextX));
+            moveAble.add(nextPosition);
         }
     }
 
@@ -46,8 +44,8 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
 
-        List<Direction> moveAble = new ArrayList<>();
-        makeMoveAble(board, moveAble, getBasicDirection(), source);
+        List<Position> moveAble = new ArrayList<>();
+        makeMoveAble(board, moveAble, getDirection(), source);
 
         verifyTargetMove(moveAble, destination);
     }
