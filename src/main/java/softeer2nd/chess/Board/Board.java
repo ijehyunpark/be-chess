@@ -6,6 +6,7 @@ import softeer2nd.chess.pieces.PieceFactory;
 import softeer2nd.chess.pieces.concrete.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static softeer2nd.chess.pieces.Piece.Color.BLACK;
 import static softeer2nd.chess.pieces.Piece.Type.*;
@@ -15,18 +16,32 @@ public class Board {
 
     public static class Rank {
 
-        public final List<Piece> pieces;
+        public final List<RankPiece> rankPieces;
+
+        private static class RankPiece {
+
+            public Piece piece;
+            public Boolean isMoved;
+
+            public RankPiece(Piece piece) {
+                this.piece = piece;
+                this.isMoved = false;
+            }
+
+        }
 
         private Rank(List<Piece> pieces) {
-            this.pieces = pieces;
+            this.rankPieces = pieces.stream()
+                    .map(RankPiece::new)
+                    .collect(Collectors.toList());
         }
 
         public Piece getPiece(int x) {
-            return pieces.get(x);
+            return rankPieces.get(x).piece;
         }
 
         public void setPiece(int x, Piece piece) {
-            pieces.set(x, piece);
+            rankPieces.get(x).piece = piece;
         }
 
         public static Rank createBlankRank() {
@@ -45,6 +60,14 @@ public class Board {
             return new Rank(pieces);
         }
 
+        public boolean isMoved(int xPos) {
+            return rankPieces.get(xPos).isMoved;
+        }
+
+        public void setMoved(int xPos) {
+            rankPieces.get(xPos).isMoved = true;
+        }
+
     }
 
     public static final int COLUMN_NUMBER = 8;
@@ -59,28 +82,32 @@ public class Board {
 
     public int pieceCount() {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.pieces.stream())
+                .flatMap(rank -> rank.rankPieces.stream())
+                .map(rankPiece -> rankPiece.piece)
                 .filter(piece -> piece.getPieceType() != NO_PIECE)
                 .count();
     }
 
     public int pieceCount(Piece.Type type) {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.pieces.stream())
+                .flatMap(rank -> rank.rankPieces.stream())
+                .map(rankPiece -> rankPiece.piece)
                 .filter(piece -> piece.getPieceType() == type)
                 .count();
     }
 
     public int pieceCount(Piece.Color color) {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.pieces.stream())
+                .flatMap(rank -> rank.rankPieces.stream())
+                .map(rankPiece -> rankPiece.piece)
                 .filter(piece -> piece.getColor() == color)
                 .count();
     }
 
     public int pieceCount(Piece.Type type, Piece.Color color) {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.pieces.stream())
+                .flatMap(rank -> rank.rankPieces.stream())
+                .map(rankPiece -> rankPiece.piece)
                 .filter(piece -> piece.getPieceType() == type && piece.getColor() == color)
                 .count();
     }
@@ -157,7 +184,8 @@ public class Board {
     public double calculatePoint(Piece.Color color) {
         // 기본 점수 계산
         double score = ranks.stream()
-                .flatMap(rank -> rank.pieces.stream())
+                .flatMap(rank -> rank.rankPieces.stream())
+                .map(rankPiece -> rankPiece.piece)
                 .filter(piece -> piece.getColor() == color)
                 .mapToDouble(value -> value.getPieceType().getDefaultScore())
                 .sum();
@@ -212,7 +240,8 @@ public class Board {
                 QUEEN, 0.0));
 
         ranks.stream()
-                .flatMap(rank -> rank.pieces.stream())
+                .flatMap(rank -> rank.rankPieces.stream())
+                .map(rankPiece -> rankPiece.piece)
                 .filter(piece -> piece.getColor() == color)
                 .forEach(piece -> scores.computeIfPresent(
                         piece.getPieceType(), (k, v) -> v + piece.getPieceType().getDefaultScore()));
@@ -234,6 +263,17 @@ public class Board {
 
     public boolean isRemovedAllKing(Piece.Color color) {
         return pieceCount(KING, color) == 0;
+    }
+
+    public boolean isMoved(Position position) {
+        return ranks.get(position.getYPos())
+                .isMoved(position.getXPos());
+    }
+
+
+    public void setPieceMoved(Position position) {
+        ranks.get(position.getYPos())
+                .setMoved(position.getXPos());
     }
 
 }

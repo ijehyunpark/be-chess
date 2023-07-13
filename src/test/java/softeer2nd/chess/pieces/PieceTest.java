@@ -5,12 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
-import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
+import softeer2nd.chess.GameManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static softeer2nd.chess.Board.BoardView.showBoard;
-import static softeer2nd.chess.exception.ExceptionMessage.*;
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
+import static softeer2nd.chess.exception.ExceptionMessage.MOVE_NOT_MOVABLE_PIECE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class PieceTest {
@@ -287,6 +288,26 @@ class PieceTest {
         // then
         assertEquals(expect, BoardView.showBoard(board));
         assertEquals(MOVE_NOT_MOVABLE_PIECE, illegalArgumentException.getMessage());
+    }
+
+    @Test
+    @DisplayName("이미 움직인 기물의 정보를 가지고 있어야 한다.")
+    void isMoveCheck() {
+        //given
+        board.initialize();
+
+        //when
+        boolean isMovedBeforeA2 = board.isMoved(new Position("a2"));
+        boolean isMovedBeforeA3 = board.isMoved(new Position("a3"));
+        chessGame.move(new Position("a2"), new Position("a3"));
+        boolean isMovedAfterA2 = board.isMoved(new Position("a2"));
+        boolean isMovedAfterA3 = board.isMoved(new Position("a3"));
+
+        //then
+        assertFalse(isMovedBeforeA2);
+        assertFalse(isMovedBeforeA3);
+        assertTrue(isMovedAfterA2);
+        assertTrue(isMovedAfterA3);
     }
 
 }
