@@ -11,9 +11,9 @@ import java.util.List;
 
 import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 
-public abstract class RecursiveMovAblePiece extends AbstractPiece implements MovablePiece {
+public abstract class RecursiveMovablePiece extends AbstractPiece implements MovablePiece {
 
-    protected RecursiveMovAblePiece(Color color, Type type) {
+    protected RecursiveMovablePiece(Color color, Type type) {
         super(color, type);
     }
 
@@ -49,7 +49,7 @@ public abstract class RecursiveMovAblePiece extends AbstractPiece implements Mov
         List<Position> moveAble = new ArrayList<>();
         getDirection().forEach(direction -> expandPieceMoveAble(board, moveAble, direction, source));
 
-        verifyTargetMove(moveAble, destination);
+        verifyDestinationMove(moveAble, destination);
     }
 
 }

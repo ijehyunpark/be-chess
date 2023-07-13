@@ -1,12 +1,12 @@
 package softeer2nd.chess.pieces.concrete;
 
-import softeer2nd.chess.pieces.RecursiveMovAblePiece;
+import softeer2nd.chess.pieces.RecursiveMovablePiece;
 
 import java.util.List;
 
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
-public class Rook extends RecursiveMovAblePiece {
+public class Rook extends RecursiveMovablePiece {
 
     private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);

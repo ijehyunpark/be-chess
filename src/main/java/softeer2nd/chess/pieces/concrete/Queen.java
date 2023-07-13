@@ -1,12 +1,12 @@
 package softeer2nd.chess.pieces.concrete;
 
-import softeer2nd.chess.pieces.RecursiveMovAblePiece;
+import softeer2nd.chess.pieces.RecursiveMovablePiece;
 
 import java.util.List;
 
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
-public class Queen extends RecursiveMovAblePiece {
+public class Queen extends RecursiveMovablePiece {
 
     private static final Queen BLACK_QUEEN = new Queen(Color.BLACK);
     private static final Queen WHITE_QUEEN = new Queen(Color.WHITE);
