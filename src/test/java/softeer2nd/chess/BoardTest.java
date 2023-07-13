@@ -120,6 +120,7 @@ class BoardTest {
     void createPiece() {
         board.initialize();
         GameManager chessGame = new GameManager(board);
+        chessGame.setIgnoreTurn();
         chessGame.start();
 
         Position sourcePosition = new Position("b2");
