@@ -73,7 +73,46 @@ public class PawnTest {
 
     @Test
     @DisplayName("대각선 공격 테스트")
-    void moveEnPassant() {
+    void attackForward() {
+        // given
+        String sample = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "...P....",
+                "...p....",
+                "........",
+                "........",
+                "........"
+        );
+
+        String expect = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "...P....",
+                "...p....",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(sample);
+
+        // when
+        IllegalArgumentException illegalArgumentException = assertThrows(
+                IllegalArgumentException.class,
+                () -> ChessGame.move(board, new Position("d4"), new Position("d5"))
+        );
+
+        // then
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
+        assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("대각선 공격 테스트")
+    void moveAttack() {
         // given
         String sample = appendNewLine(
                 "........",
