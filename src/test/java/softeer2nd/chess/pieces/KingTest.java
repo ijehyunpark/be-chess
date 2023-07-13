@@ -7,7 +7,9 @@ import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.Board.Position;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class KingTest {
@@ -36,15 +38,14 @@ public class KingTest {
         board.initialize(sample);
 
         // when
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("e5"), new Position("e7"))
         );
         ChessGame.move(board, new Position("e5"), new Position("e6"));
 
         // then
-
-
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
     }
 }
 

@@ -10,7 +10,7 @@ import softeer2nd.chess.Board.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class PawnTest {
@@ -72,7 +72,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("앙파상 테스트")
+    @DisplayName("대각선 공격 테스트")
     void moveEnPassant() {
         // given
         String sample = appendNewLine(
@@ -100,13 +100,14 @@ public class PawnTest {
         board.initialize(sample);
 
         // when
-        assertThrows(
+        IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Position("d4"), new Position("c5"))
         );
         ChessGame.move(board, new Position("d4"), new Position("e5"));
 
         // then
+        assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
         assertEquals(expect, BoardView.showBoard(board));
     }
 

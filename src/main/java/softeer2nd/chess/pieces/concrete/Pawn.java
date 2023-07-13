@@ -16,7 +16,7 @@ public class Pawn extends NonRecursiveMovAblePiece {
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
     private static final List<BasicDirection> movableDirection = List.of(
     );
-    private static final List<BasicDirection> enPassantMovableDirection = List.of(
+    private static final List<BasicDirection> attackMovableDirection = List.of(
             NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST
     );
 
@@ -43,8 +43,8 @@ public class Pawn extends NonRecursiveMovAblePiece {
         return movableDirection;
     }
 
-    private void enPassant(Board board, List<BasicDirection> pawnMoveAble, final int currentY, final int currentX) {
-        for (BasicDirection direction : enPassantMovableDirection) {
+    private void attackMove(Board board, List<BasicDirection> pawnMoveAble, final int currentY, final int currentX) {
+        for (BasicDirection direction : attackMovableDirection) {
             int nextY = currentY + direction.getYDegree();
             int nextX = currentX + direction.getXDegree();
 
@@ -64,7 +64,7 @@ public class Pawn extends NonRecursiveMovAblePiece {
     @Override
     protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
         List<BasicDirection> pawnMoveAble = new ArrayList<>(directionList);
-        enPassant(board, pawnMoveAble, currentY, currentX);
+        attackMove(board, pawnMoveAble, currentY, currentX);
         super.makeMoveAble(board, moveAble, pawnMoveAble, currentY, currentX);
     }
 
