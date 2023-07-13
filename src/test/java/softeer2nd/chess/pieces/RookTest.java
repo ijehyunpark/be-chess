@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
-import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.exception.ExceptionMessage;
 import softeer2nd.chess.pieces.concrete.Rook;
@@ -58,19 +58,19 @@ public class RookTest {
         board.initialize(rookSample);
 
         // when
-        ChessGame.move(board, new Position("e6"), new Position("e8"));
+        GameManager.move(board, new Position("e6"), new Position("e8"));
         Piece result1 = board.findPiece(new Position("e8"));
-        ChessGame.move(board, new Position("e8"), new Position("e5"));
+        GameManager.move(board, new Position("e8"), new Position("e5"));
         Piece result2 = board.findPiece(new Position("e5"));
 
-        ChessGame.move(board, new Position("e5"), new Position("a5"));
+        GameManager.move(board, new Position("e5"), new Position("a5"));
         Piece result3 = board.findPiece(new Position("a5"));
-        ChessGame.move(board, new Position("a5"), new Position("f5"));
+        GameManager.move(board, new Position("a5"), new Position("f5"));
         Piece result4 = board.findPiece(new Position("f5"));
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("f5"), new Position("a1"))
+                () -> GameManager.move(board, new Position("f5"), new Position("a1"))
         );
 
         // then
@@ -90,7 +90,7 @@ public class RookTest {
         board.assignPiece(source, Rook.createBlackRook());
 
         // when
-        ChessGame.move(board, source, destination);
+        GameManager.move(board, source, destination);
         Piece origin = board.findPiece(source);
         Piece target = board.findPiece(destination);
 
@@ -135,7 +135,7 @@ public class RookTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, source, destination)
+                () -> GameManager.move(board, source, destination)
         );
 
         // then

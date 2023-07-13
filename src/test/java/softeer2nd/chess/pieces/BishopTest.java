@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
-import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.pieces.concrete.Bishop;
 
@@ -50,12 +50,12 @@ public class BishopTest {
         board.initialize(bishopSample);
 
         // when
-        ChessGame.move(board, new Position("e6"), new Position("g8"));
+        GameManager.move(board, new Position("e6"), new Position("g8"));
         Piece result1 = board.findPiece(new Position("g8"));
 
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("g8"), new Position("g7"))
+                () -> GameManager.move(board, new Position("g8"), new Position("g7"))
         );
 
         // then

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
-import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,19 +53,19 @@ public class PawnTest {
         // when
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("d4"), new Position("d5"))
+                () -> GameManager.move(board, new Position("d4"), new Position("d5"))
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("d4"), new Position("c4"))
+                () -> GameManager.move(board, new Position("d4"), new Position("c4"))
         );
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("d4"), new Position("e4"))
+                () -> GameManager.move(board, new Position("d4"), new Position("e4"))
         );
-        ChessGame.move(board, new Position("d4"), new Position("d3"));
-        ChessGame.move(board, new Position("e4"), new Position("e5"));
+        GameManager.move(board, new Position("d4"), new Position("d3"));
+        GameManager.move(board, new Position("e4"), new Position("e5"));
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
@@ -102,7 +102,7 @@ public class PawnTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("d4"), new Position("d5"))
+                () -> GameManager.move(board, new Position("d4"), new Position("d5"))
         );
 
         // then
@@ -141,9 +141,9 @@ public class PawnTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("d4"), new Position("c5"))
+                () -> GameManager.move(board, new Position("d4"), new Position("c5"))
         );
-        ChessGame.move(board, new Position("d4"), new Position("e5"));
+        GameManager.move(board, new Position("d4"), new Position("e5"));
 
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
