@@ -9,7 +9,8 @@ import softeer2nd.chess.Board.ChessGame;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class PawnTest {
 
@@ -24,26 +25,29 @@ public class PawnTest {
     @DisplayName("폰 움직임 테스트")
     void movePawn() {
         // given
-        String sample =
-                "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "...Pp..." +
-                        "........" +
-                        "........" +
-                        "........";
+        String sample = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "........",
+                "...Pp...",
+                "........",
+                "........",
+                "........"
+        );
 
-        String expect =
-                "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "....p..." + NEWLINE +
-                        "........" + NEWLINE +
-                        "...P...." + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, sample);
+        String expect = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "....p...",
+                "........",
+                "...P....",
+                "........",
+                "........"
+        );
+
+        board.initialize(sample);
 
         // when
         assertThrows(
@@ -70,26 +74,29 @@ public class PawnTest {
     @DisplayName("앙파상 테스트")
     void moveEnPassant() {
         // given
-        String sample =
-                "........" +
-                        "........" +
-                        "........" +
-                        "....p..." +
-                        "...P...." +
-                        "........" +
-                        "........" +
-                        "........";
+        String sample = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "....p...",
+                "...P....",
+                "........",
+                "........",
+                "........"
+        );
 
-        String expect =
-                "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "....P..." + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, sample);
+        String expect = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "....P...",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(sample);
 
         // when
         assertThrows(

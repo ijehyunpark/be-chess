@@ -10,7 +10,8 @@ import softeer2nd.chess.pieces.concrete.Knight;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class KnightTest {
     Board board;
@@ -25,26 +26,30 @@ public class KnightTest {
     @DisplayName("나이트 기물의 움직임 테스트")
     void moveKnight() {
         // given
-        String knightSample =
-                "........" +
-                        "........" +
-                        "....N..." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........";
+        String knightSample = appendNewLine(
+                "........",
+                "........",
+                "....N...",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
 
-        String expect =
-                "...N...." + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, knightSample);
+
+        String expect = appendNewLine(
+                "...N....",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(knightSample);
 
         // when
         ChessGame.move(board, new Board.Position("e6"), new Board.Position("d8"));

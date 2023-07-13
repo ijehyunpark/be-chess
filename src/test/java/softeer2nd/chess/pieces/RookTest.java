@@ -10,7 +10,8 @@ import softeer2nd.chess.pieces.concrete.Rook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class RookTest {
 
@@ -26,26 +27,30 @@ public class RookTest {
     @DisplayName("룩 기물의 움직임 테스트")
     void moveRook() {
         // given
-        String rookSample =
-                "........" +
-                        "........" +
-                        "....R..." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........";
+        String rookSample = appendNewLine(
 
-        String expect =
-                "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        ".....R.." + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, rookSample);
+                "........",
+                "........",
+                "....R...",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        String expect = appendNewLine(
+                "........",
+                "........",
+                "........",
+                ".....R..",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(rookSample);
 
         // when
         ChessGame.move(board, new Board.Position("e6"), new Board.Position("e8"));

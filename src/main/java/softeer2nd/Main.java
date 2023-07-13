@@ -6,7 +6,7 @@ import softeer2nd.chess.Board.ChessGame;
 import java.util.Scanner;
 
 import static softeer2nd.chess.Board.BoardView.showBoard;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
 
 public class Main {
 
@@ -39,7 +39,7 @@ public class Main {
     }
 
     private static void start() {
-        ChessGame.initialize(board);
+        board.initialize();
         isStart = true;
 
         System.out.println(showBoard(board));
@@ -47,7 +47,7 @@ public class Main {
 
     private static void move(String[] commandArgs) {
         if (commandArgs.length != 3) {
-            System.out.println("잘못된 인자 개수입니다. 다음과 같이 입력해 주세요." + NEWLINE + "move [이동 전] [이동 후]");
+            System.out.println("잘못된 인자 개수입니다. 다음과 같이 입력해 주세요." + NEW_LINE + "move [이동 전] [이동 후]");
         } else if (!isStart) {
             System.out.println("게임을 시작해 주세요.");
         }

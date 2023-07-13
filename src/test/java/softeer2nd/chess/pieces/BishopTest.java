@@ -10,7 +10,7 @@ import softeer2nd.chess.pieces.concrete.Bishop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class BishopTest {
     Board board;
@@ -25,25 +25,27 @@ public class BishopTest {
     void moveBishop() {
         // given
         String bishopSample =
-                "........" +
-                        "........" +
-                        "....B..." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........";
+                appendNewLine(
+                        "........",
+                        "........",
+                        "....B...",
+                        "........",
+                        "........",
+                        "........",
+                        "........",
+                        "........");
 
         String expect =
-                "......B." + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, bishopSample);
+                appendNewLine(
+                        "......B.",
+                        "........",
+                        "........",
+                        "........",
+                        "........",
+                        "........",
+                        "........",
+                        "........");
+        board.initialize(bishopSample);
 
         // when
         ChessGame.move(board, new Board.Position("e6"), new Board.Position("g8"));
