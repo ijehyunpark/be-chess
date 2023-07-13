@@ -1,23 +1,17 @@
 package softeer2nd.chess.utils;
 
-public class StringUtils {
+public abstract class StringUtils {
 
     public static final String NEWLINE = System.getProperty("line.separator");
 
-    private StringUtils() {
-
+    public static String appendNewLine(final String message){
+        return message + NEWLINE;
     }
 
-    /**
-     * 문자열 끝에 개행 문자를 추가한다.
-     */
-    public static String appendNewLine(final String string) {
-        return string + NEWLINE;
+    public static String appendNewLine(final String... messages) {
+        return appendNewLine(String.join(NEWLINE, messages));
     }
 
-    /**
-     * 문자열 끝에 개행 문자를 추가한다.
-     */
     public static StringBuilder appendNewLine(final StringBuilder builder) {
         return builder.append(NEWLINE);
     }
