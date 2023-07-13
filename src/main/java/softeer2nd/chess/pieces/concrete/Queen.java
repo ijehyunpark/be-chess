@@ -28,7 +28,7 @@ public class Queen extends RecursiveMovePiece {
     /**
      * 백색 비숍 싱글톤 인스턴스를 가져온다.
      */
-    public static Queen createWhiteQueen(){
+    public static Queen createWhiteQueen() {
         return WHITE_QUEEN;
     }
 

@@ -16,7 +16,7 @@ class PieceTest {
     Board board;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         board = new Board();
     }
 
@@ -68,23 +68,23 @@ class PieceTest {
         // given
         String sample =
                 ".K......" +
-                "........" +
-                "K....KN." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                ".......K";
+                        "........" +
+                        "K....KN." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        ".......K";
 
         String expect =
                 "........\n" +
-                "..K.....\n" +
-                ".....KN.\n" +
-                "........\n" +
-                "K.......\n" +
-                "........\n" +
-                "........\n" +
-                ".......K\n";
+                        "..K.....\n" +
+                        ".....KN.\n" +
+                        "........\n" +
+                        "K.......\n" +
+                        "........\n" +
+                        "........\n" +
+                        ".......K\n";
 
         ChessGame.initialize(board, sample);
 
@@ -123,23 +123,23 @@ class PieceTest {
         // given
         String sample =
                 "........" +
-                "........" +
-                "Q....QN." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                ".......Q";
+                        "........" +
+                        "Q....QN." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        ".......Q";
 
         String expect =
                 "........\n" +
-                "........\n" +
-                "......N.\n" +
-                "........\n" +
-                "....Q...\n" +
-                "Q.......\n" +
-                "........\n" +
-                ".....Q..\n";
+                        "........\n" +
+                        "......N.\n" +
+                        "........\n" +
+                        "....Q...\n" +
+                        "Q.......\n" +
+                        "........\n" +
+                        ".....Q..\n";
 
         ChessGame.initialize(board, sample);
 
@@ -174,23 +174,23 @@ class PieceTest {
         // given
         String sample =
                 "........" +
-                "........" +
-                ".q...Q.." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        ".q...Q.." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "........" + NEWLINE +
-                "........" + NEWLINE +
-                ".Q......" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        ".Q......" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, sample);
 
         // when
@@ -198,7 +198,7 @@ class PieceTest {
                 IllegalArgumentException.class,
                 () -> ChessGame.move(board, new Board.Position("f6"), new Board.Position("a6"))
         );
-        ChessGame.move(board, new Board.Position("f6") ,new Board.Position("b6"));
+        ChessGame.move(board, new Board.Position("f6"), new Board.Position("b6"));
 
         // then
         assertEquals(expect, BoardView.showBoard(board));
@@ -210,23 +210,23 @@ class PieceTest {
         // given
         String sample =
                 "........" +
-                "........" +
-                ".Q...Q.." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        ".Q...Q.." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "........" + NEWLINE +
-                "........" + NEWLINE +
-                ".Q...Q.." + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        ".Q...Q.." + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, sample);
 
         // when
@@ -246,13 +246,13 @@ class PieceTest {
         // given
         String expect =
                 "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initializeEmpty(board);
 
         // when

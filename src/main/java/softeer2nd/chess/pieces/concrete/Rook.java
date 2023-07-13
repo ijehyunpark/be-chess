@@ -10,10 +10,7 @@ public class Rook extends RecursiveMovePiece {
     private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
     private final List<BasicDirection> moveAble = List.of(
-            NORTH,
-            EAST,
-            SOUTH,
-            WEST
+            NORTH, EAST, SOUTH, WEST
     );
 
     private Rook(Color color) {
@@ -30,7 +27,7 @@ public class Rook extends RecursiveMovePiece {
     /**
      * 백색 비숍 싱글톤 인스턴스를 가져온다.
      */
-    public static Rook createWhiteRook(){
+    public static Rook createWhiteRook() {
         return WHITE_ROOK;
     }
 

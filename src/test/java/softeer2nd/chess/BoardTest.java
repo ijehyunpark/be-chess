@@ -4,15 +4,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
-import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
-import softeer2nd.chess.pieces.*;
-import softeer2nd.chess.pieces.concrete.*;
+import softeer2nd.chess.pieces.BlankPiece;
+import softeer2nd.chess.pieces.PieceFactory;
+import softeer2nd.chess.pieces.concrete.King;
+import softeer2nd.chess.pieces.concrete.Pawn;
+import softeer2nd.chess.pieces.concrete.Queen;
+import softeer2nd.chess.pieces.concrete.Rook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static softeer2nd.chess.Board.BoardView.showBoard;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
@@ -45,7 +46,7 @@ class BoardTest {
 
     @Test
     @DisplayName("보드판 생성 테스트")
-    void create(){
+    void create() {
         ChessGame.initialize(board);
         assertEquals(32, board.pieceCount());
         String blankRank = appendNewLine("........");

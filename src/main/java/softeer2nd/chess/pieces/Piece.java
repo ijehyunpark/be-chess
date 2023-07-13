@@ -6,8 +6,9 @@ public interface Piece {
     enum Color {
         BLACK, WHITE, NO_COLOR;
     }
+
     enum Type {
-        KING('k', 0), QUEEN('q', 9), ROOK('r',5),
+        KING('k', 0), QUEEN('q', 9), ROOK('r', 5),
         BISHOP('b', 3), KNIGHT('n', 2.5), PAWN('p', 1),
         NO_PIECE('.', 0);
 
@@ -35,6 +36,7 @@ public interface Piece {
             return defaultScore;
         }
     }
+
     enum BasicDirection {
         NORTH(-1, 0),
         NORTHEAST(1, -1),
@@ -71,6 +73,7 @@ public interface Piece {
             return xDegree;
         }
     }
+
     class Direction {
         private int y;
         private int x;
@@ -92,8 +95,12 @@ public interface Piece {
     void verifyMove(Board board, Board.Position source, Board.Position target);
 
     Color getColor();
+
     Type getPieceType();
+
     char getRepresentation();
+
     boolean isBlack();
+
     boolean isWhite();
 }

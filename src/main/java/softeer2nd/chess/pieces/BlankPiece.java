@@ -18,7 +18,8 @@ public class BlankPiece implements Piece {
         this.color = Color.NO_COLOR;
         this.type = Type.NO_PIECE;
     }
-    protected BlankPiece(Color color, Type type){
+
+    protected BlankPiece(Color color, Type type) {
         this.color = color;
         this.type = type;
     }
@@ -30,26 +31,30 @@ public class BlankPiece implements Piece {
         return BlankPiece.BLANK_PIECE_INSTANCE;
     }
 
-    protected void verifyTargetMove(Board.Position target, List<Direction> moveAble){
+    protected void verifyTargetMove(Board.Position target, List<Direction> moveAble) {
         boolean isMoveAble = moveAble.stream()
                 .anyMatch(direction ->
                         target.getYPos() == direction.getY() &&
-                        target.getXPos() == direction.getX());
+                                target.getXPos() == direction.getX());
 
-        if(!isMoveAble)
+        if (!isMoveAble) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 범위입니다.");
+        }
     }
 
     public void verifyMove(Board board, Board.Position source, Board.Position target) {
         throw new IllegalArgumentException("정의되지 않는 기물(빈 기물)은 이동할 수 없습니다.");
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
+
     public Type getPieceType() {
         return this.type;
-    };
+    }
+
+    ;
 
     public char getRepresentation() {
         return color == Color.BLACK ?

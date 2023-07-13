@@ -13,6 +13,7 @@ public class Knight extends NonRecursiveMovePiece {
             NNE, NNW, SSE, SSW,
             EEN, EES, WWN, WWS
     );
+
     private Knight(Color color) {
         super(color, Type.KNIGHT);
     }
@@ -27,7 +28,7 @@ public class Knight extends NonRecursiveMovePiece {
     /**
      * 백색 나이트싱글톤 인스턴스를 가져온다.
      */
-    public static Knight createWhiteKnight(){
+    public static Knight createWhiteKnight() {
         return WHITE_KNIGHT;
     }
 

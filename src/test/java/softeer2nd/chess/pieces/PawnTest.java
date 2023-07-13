@@ -16,7 +16,7 @@ public class PawnTest {
     Board board;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         board = new Board();
     }
 
@@ -26,23 +26,23 @@ public class PawnTest {
         // given
         String sample =
                 "........" +
-                "........" +
-                "........" +
-                "........" +
-                "...Pp..." +
-                "........" +
-                "........" +
-                "........" ;
+                        "........" +
+                        "........" +
+                        "........" +
+                        "...Pp..." +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "....p..." + NEWLINE +
-                "........" + NEWLINE +
-                "...P...." + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "....p..." + NEWLINE +
+                        "........" + NEWLINE +
+                        "...P...." + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, sample);
 
         // when
@@ -72,23 +72,23 @@ public class PawnTest {
         // given
         String sample =
                 "........" +
-                "........" +
-                "........" +
-                "....p..." +
-                "...P...." +
-                "........" +
-                "........" +
-                "........" ;
+                        "........" +
+                        "........" +
+                        "....p..." +
+                        "...P...." +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "....P..." + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "....P..." + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, sample);
 
         // when

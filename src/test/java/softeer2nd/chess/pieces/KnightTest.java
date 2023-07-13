@@ -16,7 +16,7 @@ public class KnightTest {
     Board board;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         board = new Board();
     }
 
@@ -27,23 +27,23 @@ public class KnightTest {
         // given
         String knightSample =
                 "........" +
-                "........" +
-                "....N..." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        "....N..." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "...N...." + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, knightSample);
 
         // when
