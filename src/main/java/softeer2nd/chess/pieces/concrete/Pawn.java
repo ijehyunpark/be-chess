@@ -46,8 +46,8 @@ public class Pawn extends NonRecursiveMovAblePiece {
 
     private void attackMove(Board board, List<Direction> pawnMoveAble, Position position) {
         for (Direction direction : attackMovableDirection) {
-            int nextY = position.getYPos() + direction.getYDegree();
-            int nextX = position.getXPos() + direction.getXDegree();
+            int nextY = position.getColumn() + direction.getYDegree();
+            int nextX = position.getRow() + direction.getXDegree();
 
             if (nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
                     nextX < 0 || nextX >= Board.ROW_NUMBER) {
@@ -86,8 +86,8 @@ public class Pawn extends NonRecursiveMovAblePiece {
 
     public void verifyForwardDifferentColor(Board board, Position source, Position destination, Direction forward) {
         if (!board.findPiece(destination).isBlank() &&
-                source.getYPos() + forward.getYDegree() == destination.getYPos() &&
-                source.getXPos() + forward.getXDegree() == destination.getXPos()) {
+                source.getColumn() + forward.getYDegree() == destination.getColumn() &&
+                source.getRow() + forward.getXDegree() == destination.getRow()) {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
     }
