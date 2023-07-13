@@ -26,7 +26,7 @@ public class Main {
                 start();
             } else if (command.equals("end")) {
                 scanLoop = false;
-            } else if (command.startsWith("move")) {
+            } else if (command.startsWith("move ")) {
                 String[] commandArgs = command.split(" ");
                 try {
                     move(commandArgs);
