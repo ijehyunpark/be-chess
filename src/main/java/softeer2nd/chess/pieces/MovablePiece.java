@@ -41,11 +41,11 @@ public interface MovablePiece extends Piece {
             this.rowDegree = rowDegree;
         }
 
-        public int getYDegree() {
+        public int getColumnDegree() {
             return columnDegree;
         }
 
-        public int getXDegree() {
+        public int getRowDegree() {
             return rowDegree;
         }
 
@@ -63,7 +63,7 @@ public interface MovablePiece extends Piece {
     }
 
     default Position movePosition(Position position, Direction direction) {
-        return new Position(position.getColumn() + direction.getYDegree(), position.getRow() + direction.getXDegree());
+        return new Position(position.getColumn() + direction.getColumnDegree(), position.getRow() + direction.getRowDegree());
     }
 
 }
