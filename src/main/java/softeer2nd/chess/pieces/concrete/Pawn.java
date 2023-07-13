@@ -75,11 +75,11 @@ public class Pawn extends NonRecursiveMovAblePiece {
         }
 
         // 색깔에 따른 직진 전진 방향 구분
-        BasicDirection forward = board.findPiece(source).isBlack() ? SOUTH : NORTH;
-        verifyForwardDifferentColor(board, source, destination, forward);
+        BasicDirection straight = board.findPiece(source).isBlack() ? SOUTH : NORTH;
+        verifyForwardDifferentColor(board, source, destination, straight);
 
         List<Direction> moveAble = new ArrayList<>();
-        makeMoveAble(board, moveAble, List.of(forward), source);
+        makeMoveAble(board, moveAble, List.of(straight), source);
         verifyTargetMove(moveAble, destination);
     }
 
