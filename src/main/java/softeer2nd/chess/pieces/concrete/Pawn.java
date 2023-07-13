@@ -46,15 +46,13 @@ public class Pawn extends NonRecursiveMovAblePiece {
 
     private void attackMove(Board board, List<Direction> pawnMoveAble, Position position) {
         for (Direction direction : attackMovableDirection) {
-            int nextY = position.getColumn() + direction.getYDegree();
-            int nextX = position.getRow() + direction.getXDegree();
+            Position nextPosition = movePosition(position, direction);
 
-            if (nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
-                    nextX < 0 || nextX >= Board.ROW_NUMBER) {
+            if (board.isOutOfBoardIndex(nextPosition)) {
                 continue;
             }
 
-            Piece target = board.findPiece(new Position(nextY, nextX));
+            Piece target = board.findPiece(nextPosition);
             if (target.getPieceType() != Type.NO_PIECE
                     && target.getColor() != board.findPiece(position).getColor()) {
                 pawnMoveAble.add(direction);
@@ -71,23 +69,32 @@ public class Pawn extends NonRecursiveMovAblePiece {
 
     @Override
     public void verifyMove(Board board, Position source, Position destination) {
-        if (Piece.isSameColor(board.findPiece(source), board.findPiece(destination))) {
+        if (Piece.isSameColor(this, board.findPiece(destination))) {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
 
+        List<Direction> directionList = new ArrayList<>();
+
         // 색깔에 따른 직진 전진 방향 구분
-        Direction straight = board.findPiece(source).isBlack() ? SOUTH : NORTH;
+        Direction straight = this.isBlack() ? SOUTH : NORTH;
         verifyForwardDifferentColor(board, source, destination, straight);
+        directionList.add(straight);
+
+        // 처음 움직일 경우 두칸 전진
+        if(!board.isMoved(source)){
+            Direction doubleStraight = this.isBlack() ? SOUTH2 : NORTH2;
+            verifyForwardDifferentColor(board, source, destination, doubleStraight);
+            directionList.add(doubleStraight);
+        }
 
         List<Position> moveAble = new ArrayList<>();
-        makeMoveAble(board, moveAble, List.of(straight), source);
+        makeMoveAble(board, moveAble, directionList, source);
         verifyTargetMove(moveAble, destination);
     }
 
     public void verifyForwardDifferentColor(Board board, Position source, Position destination, Direction forward) {
         if (!board.findPiece(destination).isBlank() &&
-                source.getColumn() + forward.getYDegree() == destination.getColumn() &&
-                source.getRow() + forward.getXDegree() == destination.getRow()) {
+                Position.isSamePosition(movePosition(source, forward), destination)) {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
     }

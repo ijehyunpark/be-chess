@@ -42,7 +42,7 @@ public abstract class RecursiveMovAblePiece extends AbstractPiece implements Mov
 
     @Override
     public void verifyMove(Board board, Position source, Position destination) {
-        if (board.findPiece(source).getColor() == board.findPiece(destination).getColor()) {
+        if (this.getColor() == board.findPiece(destination).getColor()) {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
 

@@ -36,7 +36,7 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
 
     @Override
     public void verifyMove(Board board, Position source, Position destination) {
-        if (Piece.isSameColor(board.findPiece(source), board.findPiece(destination))) {
+        if (Piece.isSameColor(this, board.findPiece(destination))) {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
 
