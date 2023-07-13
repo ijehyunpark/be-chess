@@ -4,13 +4,13 @@ import softeer2nd.chess.pieces.RecursiveMovAblePiece;
 
 import java.util.List;
 
-import static softeer2nd.chess.pieces.MovablePiece.BasicDirection.*;
+import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 
 public class Bishop extends RecursiveMovAblePiece {
     private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
-    private final List<BasicDirection> movableDirection = List.of(
+    private final List<Direction> movableDirection = List.of(
             NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST
     );
 
@@ -33,7 +33,7 @@ public class Bishop extends RecursiveMovAblePiece {
     }
 
     @Override
-    public List<BasicDirection> getBasicDirection() {
+    public List<Direction> getDirection() {
         return movableDirection;
     }
 }

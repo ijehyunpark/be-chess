@@ -9,14 +9,14 @@ import softeer2nd.chess.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-import static softeer2nd.chess.pieces.MovablePiece.BasicDirection.*;
+import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 public class Pawn extends NonRecursiveMovAblePiece {
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
-    private static final List<BasicDirection> movableDirection = List.of(
+    private static final List<Direction> movableDirection = List.of(
     );
-    private static final List<BasicDirection> attackMovableDirection = List.of(
+    private static final List<Direction> attackMovableDirection = List.of(
             NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST
     );
 
@@ -39,12 +39,12 @@ public class Pawn extends NonRecursiveMovAblePiece {
     }
 
     @Override
-    public List<BasicDirection> getBasicDirection() {
+    public List<Direction> getDirection() {
         return movableDirection;
     }
 
-    private void attackMove(Board board, List<BasicDirection> pawnMoveAble, Position position) {
-        for (BasicDirection direction : attackMovableDirection) {
+    private void attackMove(Board board, List<Direction> pawnMoveAble, Position position) {
+        for (Direction direction : attackMovableDirection) {
             int nextY = position.getYPos() + direction.getYDegree();
             int nextX = position.getXPos() + direction.getXDegree();
 
@@ -62,8 +62,8 @@ public class Pawn extends NonRecursiveMovAblePiece {
     }
 
     @Override
-    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, Position position) {
-        List<BasicDirection> pawnMoveAble = new ArrayList<>(directionList);
+    protected void makeMoveAble(Board board, List<Position> moveAble, List<Direction> directionList, Position position) {
+        List<Direction> pawnMoveAble = new ArrayList<>(directionList);
         attackMove(board, pawnMoveAble, position);
         super.makeMoveAble(board, moveAble, pawnMoveAble, position);
     }
@@ -75,15 +75,15 @@ public class Pawn extends NonRecursiveMovAblePiece {
         }
 
         // 색깔에 따른 직진 전진 방향 구분
-        BasicDirection straight = board.findPiece(source).isBlack() ? SOUTH : NORTH;
+        Direction straight = board.findPiece(source).isBlack() ? SOUTH : NORTH;
         verifyForwardDifferentColor(board, source, destination, straight);
 
-        List<Direction> moveAble = new ArrayList<>();
+        List<Position> moveAble = new ArrayList<>();
         makeMoveAble(board, moveAble, List.of(straight), source);
         verifyTargetMove(moveAble, destination);
     }
 
-    public void verifyForwardDifferentColor(Board board, Position source, Position destination, BasicDirection forward) {
+    public void verifyForwardDifferentColor(Board board, Position source, Position destination, Direction forward) {
         if (!board.findPiece(destination).isBlank() &&
                 source.getYPos() + forward.getYDegree() == destination.getYPos() &&
                 source.getXPos() + forward.getXDegree() == destination.getXPos()) {

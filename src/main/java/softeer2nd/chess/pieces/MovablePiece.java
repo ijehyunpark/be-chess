@@ -8,7 +8,7 @@ import java.util.List;
 import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 
 public interface MovablePiece extends Piece {
-    enum BasicDirection {
+    enum Direction {
         NORTH(-1, 0),
         NORTHEAST(1, -1),
         EAST(0, 1),
@@ -31,7 +31,7 @@ public interface MovablePiece extends Piece {
         private final int yDegree;
         private final int xDegree;
 
-        BasicDirection(int yDegree, int xDegree) {
+        Direction(int yDegree, int xDegree) {
             this.yDegree = yDegree;
             this.xDegree = xDegree;
         }
@@ -45,33 +45,18 @@ public interface MovablePiece extends Piece {
         }
     }
 
-    class Direction {
-        private final int y;
-        private final int x;
-
-        public Direction(int y, int x) {
-            this.y = y;
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public int getX() {
-            return x;
-        }
-    }
-
     void verifyMove(Board board, Position source, Position destination);
 
-    default void verifyTargetMove(List<Direction> moveAble, Position destination) {
+    default void verifyTargetMove(List<Position> moveAble, Position destination) {
         boolean isMoveAble = moveAble.stream()
-                .anyMatch(direction -> destination.getYPos() == direction.getY() &&
-                        destination.getXPos() == direction.getX());
+                .anyMatch(movePosition -> Position.isSamePosition(movePosition, destination));
 
         if (!isMoveAble) {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
+    }
+
+    default Position movePosition(Position position, Direction direction) {
+        return new Position(position.getYPos() + direction.getYDegree(), position.getXPos() + direction.getXDegree());
     }
 }
