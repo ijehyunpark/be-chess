@@ -12,6 +12,7 @@ import java.util.List;
 import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 
 public abstract class RecursiveMovAblePiece extends AbstractPiece implements MovablePiece {
+
     protected RecursiveMovAblePiece(Color color, Type type) {
         super(color, type);
     }
@@ -50,4 +51,5 @@ public abstract class RecursiveMovAblePiece extends AbstractPiece implements Mov
 
         verifyTargetMove(moveAble, destination);
     }
+
 }

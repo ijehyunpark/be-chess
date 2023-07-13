@@ -15,6 +15,7 @@ import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class BishopTest {
+
     Board board;
 
     @BeforeEach
@@ -63,4 +64,5 @@ public class BishopTest {
         assertEquals(result1, Bishop.createBlackBishop());
         assertEquals(expect, BoardView.showBoard(board));
     }
+
 }

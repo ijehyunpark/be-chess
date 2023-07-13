@@ -12,6 +12,7 @@ import java.util.List;
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 public class Pawn extends NonRecursiveMovAblePiece {
+
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
     private static final List<Direction> movableDirection = List.of(
@@ -90,4 +91,5 @@ public class Pawn extends NonRecursiveMovAblePiece {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
     }
+
 }

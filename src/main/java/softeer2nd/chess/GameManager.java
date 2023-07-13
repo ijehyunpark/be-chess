@@ -10,6 +10,7 @@ import softeer2nd.chess.pieces.Piece;
 import static softeer2nd.chess.exception.ExceptionMessage.OUT_OF_BOUND_INPUT;
 
 public abstract class GameManager {
+
     /**
      * 보드판에서 한 기물을 이동시킨다. <br/>
      * 구체적으로 가능한 이동일 경우 보드판에서 sourcePosition와 targetPosition의 위치를 교환한다.
@@ -46,4 +47,5 @@ public abstract class GameManager {
             throw new IllegalArgumentException(OUT_OF_BOUND_INPUT);
         }
     }
+
 }

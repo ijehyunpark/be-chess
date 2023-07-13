@@ -284,4 +284,5 @@ class PieceTest {
         assertEquals(expect, BoardView.showBoard(board));
         assertEquals(MOVE_NOT_MOVABLE_PIECE, illegalArgumentException.getMessage());
     }
+
 }

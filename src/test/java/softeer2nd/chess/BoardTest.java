@@ -18,6 +18,7 @@ import static softeer2nd.chess.Board.BoardView.showBoard;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
+
     Board board;
     String sample1 = appendNewLine(
             ".KR.....",
@@ -175,4 +176,5 @@ class BoardTest {
         assertEquals(Queen.createWhiteQueen(), board.getSortedWhitePieces().get(0));
         assertEquals(Rook.createWhiteRook(), board.getSortedWhitePieces().get(1));
     }
+
 }

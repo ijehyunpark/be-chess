@@ -49,4 +49,5 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
 
         verifyTargetMove(moveAble, destination);
     }
+
 }

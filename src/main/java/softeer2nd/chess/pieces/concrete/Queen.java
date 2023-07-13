@@ -7,6 +7,7 @@ import java.util.List;
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 public class Queen extends RecursiveMovAblePiece {
+
     private static final Queen BLACK_QUEEN = new Queen(Color.BLACK);
     private static final Queen WHITE_QUEEN = new Queen(Color.WHITE);
     private final List<Direction> movableDirection = List.of(
@@ -36,4 +37,5 @@ public class Queen extends RecursiveMovAblePiece {
     public List<Direction> getDirection() {
         return movableDirection;
     }
+
 }

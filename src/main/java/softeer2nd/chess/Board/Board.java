@@ -14,6 +14,7 @@ import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
 public class Board {
 
     public static class Rank {
+
         public final List<Piece> pieces;
 
         private Rank(List<Piece> pieces) {
@@ -43,6 +44,7 @@ public class Board {
 
             return new Rank(pieces);
         }
+
     }
 
     public static final int COLUMN_NUMBER = 8;
@@ -172,11 +174,8 @@ public class Board {
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
             for (int col = 0; col < COLUMN_NUMBER; col++) {
-                Piece target = ranks.get(col).getPiece(row);
-                if (target.getColor() != color) {
-                    continue;
-                }
-                if (target.getPieceType() != PAWN) {
+                Piece target = findPiece(new Position(col, row));
+                if (target.getColor() != color || target.getPieceType() != PAWN) {
                     continue;
                 }
                 count++;
@@ -232,4 +231,5 @@ public class Board {
         return position.getYPos() < 0 || position.getYPos() >= Board.COLUMN_NUMBER ||
                 position.getXPos() < 0 || position.getXPos() >= Board.ROW_NUMBER;
     }
+
 }
