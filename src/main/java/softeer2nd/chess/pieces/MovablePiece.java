@@ -27,23 +27,26 @@ public interface MovablePiece extends Piece {
         EEN(2, 1),
         EES(2, -1),
         WWN(-2, 1),
-        WWS(-2, -1);
+        WWS(-2, -1),
+
+        NORTH2(-2, 0),
+        SOUTH2(2, 0);
 
 
-        private final int yDegree;
-        private final int xDegree;
+        private final int columnDegree;
+        private final int rowDegree;
 
-        Direction(int yDegree, int xDegree) {
-            this.yDegree = yDegree;
-            this.xDegree = xDegree;
+        Direction(int columnDegree, int rowDegree) {
+            this.columnDegree = columnDegree;
+            this.rowDegree = rowDegree;
         }
 
         public int getYDegree() {
-            return yDegree;
+            return columnDegree;
         }
 
         public int getXDegree() {
-            return xDegree;
+            return rowDegree;
         }
 
     }
