@@ -3,7 +3,7 @@ package softeer2nd.chess.pieces.concrete;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.exception.ExceptionMessage;
-import softeer2nd.chess.pieces.NonRecursiveMovAblePiece;
+import softeer2nd.chess.pieces.NonRecursiveMovablePiece;
 import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
-public class Pawn extends NonRecursiveMovAblePiece {
+public class Pawn extends NonRecursiveMovablePiece {
 
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
@@ -83,7 +83,7 @@ public class Pawn extends NonRecursiveMovAblePiece {
 
         List<Position> moveAble = new ArrayList<>();
         makeMoveAble(board, moveAble, directionList, source);
-        verifyTargetMove(moveAble, destination);
+        verifyDestinationMove(moveAble, destination);
     }
 
     private void moveDoubleStraightMove(Board board, Position source, Position destination, List<Direction> directionList) {

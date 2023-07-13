@@ -1,13 +1,13 @@
 package softeer2nd.chess.pieces.concrete;
 
-import softeer2nd.chess.pieces.RecursiveMovAblePiece;
+import softeer2nd.chess.pieces.RecursiveMovablePiece;
 
 import java.util.List;
 
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
 
-public class Bishop extends RecursiveMovAblePiece {
+public class Bishop extends RecursiveMovablePiece {
 
     private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);

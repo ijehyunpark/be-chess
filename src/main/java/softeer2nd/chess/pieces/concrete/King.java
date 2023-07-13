@@ -1,12 +1,12 @@
 package softeer2nd.chess.pieces.concrete;
 
-import softeer2nd.chess.pieces.NonRecursiveMovAblePiece;
+import softeer2nd.chess.pieces.NonRecursiveMovablePiece;
 
 import java.util.List;
 
 import static softeer2nd.chess.pieces.MovablePiece.Direction.*;
 
-public class King extends NonRecursiveMovAblePiece {
+public class King extends NonRecursiveMovablePiece {
 
     private static final King BLACK_KING = new King(Color.BLACK);
     private static final King WHITE_KING = new King(Color.WHITE);

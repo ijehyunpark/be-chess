@@ -53,7 +53,7 @@ public interface MovablePiece extends Piece {
 
     void verifyMove(Board board, Position source, Position destination);
 
-    default void verifyTargetMove(List<Position> moveAble, Position destination) {
+    default void verifyDestinationMove(List<Position> moveAble, Position destination) {
         boolean isMoveAble = moveAble.stream()
                 .anyMatch(movePosition -> Position.isSamePosition(movePosition, destination));
 
