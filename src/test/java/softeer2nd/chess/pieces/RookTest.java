@@ -147,14 +147,13 @@ public class RookTest {
     }
 
     private static Stream<Arguments> provideUnavailable() {
-        int col = 2;
-        int row = 4;
+        Position source = new Position(2, 4);
         return Stream.of(
-                Arguments.of(new Position(col, row), new Position(2, 4)),
-                Arguments.of(new Position(col, row), new Position(1, 3)),
-                Arguments.of(new Position(col, row), new Position(5, 3)),
-                Arguments.of(new Position(col, row), new Position(7, 2)),
-                Arguments.of(new Position(col, row), new Position(4, 2))
+                Arguments.of(source, new Position(2, 4)),
+                Arguments.of(source, new Position(1, 3)),
+                Arguments.of(source, new Position(5, 3)),
+                Arguments.of(source, new Position(7, 2)),
+                Arguments.of(source, new Position(4, 2))
         );
     }
 
