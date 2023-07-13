@@ -29,13 +29,13 @@ class PieceTest {
         verifyPiece(PieceFactory.createPiece(BlankPiece.Type.QUEEN, BlankPiece.Color.WHITE), PieceFactory.createPiece(BlankPiece.Type.QUEEN, BlankPiece.Color.BLACK), BlankPiece.Type.QUEEN);
         verifyPiece(PieceFactory.createPiece(BlankPiece.Type.KING, BlankPiece.Color.WHITE), PieceFactory.createPiece(BlankPiece.Type.KING, BlankPiece.Color.BLACK), BlankPiece.Type.KING);
 
-        BlankPiece blank = BlankPiece.createBlank();
+        Piece blank = BlankPiece.createBlank();
         assertFalse(blank.isWhite());
         assertFalse(blank.isBlack());
         assertEquals(BlankPiece.Type.NO_PIECE, blank.getPieceType());
     }
 
-    private void verifyPiece(final BlankPiece whitePiece, final BlankPiece blackPiece, final BlankPiece.Type type) {
+    private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final Piece.Type type) {
         assertTrue(whitePiece.isWhite());
         assertEquals(type, whitePiece.getPieceType());
 
@@ -46,8 +46,8 @@ class PieceTest {
     @Test
     @DisplayName("기물의 색깔 확인 테스트")
     void color() {
-        BlankPiece blackPawn = PieceFactory.createPiece(BlankPiece.Type.PAWN, BlankPiece.Color.BLACK);
-        BlankPiece whitePawn = PieceFactory.createPiece(BlankPiece.Type.PAWN, BlankPiece.Color.WHITE);
+        Piece blackPawn = PieceFactory.createPiece(BlankPiece.Type.PAWN, BlankPiece.Color.BLACK);
+        Piece whitePawn = PieceFactory.createPiece(BlankPiece.Type.PAWN, BlankPiece.Color.WHITE);
 
         assertTrue(blackPawn.isBlack());
         assertFalse(blackPawn.isWhite());

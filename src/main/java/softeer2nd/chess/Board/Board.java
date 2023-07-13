@@ -116,7 +116,7 @@ public class Board {
     }
 
     public boolean isBlankPiece(Position position) {
-        return findPiece(position).getPieceType() == NO_PIECE;
+        return findPiece(position).isBlank();
     }
 
 

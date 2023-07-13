@@ -1,15 +1,15 @@
 package softeer2nd.chess.pieces.concrete;
 
-import softeer2nd.chess.pieces.NonRecursiveMovePiece;
+import softeer2nd.chess.pieces.NonRecursiveMovAblePiece;
 
 import java.util.List;
 
-import static softeer2nd.chess.pieces.Piece.BasicDirection.*;
+import static softeer2nd.chess.pieces.MovablePiece.BasicDirection.*;
 
-public class Knight extends NonRecursiveMovePiece {
+public class Knight extends NonRecursiveMovAblePiece {
     private static final Knight BLACK_KNIGHT = new Knight(Color.BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(Color.WHITE);
-    private static final List<BasicDirection> moveAble = List.of(
+    private static final List<BasicDirection> movableDirection = List.of(
             NNE, NNW, SSE, SSW,
             EEN, EES, WWN, WWS
     );
@@ -34,6 +34,6 @@ public class Knight extends NonRecursiveMovePiece {
 
     @Override
     public List<BasicDirection> getBasicDirection() {
-        return moveAble;
+        return movableDirection;
     }
 }

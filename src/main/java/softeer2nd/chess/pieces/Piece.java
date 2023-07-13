@@ -1,15 +1,17 @@
 package softeer2nd.chess.pieces;
 
-import softeer2nd.chess.Board.Board;
-
 public interface Piece {
     enum Color {
-        BLACK, WHITE, NO_COLOR;
+        BLACK, WHITE, NO_COLOR
     }
 
     enum Type {
-        KING('k', 0), QUEEN('q', 9), ROOK('r', 5),
-        BISHOP('b', 3), KNIGHT('n', 2.5), PAWN('p', 1),
+        KING('k', 0),
+        QUEEN('q', 9),
+        ROOK('r', 5),
+        BISHOP('b', 3),
+        KNIGHT('n', 2.5),
+        PAWN('p', 1),
         NO_PIECE('.', 0);
 
         /**
@@ -37,70 +39,17 @@ public interface Piece {
         }
     }
 
-    enum BasicDirection {
-        NORTH(-1, 0),
-        NORTHEAST(1, -1),
-        EAST(0, 1),
-        SOUTHEAST(1, 1),
-        SOUTH(1, 0),
-        SOUTHWEST(-1, 1),
-        WEST(0, -1),
-        NORTHWEST(-1, -1),
-
-        NNE(1, 2),
-        NNW(-1, 2),
-        SSE(1, -2),
-        SSW(-1, -2),
-        EEN(2, 1),
-        EES(2, -1),
-        WWN(-2, 1),
-        WWS(-2, -1);
-
-
-        private final int yDegree;
-        private final int xDegree;
-
-        BasicDirection(int yDegree, int xDegree) {
-            this.yDegree = yDegree;
-            this.xDegree = xDegree;
-        }
-
-        public int getYDegree() {
-            return yDegree;
-        }
-
-        public int getXDegree() {
-            return xDegree;
-        }
-    }
-
-    class Direction {
-        private int y;
-        private int x;
-
-        public Direction(int y, int x) {
-            this.y = y;
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public int getX() {
-            return x;
-        }
-    }
-
-    void verifyMove(Board board, Board.Position source, Board.Position target);
+    Type getPieceType();
 
     Color getColor();
-
-    Type getPieceType();
 
     char getRepresentation();
 
     boolean isBlack();
 
     boolean isWhite();
+
+    boolean isBlank();
+
+    boolean isSameColor(Piece piece1, Piece piece2);
 }

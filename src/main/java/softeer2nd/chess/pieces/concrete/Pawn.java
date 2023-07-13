@@ -1,20 +1,19 @@
 package softeer2nd.chess.pieces.concrete;
 
 import softeer2nd.chess.Board.Board;
-import softeer2nd.chess.pieces.NonRecursiveMovePiece;
+import softeer2nd.chess.pieces.NonRecursiveMovAblePiece;
 import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static softeer2nd.chess.pieces.Piece.BasicDirection.*;
-
-public class Pawn extends NonRecursiveMovePiece {
+import static softeer2nd.chess.pieces.MovablePiece.BasicDirection.*;
+public class Pawn extends NonRecursiveMovAblePiece {
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
-    private static final List<BasicDirection> moveAble = List.of(
+    private static final List<BasicDirection> movableDirection = List.of(
     );
-    private static final List<BasicDirection> enPassantMoveAble = List.of(
+    private static final List<BasicDirection> enPassantMovableDirection = List.of(
             NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST
     );
 
@@ -38,11 +37,11 @@ public class Pawn extends NonRecursiveMovePiece {
 
     @Override
     public List<BasicDirection> getBasicDirection() {
-        return moveAble;
+        return movableDirection;
     }
 
     private void enPassant(Board board, List<BasicDirection> pawnMoveAble, final int currentY, final int currentX) {
-        for (BasicDirection direction : enPassantMoveAble) {
+        for (BasicDirection direction : enPassantMovableDirection) {
             int nextY = currentY + direction.getYDegree();
             int nextX = currentX + direction.getXDegree();
 
@@ -67,8 +66,8 @@ public class Pawn extends NonRecursiveMovePiece {
     }
 
     @Override
-    public void verifyMove(Board board, Board.Position source, Board.Position target) {
-        if (board.findPiece(source).getColor() == board.findPiece(target).getColor()) {
+    public void verifyMove(Board board, Board.Position source, Board.Position destination) {
+        if (board.findPiece(source).getColor() == board.findPiece(destination).getColor()) {
             throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
         }
 
@@ -77,6 +76,7 @@ public class Pawn extends NonRecursiveMovePiece {
                 board.findPiece(source).isBlack() ? SOUTH : NORTH
         );
         makeMoveAble(board, moveAble, directionList, source.getYPos(), source.getXPos());
-        verifyTargetMove(target, moveAble);
+
+        verifyTargetMove(moveAble, destination);
     }
 }

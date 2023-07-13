@@ -8,7 +8,7 @@ public abstract class PieceFactory {
      * 표현식을 받아 새로운 체스말을 생성한다. <br/>
      * 표현식은 {@link Piece.Type} 에서 확인할 수 있다.
      */
-    public static BlankPiece createPiece(char representation) {
+    public static Piece createPiece(char representation) {
         boolean isBlack = Character.isUpperCase(representation);
         representation = Character.toLowerCase(representation);
         for (Piece.Type type : Piece.Type.values()) {
@@ -19,7 +19,7 @@ public abstract class PieceFactory {
         throw new IllegalArgumentException("잘못된 표현식입니다. : " + representation);
     }
 
-    public static BlankPiece createPiece(final Piece.Type type, final Piece.Color color) {
+    public static MovablePiece createPiece(final Piece.Type type, final Piece.Color color) {
         switch (type) {
             case PAWN:
                 return color == Piece.Color.BLACK ?

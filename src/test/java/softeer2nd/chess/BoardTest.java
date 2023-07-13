@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
 import softeer2nd.chess.pieces.BlankPiece;
+import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.PieceFactory;
 import softeer2nd.chess.pieces.concrete.King;
 import softeer2nd.chess.pieces.concrete.Pawn;
@@ -149,7 +150,7 @@ class BoardTest {
 
     }
 
-    private void addPiece(Board.Position position, BlankPiece piece) {
+    private void addPiece(Board.Position position, Piece piece) {
         board.assignPiece(position, piece);
     }
 
