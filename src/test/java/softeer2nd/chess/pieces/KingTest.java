@@ -7,6 +7,7 @@ import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class KingTest {
     Board board;
@@ -20,16 +21,18 @@ public class KingTest {
     @DisplayName("킹 기물 이동 테스트")
     void move() {
         // given
-        String sample =
-                "........" +
-                        "........" +
-                        "........" +
-                        "....K..." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........";
-        ChessGame.initialize(board, sample);
+        String sample = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "....K...",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(sample);
 
         // when
         assertThrows(

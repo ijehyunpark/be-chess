@@ -9,7 +9,8 @@ import softeer2nd.chess.Board.ChessGame;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static softeer2nd.chess.Board.BoardView.showBoard;
-import static softeer2nd.chess.utils.StringUtils.NEWLINE;
+import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class PieceTest {
 
@@ -66,27 +67,29 @@ class PieceTest {
     @DisplayName("단순 이동 기물 이동 테스트")
     void moveNonRecursive() {
         // given
-        String sample =
-                ".K......" +
-                        "........" +
-                        "K....KN." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        ".......K";
+        String sample = appendNewLine(
+                ".K......",
+                "........",
+                "K....KN.",
+                "........",
+                "........",
+                "........",
+                "........",
+                ".......K");
 
-        String expect =
-                "........\n" +
-                        "..K.....\n" +
-                        ".....KN.\n" +
-                        "........\n" +
-                        "K.......\n" +
-                        "........\n" +
-                        "........\n" +
-                        ".......K\n";
+        String expect = appendNewLine(
+                "........",
+                "..K.....",
+                ".....KN.",
+                "........",
+                "K.......",
+                "........",
+                "........",
+                ".......K"
+        );
 
-        ChessGame.initialize(board, sample);
+
+        board.initialize(sample);
 
         // when
         ChessGame.move(board, new Board.Position("b8"), new Board.Position("b7"));
@@ -121,27 +124,30 @@ class PieceTest {
     @DisplayName("재귀적 이동 기물 이동 테스트")
     void moveRecursive() {
         // given
-        String sample =
-                "........" +
-                        "........" +
-                        "Q....QN." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        ".......Q";
+        String sample = appendNewLine(
+                "........",
+                "........",
+                "Q....QN.",
+                "........",
+                "........",
+                "........",
+                "........",
+                ".......Q"
+        );
 
-        String expect =
-                "........\n" +
-                        "........\n" +
-                        "......N.\n" +
-                        "........\n" +
-                        "....Q...\n" +
-                        "Q.......\n" +
-                        "........\n" +
-                        ".....Q..\n";
+        String expect = appendNewLine(
+                "........",
+                "........",
+                "......N.",
+                "........",
+                "....Q...",
+                "Q.......",
+                "........",
+                ".....Q.."
+        );
 
-        ChessGame.initialize(board, sample);
+
+        board.initialize(sample);
 
         // when
         ChessGame.move(board, new Board.Position("a6"), new Board.Position("a8"));
@@ -172,26 +178,30 @@ class PieceTest {
     @DisplayName("기물을 넘어갈 수 없으며 색깔이 다른 기물 위치로 이동하면 해당 기물이 제거되어야 한다.")
     void remove() {
         // given
-        String sample =
-                "........" +
-                        "........" +
-                        ".q...Q.." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........";
+        String sample = appendNewLine(
+                "........",
+                "........",
+                ".q...Q..",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
 
-        String expect =
-                "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        ".Q......" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, sample);
+
+        String expect = appendNewLine(
+                "........",
+                "........",
+                ".Q......",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(sample);
 
         // when
         assertThrows(
@@ -208,26 +218,30 @@ class PieceTest {
     @DisplayName("같은 색 기물은 제거되면 안된다.")
     void notRemove() {
         // given
-        String sample =
-                "........" +
-                        "........" +
-                        ".Q...Q.." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........";
+        String sample = appendNewLine(
+                "........",
+                "........",
+                ".Q...Q..",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
 
-        String expect =
-                "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        ".Q...Q.." + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initialize(board, sample);
+
+        String expect = appendNewLine(
+                "........",
+                "........",
+                ".Q...Q..",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initialize(sample);
 
         // when
         assertThrows(
@@ -244,16 +258,18 @@ class PieceTest {
     @DisplayName("없는 기물의 움직임 테스트는 실패해야 합니다")
     void moveEmpty() {
         // given
-        String expect =
-                "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE +
-                        "........" + NEWLINE;
-        ChessGame.initializeEmpty(board);
+        String expect = appendNewLine(
+                "........",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........",
+                "........"
+        );
+
+        board.initializeEmpty();
 
         // when
         assertThrows(

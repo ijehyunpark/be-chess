@@ -1,5 +1,6 @@
 package softeer2nd.chess.Board;
 
+import softeer2nd.chess.exception.ExceptionMessage;
 import softeer2nd.chess.pieces.*;
 import softeer2nd.chess.pieces.concrete.*;
 
@@ -7,22 +8,39 @@ import java.util.*;
 
 import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
+import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
 
 public class Board {
 
     public static class Rank {
-        public final List<Piece> rank = new ArrayList<>();
+        public final List<Piece> pieces;
 
-        public void appendPiece(Piece piece) {
-            this.rank.add(piece);
+        private Rank(List<Piece> pieces) {
+            this.pieces = pieces;
         }
 
         public Piece getPiece(int x) {
-            return rank.get(x);
+            return pieces.get(x);
         }
 
         public void setPiece(int x, Piece piece) {
-            rank.set(x, piece);
+            pieces.set(x, piece);
+        }
+
+        public static Rank createBlankRank() {
+            return createCustomRank("........");
+        }
+
+        public static Rank createCustomRank(String representation) {
+            if (representation.length() != ROW_NUMBER)
+                throw new IllegalArgumentException(ExceptionMessage.WRONG_ARGUMENT);
+
+            List<Piece> pieces = new ArrayList<>();
+            for (int i = 0; i < ROW_NUMBER; i++) {
+                pieces.add(PieceFactory.createPiece(representation.charAt(i)));
+            }
+
+            return new Rank(pieces);
         }
     }
 
@@ -56,7 +74,7 @@ public class Board {
 
     public static final int COLUMN_NUMBER = 8;
     public static final int ROW_NUMBER = 8;
-    private final List<Rank> ranks = new ArrayList<>();
+    private List<Rank> ranks;
     private final List<Piece> sortedBlackPieces = new ArrayList<>(Arrays.asList(
             Pawn.createBlackPawn(), Knight.createBlackKnight(), Bishop.createBlackBishop(),
             Rook.createBlackRook(), King.createBlackKing(), Queen.createBlackQueen()));
@@ -66,48 +84,74 @@ public class Board {
 
     public int pieceCount() {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.rank.stream())
+                .flatMap(rank -> rank.pieces.stream())
                 .filter(piece -> piece.getPieceType() != NO_PIECE)
                 .count();
     }
 
     public int pieceCount(Piece.Type type) {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.rank.stream())
+                .flatMap(rank -> rank.pieces.stream())
                 .filter(piece -> piece.getPieceType() == type)
                 .count();
     }
 
     public int pieceCount(Piece.Color color) {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.rank.stream())
+                .flatMap(rank -> rank.pieces.stream())
                 .filter(piece -> piece.getColor() == color)
                 .count();
     }
 
     public int pieceCount(Piece.Type type, Piece.Color color) {
         return (int) ranks.stream()
-                .flatMap(rank -> rank.rank.stream())
+                .flatMap(rank -> rank.pieces.stream())
                 .filter(piece -> piece.getPieceType() == type && piece.getColor() == color)
                 .count();
     }
 
     /**
-     * 테스트를 사용하기 위한 메소드이다. <br/>
-     * 배치도에 따라 기물을 배치한다..
-     *
-     * @param pieceAndColorMap 기물 배치를 나타낸다. 개행문자를 포함하지 않으며 적절한 길이 ({@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER})만큼 입력해야 한다.
+     * 기본 보드판으로 초기화한다.
      */
-    public void initPieces(String pieceAndColorMap) {
-        ranks.clear();
-        for (int col = 0; col < COLUMN_NUMBER; col++) {
-            Rank rank = new Rank();
-            for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.appendPiece(PieceFactory.createPiece(
-                        pieceAndColorMap.charAt(col * COLUMN_NUMBER + row)));
-            }
-            ranks.add(rank);
-        }
+    public void initialize() {
+        this.ranks = List.of(
+                Rank.createCustomRank("RNBQKBNR"),
+                Rank.createCustomRank("PPPPPPPP"),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createCustomRank("pppppppp"),
+                Rank.createCustomRank("rnbqkbnr")
+        );
+    }
+
+    /**
+     * 테스트를 위해 사용되는 메소드이다.
+     * 빈 보드판으로 초기화한다.
+     */
+    public void initializeEmpty() {
+        this.ranks = List.of(
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank(),
+                Rank.createBlankRank()
+        );
+    }
+
+    /**
+     * 테스트를 위해 사용되는 메소드이다. <br/>
+     * 보드판을 초기화한다. 특정 보드판으로 초기화된다.
+     */
+    public void initialize(String pieceAndColorMap) {
+        String[] maps = pieceAndColorMap.split(NEW_LINE);
+        this.ranks = new ArrayList<>();
+        Arrays.stream(maps)
+                .forEachOrdered(s -> ranks.add(Rank.createCustomRank(s)));
     }
 
     public Piece findPiece(Position position) {
@@ -118,7 +162,6 @@ public class Board {
     public boolean isBlankPiece(Position position) {
         return findPiece(position).isBlank();
     }
-
 
     /**
      * 특정 보드판의 위치에 기물을 추가한다. <br />
@@ -139,11 +182,10 @@ public class Board {
     public double calculatePoint(Piece.Color color) {
         // 기본 점수 계산
         double score = ranks.stream()
-                .flatMap(rank -> rank.rank.stream())
+                .flatMap(rank -> rank.pieces.stream())
                 .filter(piece -> piece.getColor() == color)
                 .mapToDouble(value -> value.getPieceType().getDefaultScore())
                 .sum();
-
 
         // 특수 점수(Pawn에 대한 예외처리: 같은 세로줄의 같은 색의 폰의 경우 점수 0.5점 처리)
         // 같은 column의 개수가 2 이상인 해당 색깔의 폰을 찾은 후 그 개수만큼 점수에서 0.5점 차감한다.
@@ -151,7 +193,7 @@ public class Board {
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
             for (int col = 0; col < COLUMN_NUMBER; col++) {
-                Piece target = ranks.get(col).rank.get(row);
+                Piece target = ranks.get(col).getPiece(row);
                 if (target.getColor() != color) {
                     continue;
                 }
@@ -180,7 +222,7 @@ public class Board {
                 QUEEN, 0.0));
 
         ranks.stream()
-                .flatMap(rank -> rank.rank.stream())
+                .flatMap(rank -> rank.pieces.stream())
                 .filter(piece -> piece.getColor() == color)
                 .forEach(piece -> scores.computeIfPresent(
                         piece.getPieceType(), (k, v) -> v + piece.getPieceType().getDefaultScore()));

@@ -18,27 +18,28 @@ import static softeer2nd.chess.Board.BoardView.showBoard;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
-
     Board board;
-    String sample1 =
-            ".KR....." +
-            "P.PB...." +
-            ".P..Q..." +
-            "........" +
-            ".....nq." +
-            ".....p.." +
-            "......p." +
-            "....rk..";
+    String sample1 = appendNewLine(
+            ".KR.....",
+            "P.PB....",
+            ".P..Q...",
+            "........",
+            ".....nq.",
+            ".....p..",
+            "......p.",
+            "....rk.."
+    );
 
-    String sample2 =
-            ".KR....." +
-            "P.PB...." +
-            ".P..Q..." +
-            "........" +
-            ".....nq." +
-            ".....p.p" +
-            ".....pp." +
-            "....rk..";
+    String sample2 = appendNewLine(
+            ".KR.....",
+            "P.PB....",
+            ".P..Q...",
+            "........",
+            ".....nq.",
+            ".....p.p",
+            ".....pp.",
+            "....rk.."
+    );
 
     @BeforeEach
     void setUp() {
@@ -48,7 +49,7 @@ class BoardTest {
     @Test
     @DisplayName("보드판 생성 테스트")
     void create() {
-        ChessGame.initialize(board);
+        board.initialize();
         assertEquals(32, board.pieceCount());
         String blankRank = appendNewLine("........");
         assertEquals(
@@ -63,7 +64,7 @@ class BoardTest {
     @Test
     @DisplayName("보드판에서 기물 개수 계산 테스트")
     void pieceCount() {
-        ChessGame.initialize(board);
+        board.initialize();
 
         assertEquals(32, board.pieceCount());
         assertEquals(16, board.pieceCount(BlankPiece.Color.BLACK));
@@ -78,7 +79,7 @@ class BoardTest {
         assertEquals(2, board.pieceCount(BlankPiece.Type.KNIGHT, BlankPiece.Color.WHITE));
         assertEquals(1, board.pieceCount(BlankPiece.Type.KING, BlankPiece.Color.BLACK));
 
-        ChessGame.initialize(board, sample1);
+        board.initialize(sample1);
         assertEquals(13, board.pieceCount());
         assertEquals(3, board.pieceCount(BlankPiece.Type.PAWN, BlankPiece.Color.BLACK));
     }
@@ -86,17 +87,18 @@ class BoardTest {
     @Test
     @DisplayName("보드판을 임의로 초기화 테스트")
     void initPieces() {
-        String expect =
-                ".KR.....\n" +
-                "P.PB....\n" +
-                ".P..Q...\n" +
-                "........\n" +
-                ".....nq.\n" +
-                ".....p..\n" +
-                "......p.\n" +
-                "....rk..\n";
+        String expect = appendNewLine(
+                ".KR.....",
+                "P.PB....",
+                ".P..Q...",
+                "........",
+                ".....nq.",
+                ".....p..",
+                "......p.",
+                "....rk.."
+        );
 
-        ChessGame.initialize(board, sample1);
+        board.initialize(sample1);
 
         assertEquals(expect, showBoard(board));
     }
@@ -104,7 +106,7 @@ class BoardTest {
     @Test
     @DisplayName("기물 검색 테스트")
     void findPiece() {
-        ChessGame.initialize(board);
+        board.initialize();
 
         assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Board.Position("a8")));
         assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Board.Position("h8")));
@@ -115,7 +117,7 @@ class BoardTest {
     @Test
     @DisplayName("보드판의 특정 위치에 새로운 기물 추가 테스트")
     void createPiece() {
-        ChessGame.initialize(board);
+        board.initialize();
 
         Board.Position sourcePosition = new Board.Position("b2");
         Board.Position targetPosition = new Board.Position("b3");
@@ -127,7 +129,7 @@ class BoardTest {
     @Test
     @DisplayName("점수 계산 메소드를 테스트한다.")
     void calculatePoint() {
-        ChessGame.initializeEmpty(board);
+        board.initializeEmpty();
 
         addPiece(new Board.Position("b6"), Pawn.createBlackPawn());
         addPiece(new Board.Position("e6"), Queen.createBlackQueen());
@@ -144,7 +146,7 @@ class BoardTest {
 
         System.out.println(showBoard(board));
 
-        ChessGame.initialize(board, sample2);
+        board.initialize(sample2);
         assertEquals(20.0, board.calculatePoint(BlankPiece.Color.BLACK), 0.01);
         assertEquals(19.5, board.calculatePoint(BlankPiece.Color.WHITE), 0.01);
 
@@ -158,7 +160,7 @@ class BoardTest {
     @DisplayName("점수 별로 정렬이 되는지 테스트한다.")
     void sort() {
         // given
-        ChessGame.initialize(board, sample2);
+        board.initialize(sample2);
 
         // when
         board.sortPieces(BlankPiece.Color.BLACK);
