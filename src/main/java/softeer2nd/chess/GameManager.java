@@ -87,8 +87,8 @@ public class GameManager {
     }
 
     private void verifyOutOfBoardIndex(Position destinationPosition) {
-        if (destinationPosition.getYPos() < 0 || destinationPosition.getYPos() >= Board.COLUMN_NUMBER ||
-                destinationPosition.getXPos() < 0 || destinationPosition.getXPos() >= Board.ROW_NUMBER) {
+        if (destinationPosition.getColumn() < 0 || destinationPosition.getColumn() >= Board.COLUMN_NUMBER ||
+                destinationPosition.getRow() < 0 || destinationPosition.getRow() >= Board.ROW_NUMBER) {
             throw new IllegalArgumentException(OUT_OF_BOUND_INPUT);
         }
     }

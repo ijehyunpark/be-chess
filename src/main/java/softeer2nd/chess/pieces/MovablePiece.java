@@ -60,7 +60,7 @@ public interface MovablePiece extends Piece {
     }
 
     default Position movePosition(Position position, Direction direction) {
-        return new Position(position.getYPos() + direction.getYDegree(), position.getXPos() + direction.getXDegree());
+        return new Position(position.getColumn() + direction.getYDegree(), position.getRow() + direction.getXDegree());
     }
 
 }

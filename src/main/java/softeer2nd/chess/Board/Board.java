@@ -157,8 +157,8 @@ public class Board {
     }
 
     public Piece findPiece(Position position) {
-        return ranks.get(position.getYPos())
-                .getPiece(position.getXPos());
+        return ranks.get(position.getColumn())
+                .getPiece(position.getRow());
     }
 
     public boolean isBlankPiece(Position position) {
@@ -170,8 +170,8 @@ public class Board {
      * Note: 해당 위치의 기존 기물를 무시하고 추가한다.
      */
     public void assignPiece(Position position, Piece piece) {
-        ranks.get(position.getYPos())
-                .setPiece(position.getXPos(), piece);
+        ranks.get(position.getColumn())
+                .setPiece(position.getRow(), piece);
     }
 
     /**
@@ -257,8 +257,8 @@ public class Board {
     }
 
     public boolean isOutOfBoardIndex(Position position) {
-        return position.getYPos() < 0 || position.getYPos() >= Board.COLUMN_NUMBER ||
-                position.getXPos() < 0 || position.getXPos() >= Board.ROW_NUMBER;
+        return position.getColumn() < 0 || position.getColumn() >= Board.COLUMN_NUMBER ||
+                position.getRow() < 0 || position.getRow() >= Board.ROW_NUMBER;
     }
 
     public boolean isRemovedAllKing(Piece.Color color) {
@@ -266,14 +266,14 @@ public class Board {
     }
 
     public boolean isMoved(Position position) {
-        return ranks.get(position.getYPos())
-                .isMoved(position.getXPos());
+        return ranks.get(position.getColumn())
+                .isMoved(position.getRow());
     }
 
 
     public void setPieceMoved(Position position) {
-        ranks.get(position.getYPos())
-                .setMoved(position.getXPos());
+        ranks.get(position.getColumn())
+                .setMoved(position.getRow());
     }
 
 }
