@@ -1,12 +1,13 @@
 package softeer2nd.chess.Board;
 
 import softeer2nd.chess.exception.ExceptionMessage;
-import softeer2nd.chess.pieces.*;
+import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.PieceFactory;
 import softeer2nd.chess.pieces.concrete.*;
 
 import java.util.*;
 
-import static softeer2nd.chess.pieces.Piece.Color.*;
+import static softeer2nd.chess.pieces.Piece.Color.BLACK;
 import static softeer2nd.chess.pieces.Piece.Type.*;
 import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
 
@@ -187,8 +188,14 @@ public class Board {
                 .mapToDouble(value -> value.getPieceType().getDefaultScore())
                 .sum();
 
-        // 특수 점수(Pawn에 대한 예외처리: 같은 세로줄의 같은 색의 폰의 경우 점수 0.5점 처리)
-        // 같은 column의 개수가 2 이상인 해당 색깔의 폰을 찾은 후 그 개수만큼 점수에서 0.5점 차감한다.
+        return score - penaltyPawn(color);
+    }
+
+    /**
+     * 패털티 점수: 같은 세로줄의 같은 색의 폰의 경우 점수 0.5점으로 처리한다. <br />
+     * 같은 column의 개수가 2 이상인 해당 색깔의 폰을 찾은 후 그 개수만큼 점수에서 0.5점 차감한다.
+     */
+    private double penaltyPawn(Piece.Color color) {
         int targetPawnNumber = 0;
         for (int row = 0; row < ROW_NUMBER; row++) {
             int count = 0;
@@ -204,15 +211,27 @@ public class Board {
             }
             targetPawnNumber += count > 1 ? count : 0;
         }
-        score -= (double) targetPawnNumber * 0.5;
-        return score;
+        return (double) targetPawnNumber * 0.5;
     }
 
     /**
      * 기물 별로 가진 모든 점수를 합한 점수를 기준으로 정렬한다.
      */
     public void sortPieces(Piece.Color color) {
-        // 각 체스말 별로 점수 계산
+        Map<Piece.Type, Double> scores = calculatePieceScore(color);
+
+        // 체스말 별로 점수 정렬
+        List<Piece> targetSortedPieces = color == BLACK ? sortedBlackPieces : sortedWhitePieces;
+        targetSortedPieces.sort(Comparator.comparingDouble(
+                piece -> scores.get(piece.getPieceType())));
+        Collections.reverse(targetSortedPieces);
+    }
+
+    /**
+     * 각 기물 별로 점수 계산 <br />
+     * 기물 개수 * 기물 기본 점수
+     */
+    private Map<Piece.Type, Double> calculatePieceScore(Piece.Color color) {
         Map<Piece.Type, Double> scores = new HashMap<>(Map.of(
                 PAWN, 0.0,
                 KNIGHT, 0.0,
@@ -226,12 +245,7 @@ public class Board {
                 .filter(piece -> piece.getColor() == color)
                 .forEach(piece -> scores.computeIfPresent(
                         piece.getPieceType(), (k, v) -> v + piece.getPieceType().getDefaultScore()));
-
-        // 체스말 별로 점수 정렬
-        List<Piece> targetSortedPieces = color == BLACK ? sortedBlackPieces : sortedWhitePieces;
-        targetSortedPieces.sort(Comparator.comparingDouble(
-                piece -> scores.get(piece.getPieceType())));
-        Collections.reverse(targetSortedPieces);
+        return scores;
     }
 
     public List<Piece> getSortedBlackPieces() {
