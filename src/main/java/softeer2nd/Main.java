@@ -1,7 +1,6 @@
 package softeer2nd;
 
 import softeer2nd.chess.Board.Board;
-import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
 
 import java.util.Scanner;
@@ -13,11 +12,12 @@ public class Main {
 
     private static final Board board = new Board();
     private static boolean isStart = false;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         boolean scanLoop = true;
-        while(scanLoop) {
+        while (scanLoop) {
             // 명령어 입력
             String command = scanner.nextLine();
 
@@ -25,10 +25,14 @@ public class Main {
                 start();
             } else if (command.equals("end")) {
                 scanLoop = false;
-            } else if(command.startsWith("move")) {
+            } else if (command.startsWith("move")) {
                 String[] commandArgs = command.split(" ");
-                move(commandArgs);
-            } else{
+                try {
+                    move(commandArgs);
+                } catch (IllegalArgumentException exception) {
+                    System.out.println(exception.getLocalizedMessage());
+                }
+            } else {
                 System.out.println("잘못된 명령어 입니다.");
             }
         }
@@ -42,10 +46,9 @@ public class Main {
     }
 
     private static void move(String[] commandArgs) {
-        if(commandArgs.length != 3) {
+        if (commandArgs.length != 3) {
             System.out.println("잘못된 인자 개수입니다. 다음과 같이 입력해 주세요." + NEWLINE + "move [이동 전] [이동 후]");
-        }
-        else if(!isStart){
+        } else if (!isStart) {
             System.out.println("게임을 시작해 주세요.");
         }
         ChessGame.move(board, new Board.Position(commandArgs[1]), new Board.Position(commandArgs[2]));

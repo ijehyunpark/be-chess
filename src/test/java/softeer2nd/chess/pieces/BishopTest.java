@@ -16,7 +16,7 @@ public class BishopTest {
     Board board;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         board = new Board();
     }
 
@@ -26,23 +26,23 @@ public class BishopTest {
         // given
         String bishopSample =
                 "........" +
-                "........" +
-                "....B..." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        "....B..." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "......B." + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE;
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, bishopSample);
 
         // when

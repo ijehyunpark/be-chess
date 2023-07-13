@@ -17,6 +17,7 @@ public class Pawn extends NonRecursiveMovePiece {
     private static final List<BasicDirection> enPassantMoveAble = List.of(
             NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST
     );
+
     private Pawn(Color color) {
         super(color, Type.PAWN);
     }
@@ -31,7 +32,7 @@ public class Pawn extends NonRecursiveMovePiece {
     /**
      * 백색 폰 싱글톤 인스턴스를 가져온다.
      */
-    public static Pawn createWhitePawn(){
+    public static Pawn createWhitePawn() {
         return WHITE_PAWN;
     }
 
@@ -41,20 +42,23 @@ public class Pawn extends NonRecursiveMovePiece {
     }
 
     private void enPassant(Board board, List<BasicDirection> pawnMoveAble, final int currentY, final int currentX) {
-        for(BasicDirection direction : enPassantMoveAble) {
+        for (BasicDirection direction : enPassantMoveAble) {
             int nextY = currentY + direction.getYDegree();
             int nextX = currentX + direction.getXDegree();
 
-            if(nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
-                    nextX < 0 || nextX >= Board.ROW_NUMBER)
+            if (nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
+                    nextX < 0 || nextX >= Board.ROW_NUMBER) {
                 continue;
+            }
 
             Piece target = board.findPiece(nextY, nextX);
-            if(target.getPieceType() != Type.NO_PIECE
-                    && target.getColor() != board.findPiece(currentY, currentX).getColor())
+            if (target.getPieceType() != Type.NO_PIECE
+                    && target.getColor() != board.findPiece(currentY, currentX).getColor()) {
                 pawnMoveAble.add(direction);
+            }
         }
     }
+
     @Override
     protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
         List<BasicDirection> pawnMoveAble = new ArrayList<>(directionList);
@@ -64,8 +68,9 @@ public class Pawn extends NonRecursiveMovePiece {
 
     @Override
     public void verifyMove(Board board, Board.Position source, Board.Position target) {
-        if(board.findPiece(source).getColor() == board.findPiece(target).getColor())
+        if (board.findPiece(source).getColor() == board.findPiece(target).getColor()) {
             throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
+        }
 
         List<Direction> moveAble = new ArrayList<>();
         List<BasicDirection> directionList = List.of(

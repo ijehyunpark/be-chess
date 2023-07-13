@@ -3,7 +3,7 @@ package softeer2nd.chess.utils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static softeer2nd.chess.utils.StringUtils.NEWLINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 

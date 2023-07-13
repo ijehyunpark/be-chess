@@ -6,7 +6,7 @@ import static softeer2nd.chess.Board.Board.COLUMN_NUMBER;
 import static softeer2nd.chess.Board.Board.ROW_NUMBER;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
-public class BoardView {
+public abstract class BoardView {
     /**
      * 현재 보드판의 상태를 문자열로 변환하여 반환한다.
      */

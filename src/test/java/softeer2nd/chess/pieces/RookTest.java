@@ -17,7 +17,7 @@ public class RookTest {
     Board board;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         board = new Board();
     }
 
@@ -28,23 +28,23 @@ public class RookTest {
         // given
         String rookSample =
                 "........" +
-                "........" +
-                "....R..." +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        "....R..." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
 
         String expect =
                 "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                ".....R.." + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........" + NEWLINE +
-                "........"+ NEWLINE;
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        ".....R.." + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE +
+                        "........" + NEWLINE;
         ChessGame.initialize(board, rookSample);
 
         // when

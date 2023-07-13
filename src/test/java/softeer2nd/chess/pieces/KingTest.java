@@ -12,7 +12,7 @@ public class KingTest {
     Board board;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         board = new Board();
     }
 
@@ -22,13 +22,13 @@ public class KingTest {
         // given
         String sample =
                 "........" +
-                "........" +
-                "........" +
-                "....K..." +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        "........" +
+                        "....K..." +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
         ChessGame.initialize(board, sample);
 
         // when

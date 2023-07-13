@@ -1,6 +1,7 @@
 package softeer2nd.chess.Board;
 
 import softeer2nd.chess.pieces.*;
+import softeer2nd.chess.pieces.concrete.*;
 
 import java.util.*;
 
@@ -8,16 +9,14 @@ import static softeer2nd.chess.pieces.Piece.Color.*;
 import static softeer2nd.chess.pieces.Piece.Type.*;
 
 public class Board {
-    /**
-     * 체스판의 row 객체를 나타낸다.
-     */
+
     public static class Rank {
         public final ArrayList<Piece> rank = new ArrayList<>();
     }
 
     public static class Position {
-        private int xPos;
-        private int yPos;
+        private final int xPos;
+        private final int yPos;
 
         /**
          * @param position "a3" 과 같은 보드판 위치 정보를 사용해야 합니다. <br/>
@@ -27,6 +26,14 @@ public class Board {
             yPos = COLUMN_NUMBER - Character.getNumericValue(
                     position.charAt(1));
             xPos = position.charAt(0) - 'a';
+        }
+
+        public int getXPos() {
+            return xPos;
+        }
+
+        public int getYPos() {
+            return yPos;
         }
     }
 
@@ -61,7 +68,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
+     * 현재 보드판에 존재하는 특정 색깔의 체스 말의 개수를 찾는다.
      */
     public int pieceCount(Piece.Color color) {
         return (int) pieces.stream()
@@ -71,7 +78,7 @@ public class Board {
     }
 
     /**
-     * 현재 체스 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
+     * 현재 보드판에 존재하는 특정 종류 및 색깔에 해당되는 체스 말의 개수를 찾는다.
      */
     public int pieceCount(Piece.Type type, Piece.Color color) {
         return (int) pieces.stream()
@@ -80,39 +87,20 @@ public class Board {
                 .count();
     }
 
-    public void clear() {
-        pieces.clear();
-    }
-
     /**
      * 테스트를 사용하기 위한 메소드이다. <br/>
      * 배치도에 따라 기물을 배치한다..
+     *
      * @param pieceAndColorMap 기물 배치를 나타낸다. 개행문자를 포함하지 않으며 적절한 길이 ({@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER})만큼 입력해야 한다.
      */
     public void initPieces(String pieceAndColorMap) {
+        pieces.clear();
         for (int col = 0; col < COLUMN_NUMBER; col++) {
             Rank rank = new Rank();
             for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(Piece.createPiece(
+                rank.rank.add(PieceFactory.createPiece(
                         pieceAndColorMap.charAt(col * COLUMN_NUMBER + row)
                 ));
-            }
-            pieces.add(rank);
-        }
-    }
-
-    /**
-     * 배치도에 따라 기물을 배치한다. <br/>
-     * 기물 종류를 나타내는  pieceMap과 색깔을 나타내는 colorMap을 사용하여 초기 기물 배치를 수행한다. <br/>
-     * Note: 각 pieceMap과 colorMap은 {@link Board#COLUMN_NUMBER} * {@link Board#ROW_NUMBER} 의 크기를 가지고 있어야 한다.
-     */
-    @Deprecated
-    public void initPieces(Piece.Type[][] pieceMap, Piece.Color[][] colorMap) {
-        for (int col = 0; col < COLUMN_NUMBER; col++) {
-            Rank rank = new Rank();
-            for (int row = 0; row < ROW_NUMBER; row++) {
-                rank.rank.add(pieceMap[col][row] == NO_PIECE ?
-                        Piece.createBlank() : Piece.createPiece(pieceMap[col][row], colorMap[col][row]));
             }
             pieces.add(rank);
         }
@@ -127,6 +115,12 @@ public class Board {
         return pieces.get(column)
                 .rank.get(row);
     }
+
+
+    public boolean isBlankPiece(int column, int row) {
+        return findPiece(column, row) == BlankPiece.createBlank();
+    }
+
 
     /**
      * 특정 보드판의 위치에 기물을 추가한다. <br />
@@ -160,10 +154,12 @@ public class Board {
             int count = 0;
             for (int col = 0; col < COLUMN_NUMBER; col++) {
                 Piece target = pieces.get(col).rank.get(row);
-                if(target.getColor() != color)
+                if (target.getColor() != color) {
                     continue;
-                if(target.getPieceType() != PAWN)
+                }
+                if (target.getPieceType() != PAWN) {
                     continue;
+                }
                 count++;
             }
             targetPawnNumber += count > 1 ? count : 0;
@@ -188,13 +184,11 @@ public class Board {
         pieces.stream()
                 .flatMap(rank -> rank.rank.stream())
                 .filter(piece -> piece.getColor() == color)
-                .forEach(piece -> {
-                    scores.computeIfPresent(piece.getPieceType(), (k, v) -> v + piece.getPieceType().getDefaultScore());
-                });
+                .forEach(piece -> scores.computeIfPresent(
+                        piece.getPieceType(), (k, v) -> v + piece.getPieceType().getDefaultScore()));
 
         // 체스말 별로 점수 정렬
-        List<Piece> targetSortedPieces = color == BLACK ?
-                sortedBlackPieces : sortedWhitePieces;
+        List<Piece> targetSortedPieces = color == BLACK ? sortedBlackPieces : sortedWhitePieces;
         targetSortedPieces.sort(Comparator.comparingDouble(
                 piece -> scores.get(piece.getPieceType())));
         Collections.reverse(targetSortedPieces);
