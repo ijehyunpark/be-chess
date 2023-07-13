@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.pieces.concrete.King;
 import softeer2nd.chess.pieces.concrete.Knight;
 import softeer2nd.chess.pieces.concrete.Pawn;
@@ -41,7 +42,7 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
     }
 
     @Override
-    public void verifyMove(Board board, Board.Position source, Board.Position destination) {
+    public void verifyMove(Board board, Position source, Position destination) {
         if (isSameColor(board.findPiece(source), board.findPiece(destination))) {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }

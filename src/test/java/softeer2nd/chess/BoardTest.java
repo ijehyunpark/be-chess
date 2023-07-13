@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.pieces.BlankPiece;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.pieces.PieceFactory;
@@ -108,10 +109,10 @@ class BoardTest {
     void findPiece() {
         board.initialize();
 
-        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Board.Position("a8")));
-        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Board.Position("h8")));
-        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.WHITE), board.findPiece(new Board.Position("a1")));
-        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.WHITE), board.findPiece(new Board.Position("a1")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Position("a8")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.BLACK), board.findPiece(new Position("h8")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.WHITE), board.findPiece(new Position("a1")));
+        assertEquals(PieceFactory.createPiece(BlankPiece.Type.ROOK, BlankPiece.Color.WHITE), board.findPiece(new Position("a1")));
     }
 
     @Test
@@ -119,8 +120,8 @@ class BoardTest {
     void createPiece() {
         board.initialize();
 
-        Board.Position sourcePosition = new Board.Position("b2");
-        Board.Position targetPosition = new Board.Position("b3");
+        Position sourcePosition = new Position("b2");
+        Position targetPosition = new Position("b3");
         ChessGame.move(board, sourcePosition, targetPosition);
         assertEquals(BlankPiece.createBlank(), board.findPiece(sourcePosition));
         assertEquals(Pawn.createWhitePawn(), board.findPiece(targetPosition));
@@ -131,15 +132,15 @@ class BoardTest {
     void calculatePoint() {
         board.initializeEmpty();
 
-        addPiece(new Board.Position("b6"), Pawn.createBlackPawn());
-        addPiece(new Board.Position("e6"), Queen.createBlackQueen());
-        addPiece(new Board.Position("b8"), King.createBlackKing());
-        addPiece(new Board.Position("c6"), Rook.createBlackRook());
+        addPiece(new Position("b6"), Pawn.createBlackPawn());
+        addPiece(new Position("e6"), Queen.createBlackQueen());
+        addPiece(new Position("b8"), King.createBlackKing());
+        addPiece(new Position("c6"), Rook.createBlackRook());
 
-        addPiece(new Board.Position("f2"), Pawn.createWhitePawn());
-        addPiece(new Board.Position("g2"), Pawn.createWhitePawn());
-        addPiece(new Board.Position("e1"), Rook.createWhiteRook());
-        addPiece(new Board.Position("f1"), King.createWhiteKing());
+        addPiece(new Position("f2"), Pawn.createWhitePawn());
+        addPiece(new Position("g2"), Pawn.createWhitePawn());
+        addPiece(new Position("e1"), Rook.createWhiteRook());
+        addPiece(new Position("f1"), King.createWhiteKing());
 
         assertEquals(15.0, board.calculatePoint(BlankPiece.Color.BLACK), 0.01);
         assertEquals(7.0, board.calculatePoint(BlankPiece.Color.WHITE), 0.01);
@@ -152,7 +153,7 @@ class BoardTest {
 
     }
 
-    private void addPiece(Board.Position position, Piece piece) {
+    private void addPiece(Position position, Piece piece) {
         board.assignPiece(position, piece);
     }
 

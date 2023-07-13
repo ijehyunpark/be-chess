@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.Board.Position;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
@@ -37,9 +38,9 @@ public class QueenTest {
         // when
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("e5"), new Board.Position("a3"))
+                () -> ChessGame.move(board, new Position("e5"), new Position("a3"))
         );
-        ChessGame.move(board, new Board.Position("e5"), new Board.Position("e8"));
+        ChessGame.move(board, new Position("e5"), new Position("e8"));
 
         // then
 

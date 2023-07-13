@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.pieces.concrete.Bishop;
 import softeer2nd.chess.pieces.concrete.Queen;
 import softeer2nd.chess.pieces.concrete.Rook;
@@ -35,13 +36,13 @@ public abstract class RecursiveMovAblePiece extends AbstractPiece implements Mov
 
         moveAble.add(new Direction(currentY, currentX));
 
-        if (board.isBlankPiece(new Board.Position(currentY, currentX))) {
+        if (board.isBlankPiece(new Position(currentY, currentX))) {
             expandPieceMoveAble(board, moveAble, direction, currentY, currentX);
         }
     }
 
     @Override
-    public void verifyMove(Board board, Board.Position source, Board.Position destination) {
+    public void verifyMove(Board board, Position source, Position destination) {
         if (board.findPiece(source).getColor() == board.findPiece(destination).getColor()) {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }

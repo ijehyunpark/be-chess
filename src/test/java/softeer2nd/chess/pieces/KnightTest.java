@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
 import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.Board.Position;
 import softeer2nd.chess.pieces.concrete.Knight;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,12 +53,12 @@ public class KnightTest {
         board.initialize(knightSample);
 
         // when
-        ChessGame.move(board, new Board.Position("e6"), new Board.Position("d8"));
-        Piece result1 = board.findPiece(new Board.Position("d8"));
+        ChessGame.move(board, new Position("e6"), new Position("d8"));
+        Piece result1 = board.findPiece(new Position("d8"));
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Board.Position("d8"), new Board.Position("d7"))
+                () -> ChessGame.move(board, new Position("d8"), new Position("d7"))
         );
 
         // then
