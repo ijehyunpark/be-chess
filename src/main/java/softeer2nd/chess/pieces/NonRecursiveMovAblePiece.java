@@ -8,9 +8,9 @@ import softeer2nd.chess.pieces.concrete.Pawn;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NonRecursiveMovePiece extends BlankPiece {
+public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements MovablePiece {
 
-    protected NonRecursiveMovePiece(Color color, Type type) {
+    protected NonRecursiveMovAblePiece(Color color, Type type) {
         super(color, type);
     }
 
@@ -39,13 +39,14 @@ public abstract class NonRecursiveMovePiece extends BlankPiece {
     }
 
     @Override
-    public void verifyMove(Board board, Board.Position source, Board.Position target) {
-        if (board.findPiece(source).getColor() == board.findPiece(target).getColor()) {
+    public void verifyMove(Board board, Board.Position source, Board.Position destination) {
+        if (isSameColor(board.findPiece(source), board.findPiece(destination))) {
             throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
         }
 
         List<Direction> moveAble = new ArrayList<>();
         makeMoveAble(board, moveAble, getBasicDirection(), source.getYPos(), source.getXPos());
-        verifyTargetMove(target, moveAble);
+
+        verifyTargetMove(moveAble, destination);
     }
 }
