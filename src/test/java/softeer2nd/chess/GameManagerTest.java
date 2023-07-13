@@ -7,7 +7,6 @@ import softeer2nd.chess.Board.Position;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static softeer2nd.chess.exception.ExceptionMessage.WRONG_TURN;
-import static softeer2nd.chess.pieces.Piece.Type.PAWN;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class GameManagerTest {
