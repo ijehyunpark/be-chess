@@ -9,11 +9,14 @@ import softeer2nd.chess.pieces.MovablePiece;
 import softeer2nd.chess.pieces.Piece;
 
 import static softeer2nd.chess.exception.ExceptionMessage.OUT_OF_BOUND_INPUT;
+import static softeer2nd.chess.exception.ExceptionMessage.WRONG_TURN;
 
 public class GameManager {
 
     private final Board board;
     private boolean isStart = false;
+    private boolean ignoreTurn = false;
+    private Piece.Color gameTurn = Piece.Color.BLACK;
 
     public GameManager() {
         this.board = new Board();
@@ -38,6 +41,7 @@ public class GameManager {
         verifyOutOfBoardIndex(destinationPosition);
 
         MovablePiece sourcePiece = ifNotBlankCastMovable(board.findPiece(sourcePosition));
+        verifyIsCorrectTurn(sourcePiece);
         Piece destinationPiece = board.findPiece(destinationPosition);
 
         sourcePiece.verifyMove(board, sourcePosition, destinationPosition);
@@ -49,6 +53,19 @@ public class GameManager {
 
         board.assignPiece(sourcePosition, destinationPiece);
         board.assignPiece(destinationPosition, sourcePiece);
+
+        changeGameTurn();
+    }
+
+    private void changeGameTurn() {
+        gameTurn = gameTurn == Piece.Color.BLACK ?
+                Piece.Color.WHITE : Piece.Color.BLACK;
+    }
+
+    private void verifyIsCorrectTurn(MovablePiece sourcePiece) {
+        if (!ignoreTurn && gameTurn != sourcePiece.getColor()) {
+            throw new RuntimeException(WRONG_TURN);
+        }
     }
 
     private void verifyStartGame() {
@@ -77,6 +94,10 @@ public class GameManager {
 
     public String showBoard() {
         return BoardView.showBoard(board);
+    }
+
+    public void setIgnoreTurn() {
+        this.ignoreTurn = true;
     }
 
 }

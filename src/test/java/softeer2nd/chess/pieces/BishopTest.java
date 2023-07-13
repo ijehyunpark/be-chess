@@ -23,6 +23,7 @@ public class BishopTest {
     void setUp() {
         board = new Board();
         chessGame = new GameManager(board);
+        chessGame.setIgnoreTurn();
         chessGame.start();
     }
 
