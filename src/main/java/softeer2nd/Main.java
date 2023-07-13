@@ -27,7 +27,10 @@ public class Main {
                     scanLoop = false;
                 } else if (command.startsWith("move ")) {
                     String[] commandArgs = command.split(" ");
-                    move(commandArgs);
+                    if (move(commandArgs)) {
+                        System.out.println("상대 킹 기물이 제거되었습니다.");
+                        scanLoop = false;
+                    }
                 } else {
                     System.out.println("잘못된 명령어 입니다.");
                 }
@@ -42,12 +45,13 @@ public class Main {
         System.out.println(chessGame.showBoard());
     }
 
-    private static void move(String[] commandArgs) {
+    private static boolean move(String[] commandArgs) {
         if (commandArgs.length != 3) {
             System.out.println("잘못된 인자 개수입니다. 다음과 같이 입력해 주세요." + NEW_LINE + "move [이동 전] [이동 후]");
         }
 
-        chessGame.move(new Position(commandArgs[1]), new Position(commandArgs[2]));
+        boolean isRemovedOpponentKing = chessGame.move(new Position(commandArgs[1]), new Position(commandArgs[2]));
         System.out.println(chessGame.showBoard());
+        return isRemovedOpponentKing;
     }
 }

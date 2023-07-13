@@ -232,4 +232,8 @@ public class Board {
                 position.getXPos() < 0 || position.getXPos() >= Board.ROW_NUMBER;
     }
 
+    public boolean isRemovedAllKing(Piece.Color color) {
+        return pieceCount(KING, color) == 0;
+    }
+
 }

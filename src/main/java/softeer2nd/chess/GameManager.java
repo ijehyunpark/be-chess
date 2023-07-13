@@ -7,6 +7,7 @@ import softeer2nd.chess.exception.ExceptionMessage;
 import softeer2nd.chess.pieces.BlankPiece;
 import softeer2nd.chess.pieces.MovablePiece;
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.concrete.King;
 
 import static softeer2nd.chess.exception.ExceptionMessage.OUT_OF_BOUND_INPUT;
 import static softeer2nd.chess.exception.ExceptionMessage.WRONG_TURN;
@@ -35,8 +36,9 @@ public class GameManager {
      * 구체적으로 가능한 이동일 경우 보드판에서 sourcePosition와 targetPosition의 위치를 교환한다.
      *
      * @throws IllegalArgumentException 범위를 벗어나는 이동, 같은 색깔 기물로 이동, 빈 칸 이동의 경우 발생한다.
+     * @Return 만약 상대방의 모든 {@link King} 기물이 제거되었다면 {@code true}를 반환한다. 아닌 경우 {@code false}를 반환한다.
      */
-    public void move(Position sourcePosition, Position destinationPosition) {
+    public boolean move(Position sourcePosition, Position destinationPosition) {
         verifyStartGame();
         verifyOutOfBoardIndex(destinationPosition);
 
@@ -55,6 +57,7 @@ public class GameManager {
         board.assignPiece(destinationPosition, sourcePiece);
 
         changeGameTurn();
+        return board.isRemovedAllKing(gameTurn);
     }
 
     private void changeGameTurn() {
