@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces.concrete;
 
 import softeer2nd.chess.Board.Board;
+import softeer2nd.chess.exception.ExceptionMessage;
 import softeer2nd.chess.pieces.NonRecursiveMovAblePiece;
 import softeer2nd.chess.pieces.Piece;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static softeer2nd.chess.pieces.MovablePiece.BasicDirection.*;
+
 public class Pawn extends NonRecursiveMovAblePiece {
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
@@ -68,7 +70,7 @@ public class Pawn extends NonRecursiveMovAblePiece {
     @Override
     public void verifyMove(Board board, Board.Position source, Board.Position destination) {
         if (board.findPiece(source).getColor() == board.findPiece(destination).getColor()) {
-            throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
+            throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
 
         List<Direction> moveAble = new ArrayList<>();

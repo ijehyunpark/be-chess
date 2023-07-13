@@ -2,6 +2,8 @@ package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.pieces.concrete.*;
 
+import static softeer2nd.chess.exception.ExceptionMessage.WRONG_ARGUMENT;
+
 public abstract class PieceFactory {
     /**
      * 테스트를 사용하기 위한 메소드이다. <br/>
@@ -16,7 +18,7 @@ public abstract class PieceFactory {
                 return type == Piece.Type.NO_PIECE ? BlankPiece.createBlank() : createPiece(type, isBlack ? Piece.Color.BLACK : Piece.Color.WHITE);
             }
         }
-        throw new IllegalArgumentException("잘못된 표현식입니다. : " + representation);
+        throw new IllegalArgumentException(WRONG_ARGUMENT + " : " + representation);
     }
 
     public static MovablePiece createPiece(final Piece.Type type, final Piece.Color color) {
@@ -40,7 +42,7 @@ public abstract class PieceFactory {
                 return color == Piece.Color.BLACK ?
                         King.createBlackKing() : King.createWhiteKing();
             default:
-                throw new IllegalArgumentException("타입이 허용되지 않습니다.");
+                throw new IllegalArgumentException(WRONG_ARGUMENT);
         }
     }
 }

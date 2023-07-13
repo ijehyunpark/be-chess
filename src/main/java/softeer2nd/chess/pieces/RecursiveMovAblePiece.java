@@ -8,6 +8,8 @@ import softeer2nd.chess.pieces.concrete.Rook;
 import java.util.ArrayList;
 import java.util.List;
 
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
+
 public abstract class RecursiveMovAblePiece extends AbstractPiece implements MovablePiece {
     protected RecursiveMovAblePiece(Color color, Type type) {
         super(color, type);
@@ -41,7 +43,7 @@ public abstract class RecursiveMovAblePiece extends AbstractPiece implements Mov
     @Override
     public void verifyMove(Board board, Board.Position source, Board.Position destination) {
         if (board.findPiece(source).getColor() == board.findPiece(destination).getColor()) {
-            throw new IllegalArgumentException("같은 편 기물이 존재합니다.");
+            throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
 
         List<Direction> moveAble = new ArrayList<>();
