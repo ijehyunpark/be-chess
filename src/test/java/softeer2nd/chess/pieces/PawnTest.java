@@ -5,12 +5,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
-import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
+import softeer2nd.chess.GameManager;
+import softeer2nd.chess.exception.ExceptionMessage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
+import static softeer2nd.chess.pieces.Piece.Type.NO_PIECE;
+import static softeer2nd.chess.pieces.Piece.Type.PAWN;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class PawnTest {
@@ -152,6 +154,27 @@ public class PawnTest {
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
         assertEquals(expect, BoardView.showBoard(board));
+    }
+
+    @Test
+    @DisplayName("초기 폰 두칸 이동 테스트")
+    void moveDouble() {
+        // given
+        board.initialize();
+
+        // when
+        chessGame.move(new Position("a2"), new Position("a4"));
+        chessGame.move(new Position("b2"), new Position("b3"));
+        RuntimeException doubleMoveException = assertThrows(
+                RuntimeException.class,
+                () -> chessGame.move(new Position("b3"), new Position("b5"))
+        );
+
+        // then;
+        assertEquals(PAWN, board.findPiece(new Position("a4")).getPieceType());
+        assertEquals(NO_PIECE, board.findPiece(new Position("a2")).getPieceType());
+        assertEquals(IMPOSSIBLE_MOVEMENT, doubleMoveException.getMessage());
+
     }
 
 }
