@@ -23,10 +23,13 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 public class RookTest {
 
     Board board;
+    GameManager chessGame;
 
     @BeforeEach
     void setUp() {
         board = new Board();
+        chessGame = new GameManager(board);
+        chessGame.start();
     }
 
     @Test
@@ -58,19 +61,19 @@ public class RookTest {
         board.initialize(rookSample);
 
         // when
-        GameManager.move(board, new Position("e6"), new Position("e8"));
+        chessGame.move(new Position("e6"), new Position("e8"));
         Piece result1 = board.findPiece(new Position("e8"));
-        GameManager.move(board, new Position("e8"), new Position("e5"));
+        chessGame.move(new Position("e8"), new Position("e5"));
         Piece result2 = board.findPiece(new Position("e5"));
 
-        GameManager.move(board, new Position("e5"), new Position("a5"));
+        chessGame.move(new Position("e5"), new Position("a5"));
         Piece result3 = board.findPiece(new Position("a5"));
-        GameManager.move(board, new Position("a5"), new Position("f5"));
+        chessGame.move(new Position("a5"), new Position("f5"));
         Piece result4 = board.findPiece(new Position("f5"));
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("f5"), new Position("a1"))
+                () -> chessGame.move(new Position("f5"), new Position("a1"))
         );
 
         // then
@@ -90,7 +93,7 @@ public class RookTest {
         board.assignPiece(source, Rook.createBlackRook());
 
         // when
-        GameManager.move(board, source, destination);
+        chessGame.move(source, destination);
         Piece origin = board.findPiece(source);
         Piece target = board.findPiece(destination);
 
@@ -135,7 +138,7 @@ public class RookTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, source, destination)
+                () -> chessGame.move(source, destination)
         );
 
         // then

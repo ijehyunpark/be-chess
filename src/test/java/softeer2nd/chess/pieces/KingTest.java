@@ -15,10 +15,13 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 public class KingTest {
 
     Board board;
+    GameManager chessGame;
 
     @BeforeEach
     void setUp() {
         board = new Board();
+        chessGame = new GameManager(board);
+        chessGame.start();
     }
 
     @Test
@@ -41,9 +44,9 @@ public class KingTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> GameManager.move(board, new Position("e5"), new Position("e7"))
+                () -> chessGame.move(new Position("e5"), new Position("e7"))
         );
-        GameManager.move(board, new Position("e5"), new Position("e6"));
+        chessGame.move(new Position("e5"), new Position("e6"));
 
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());

@@ -119,10 +119,12 @@ class BoardTest {
     @DisplayName("보드판의 특정 위치에 새로운 기물 추가 테스트")
     void createPiece() {
         board.initialize();
+        GameManager chessGame = new GameManager(board);
+        chessGame.start();
 
         Position sourcePosition = new Position("b2");
         Position targetPosition = new Position("b3");
-        GameManager.move(board, sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition);
         assertEquals(BlankPiece.createBlank(), board.findPiece(sourcePosition));
         assertEquals(Pawn.createWhitePawn(), board.findPiece(targetPosition));
     }
