@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
-import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,9 +40,9 @@ public class KingTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("e5"), new Position("e7"))
+                () -> GameManager.move(board, new Position("e5"), new Position("e7"))
         );
-        ChessGame.move(board, new Position("e5"), new Position("e6"));
+        GameManager.move(board, new Position("e5"), new Position("e6"));
 
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());

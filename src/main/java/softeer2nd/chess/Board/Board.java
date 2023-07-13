@@ -227,4 +227,9 @@ public class Board {
     public List<Piece> getSortedWhitePieces() {
         return sortedWhitePieces;
     }
+
+    public boolean isOutOfBoardIndex(Position position) {
+        return position.getYPos() < 0 || position.getYPos() >= Board.COLUMN_NUMBER ||
+                position.getXPos() < 0 || position.getXPos() >= Board.ROW_NUMBER;
+    }
 }

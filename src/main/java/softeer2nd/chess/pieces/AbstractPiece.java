@@ -33,8 +33,4 @@ public abstract class AbstractPiece implements Piece {
     public boolean isBlank() {
         return color == Color.NO_COLOR;
     }
-
-    public boolean isSameColor(Piece piece1, Piece piece2) {
-        return piece1.getColor() == piece2.getColor();
-    }
 }

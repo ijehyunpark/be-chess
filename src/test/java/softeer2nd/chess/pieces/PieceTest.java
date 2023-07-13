@@ -5,14 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.Board.Board;
 import softeer2nd.chess.Board.BoardView;
-import softeer2nd.chess.Board.ChessGame;
+import softeer2nd.chess.GameManager;
 import softeer2nd.chess.Board.Position;
-import softeer2nd.chess.exception.ExceptionMessage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static softeer2nd.chess.Board.BoardView.showBoard;
 import static softeer2nd.chess.exception.ExceptionMessage.*;
-import static softeer2nd.chess.utils.StringUtils.NEW_LINE;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class PieceTest {
@@ -95,28 +93,28 @@ class PieceTest {
         board.initialize(sample);
 
         // when
-        ChessGame.move(board, new Position("b8"), new Position("b7"));
-        ChessGame.move(board, new Position("b7"), new Position("c7"));
+        GameManager.move(board, new Position("b8"), new Position("b7"));
+        GameManager.move(board, new Position("b7"), new Position("c7"));
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("c7"), new Position("a8"))
+                () -> GameManager.move(board, new Position("c7"), new Position("a8"))
         );
 
-        ChessGame.move(board, new Position("a6"), new Position("a5"));
-        ChessGame.move(board, new Position("a5"), new Position("a4"));
+        GameManager.move(board, new Position("a6"), new Position("a5"));
+        GameManager.move(board, new Position("a5"), new Position("a4"));
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("h1"), new Position("h0"))
+                () -> GameManager.move(board, new Position("h1"), new Position("h0"))
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("h1"), new Position("i1"))
+                () -> GameManager.move(board, new Position("h1"), new Position("i1"))
         );
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("f6"), new Position("g6"))
+                () -> GameManager.move(board, new Position("f6"), new Position("g6"))
         );
 
         // then
@@ -153,23 +151,23 @@ class PieceTest {
         board.initialize(sample);
 
         // when
-        ChessGame.move(board, new Position("a6"), new Position("a8"));
-        ChessGame.move(board, new Position("a8"), new Position("a6"));
-        ChessGame.move(board, new Position("a6"), new Position("a5"));
-        ChessGame.move(board, new Position("a5"), new Position("a3"));
+        GameManager.move(board, new Position("a6"), new Position("a8"));
+        GameManager.move(board, new Position("a8"), new Position("a6"));
+        GameManager.move(board, new Position("a6"), new Position("a5"));
+        GameManager.move(board, new Position("a5"), new Position("a3"));
 
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("f6"), new Position("g6"))
+                () -> GameManager.move(board, new Position("f6"), new Position("g6"))
         );
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("h1"), new Position("d4"))
+                () -> GameManager.move(board, new Position("h1"), new Position("d4"))
         );
-        ChessGame.move(board, new Position("h1"), new Position("e4"));
-        ChessGame.move(board, new Position("f6"), new Position("f1"));
+        GameManager.move(board, new Position("h1"), new Position("e4"));
+        GameManager.move(board, new Position("f6"), new Position("f1"));
 
 
         // then
@@ -209,9 +207,9 @@ class PieceTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("f6"), new Position("a6"))
+                () -> GameManager.move(board, new Position("f6"), new Position("a6"))
         );
-        ChessGame.move(board, new Position("f6"), new Position("b6"));
+        GameManager.move(board, new Position("f6"), new Position("b6"));
 
         // then
         assertEquals(IMPOSSIBLE_MOVEMENT, illegalArgumentException.getMessage());
@@ -250,7 +248,7 @@ class PieceTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("f6"), new Position("a6"))
+                () -> GameManager.move(board, new Position("f6"), new Position("a6"))
         );
 
         // then
@@ -279,7 +277,7 @@ class PieceTest {
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChessGame.move(board, new Position("e6"), new Position("g7"))
+                () -> GameManager.move(board, new Position("e6"), new Position("g7"))
         );
 
         // then

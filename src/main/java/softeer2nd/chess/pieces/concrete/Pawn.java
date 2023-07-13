@@ -43,10 +43,10 @@ public class Pawn extends NonRecursiveMovAblePiece {
         return movableDirection;
     }
 
-    private void attackMove(Board board, List<BasicDirection> pawnMoveAble, final int currentY, final int currentX) {
+    private void attackMove(Board board, List<BasicDirection> pawnMoveAble, Position position) {
         for (BasicDirection direction : attackMovableDirection) {
-            int nextY = currentY + direction.getYDegree();
-            int nextX = currentX + direction.getXDegree();
+            int nextY = position.getYPos() + direction.getYDegree();
+            int nextX = position.getXPos() + direction.getXDegree();
 
             if (nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
                     nextX < 0 || nextX >= Board.ROW_NUMBER) {
@@ -55,22 +55,22 @@ public class Pawn extends NonRecursiveMovAblePiece {
 
             Piece target = board.findPiece(new Position(nextY, nextX));
             if (target.getPieceType() != Type.NO_PIECE
-                    && target.getColor() != board.findPiece(new Position(currentY, currentX)).getColor()) {
+                    && target.getColor() != board.findPiece(position).getColor()) {
                 pawnMoveAble.add(direction);
             }
         }
     }
 
     @Override
-    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
+    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, Position position) {
         List<BasicDirection> pawnMoveAble = new ArrayList<>(directionList);
-        attackMove(board, pawnMoveAble, currentY, currentX);
-        super.makeMoveAble(board, moveAble, pawnMoveAble, currentY, currentX);
+        attackMove(board, pawnMoveAble, position);
+        super.makeMoveAble(board, moveAble, pawnMoveAble, position);
     }
 
     @Override
     public void verifyMove(Board board, Position source, Position destination) {
-        if (isSameColor(board.findPiece(source), board.findPiece(destination))) {
+        if (Piece.isSameColor(board.findPiece(source), board.findPiece(destination))) {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
 
@@ -79,14 +79,14 @@ public class Pawn extends NonRecursiveMovAblePiece {
         verifyForwardDifferentColor(board, source, destination, forward);
 
         List<Direction> moveAble = new ArrayList<>();
-        makeMoveAble(board, moveAble, List.of(forward), source.getYPos(), source.getXPos());
+        makeMoveAble(board, moveAble, List.of(forward), source);
         verifyTargetMove(moveAble, destination);
     }
 
     public void verifyForwardDifferentColor(Board board, Position source, Position destination, BasicDirection forward) {
-        if(!board.findPiece(destination).isBlank() &&
+        if (!board.findPiece(destination).isBlank() &&
                 source.getYPos() + forward.getYDegree() == destination.getYPos() &&
-                source.getXPos() + forward.getXDegree() == destination.getXPos()){
+                source.getXPos() + forward.getXDegree() == destination.getXPos()) {
             throw new IllegalArgumentException(ExceptionMessage.IMPOSSIBLE_MOVEMENT);
         }
     }

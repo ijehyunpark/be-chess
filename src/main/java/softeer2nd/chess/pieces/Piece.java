@@ -51,5 +51,11 @@ public interface Piece {
 
     boolean isBlank();
 
-    boolean isSameColor(Piece piece1, Piece piece2);
+    static boolean isSameColor(Piece piece1, Piece piece2) {
+        return piece1.getColor() == piece2.getColor();
+    }
+
+    static boolean isSameColorAndHasPiece(Piece piece1, Piece piece2) {
+        return isSameColor(piece1, piece2) && !piece1.isBlank() && !piece2.isBlank();
+    }
 }

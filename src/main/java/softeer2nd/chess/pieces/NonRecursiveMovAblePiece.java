@@ -28,13 +28,12 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
      * @param currentY      탐색 중에 사용되는 y 좌표
      * @param currentX      탐색 중에 사용되는 x 좌표
      */
-    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, final int currentY, final int currentX) {
+    protected void makeMoveAble(Board board, List<Direction> moveAble, List<BasicDirection> directionList, Position position) {
         for (BasicDirection direction : directionList) {
-            int nextY = currentY + direction.getYDegree();
-            int nextX = currentX + direction.getXDegree();
+            int nextY = position.getYPos() + direction.getYDegree();
+            int nextX = position.getXPos() + direction.getXDegree();
 
-            if (nextY < 0 || nextY >= Board.COLUMN_NUMBER ||
-                    nextX < 0 || nextX >= Board.ROW_NUMBER) {
+            if (board.isOutOfBoardIndex(position)) {
                 continue;
             }
             moveAble.add(new Direction(nextY, nextX));
@@ -43,12 +42,12 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
 
     @Override
     public void verifyMove(Board board, Position source, Position destination) {
-        if (isSameColor(board.findPiece(source), board.findPiece(destination))) {
+        if (Piece.isSameColor(board.findPiece(source), board.findPiece(destination))) {
             throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
 
         List<Direction> moveAble = new ArrayList<>();
-        makeMoveAble(board, moveAble, getBasicDirection(), source.getYPos(), source.getXPos());
+        makeMoveAble(board, moveAble, getBasicDirection(), source);
 
         verifyTargetMove(moveAble, destination);
     }
