@@ -1,21 +1,22 @@
 package softeer2nd.chess.Board;
 
+import softeer2nd.chess.exception.ExceptionMessage;
 import softeer2nd.chess.pieces.BlankPiece;
 import softeer2nd.chess.pieces.MovablePiece;
 import softeer2nd.chess.pieces.Piece;
 
-import javax.xml.transform.Source;
+import static softeer2nd.chess.exception.ExceptionMessage.OUT_OF_BOUND_INPUT;
 
 public class ChessGame {
     public static final String BASIC_BOARD =
             "RNBQKBNR" +
-            "PPPPPPPP" +
-            "........" +
-            "........" +
-            "........" +
-            "........" +
-            "pppppppp" +
-            "rnbqkbnr";
+                    "PPPPPPPP" +
+                    "........" +
+                    "........" +
+                    "........" +
+                    "........" +
+                    "pppppppp" +
+                    "rnbqkbnr";
 
     /**
      * 기본 룰의 보드판으로 초기화한다.
@@ -39,13 +40,13 @@ public class ChessGame {
     public static void initializeEmpty(Board board) {
         String emptyMap =
                 "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........" +
-                "........";
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........" +
+                        "........";
         initialize(board, emptyMap);
     }
 
@@ -59,26 +60,26 @@ public class ChessGame {
     public static void move(Board board, Board.Position sourcePosition, Board.Position destinationPosition) {
         if (destinationPosition.getYPos() < 0 || destinationPosition.getYPos() >= Board.COLUMN_NUMBER ||
                 destinationPosition.getXPos() < 0 || destinationPosition.getXPos() >= Board.ROW_NUMBER) {
-            throw new IllegalArgumentException("보드판 범위를 벗어나는 입력입니다.");
+            throw new IllegalArgumentException(OUT_OF_BOUND_INPUT);
         }
 
         Piece sourcePiece = board.findPiece(sourcePosition);
         Piece destinationPiece = board.findPiece(destinationPosition);
 
         if (sourcePiece.isBlank()) {
-            throw new IllegalArgumentException("빈 칸입니다.");
+            throw new IllegalArgumentException(ExceptionMessage.MOVE_NOT_MOVABLE_PIECE);
         }
 
-        MovablePiece sourceMovalbePiece = (MovablePiece) sourcePiece;
+        MovablePiece sourceMovablePiece = (MovablePiece) sourcePiece;
 
-        sourceMovalbePiece.verifyMove(board, sourcePosition, destinationPosition);
+        sourceMovablePiece.verifyMove(board, sourcePosition, destinationPosition);
 
         // 다른 색 기물일 경우 제거한다.
-        if ((sourceMovalbePiece.getColor() != destinationPiece.getColor()) && sourceMovalbePiece.getColor() != Piece.Color.NO_COLOR && destinationPiece.getColor() != Piece.Color.NO_COLOR) {
+        if ((sourceMovablePiece.getColor() != destinationPiece.getColor()) && sourceMovablePiece.getColor() != Piece.Color.NO_COLOR && destinationPiece.getColor() != Piece.Color.NO_COLOR) {
             destinationPiece = BlankPiece.createBlank();
         }
 
         board.assignPiece(sourcePosition, destinationPiece);
-        board.assignPiece(destinationPosition, sourceMovalbePiece);
+        board.assignPiece(destinationPosition, sourceMovablePiece);
     }
 }

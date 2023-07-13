@@ -4,6 +4,8 @@ import softeer2nd.chess.Board.Board;
 
 import java.util.List;
 
+import static softeer2nd.chess.exception.ExceptionMessage.IMPOSSIBLE_MOVEMENT;
+
 public interface MovablePiece extends Piece {
     enum BasicDirection {
         NORTH(-1, 0),
@@ -64,12 +66,11 @@ public interface MovablePiece extends Piece {
 
     default void verifyTargetMove(List<Direction> moveAble, Board.Position destination) {
         boolean isMoveAble = moveAble.stream()
-                .anyMatch(direction ->
-                        destination.getYPos() == direction.getY() &&
-                                destination.getXPos() == direction.getX());
+                .anyMatch(direction -> destination.getYPos() == direction.getY() &&
+                        destination.getXPos() == direction.getX());
 
         if (!isMoveAble) {
-            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 범위입니다.");
+            throw new IllegalArgumentException(IMPOSSIBLE_MOVEMENT);
         }
     }
 }
