@@ -28,14 +28,10 @@ public abstract class NonRecursiveMovAblePiece extends AbstractPiece implements 
      * @param position      탐색 중에 사용되는 보드판 좌표
      */
     protected void makeMoveAble(Board board, List<Position> moveAble, List<Direction> directionList, Position position) {
-        for (Direction direction : directionList) {
-            Position nextPosition = movePosition(position, direction);
-
-            if (board.isOutOfBoardIndex(position)) {
-                continue;
-            }
-            moveAble.add(nextPosition);
-        }
+        directionList.stream()
+                .map(direction -> movePosition(position, direction))
+                .filter(nextPosition -> !board.isOutOfBoardIndex(position))
+                .forEach(moveAble::add);
     }
 
     @Override
